@@ -18,7 +18,7 @@ Jogo desenvolvido para a disciplina optativa de Jogos, do curso de Bacharelado e
 # Componentes
 ⦁	Mundo: O jogo se dará em vários mapas de lanes, para 2 jogadores. Os mapas evoluíram de acordo com a compra dos jogadores
 
-⦁	Mecânicas: Dois jogadores seram colocados de lados opostos de um mapa, onde selecionaram as unidades e as raias quem serão colocadas. Ao iniciar a partida, as unidades se movimentaram em direção a base do inimigo, atacando as unidades do inimigo que encontrar pelo caminho. O jogador poderá adicionar mais unidades às raias durante a partida. O jogo só terminá quando uma quantidade x de unidades atigir a base do inimigo.
+⦁	Mecânicas: Dois jogadores serão colocados de lados opostos de um mapa, onde selecionarão as unidades e em quais raias elas serão colocadas. Ao iniciar a partida, as unidades se movimentarão em direção a base do inimigo, atacando as unidades do inimigo que encontrarem pelo caminho. O jogador poderá adicionar mais unidades às raias durante a partida. O jogo termina quando uma quantidade x de unidades atigi a base do inimigo.
 
 ⦁	Níveis: IA: Fácil, médio e difícil, sendo que a diferença entre eles será a quantidade de dinheiro.
 
@@ -26,5 +26,5 @@ Jogo desenvolvido para a disciplina optativa de Jogos, do curso de Bacharelado e
 
 ⦁	Interface 
 
-⦁	Controle: teclado e controle
+⦁	Controle: teclado e joystick
 # Visual
