@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Link.cs" />
-     <None Include="Assets\2D_Shooter_ArtPack\2D_ShooterPack\2D_Shooter_notes.txt" />
+     <Compile Include="Assets\Scripts\Link.cs" />
+     <None Include="Assets\Imagens\2D_Shooter_ArtPack\2D_ShooterPack\2D_Shooter_notes.txt" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>C:/Users/Winny S/Documents/GitHub/WarDinos/WarDinos-Unity/WarDinos/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
