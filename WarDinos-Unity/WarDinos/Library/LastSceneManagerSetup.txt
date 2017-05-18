@@ -1,3 +1,4 @@
 sceneSetups:
+- path: Assets/teste_movimentacao.unity
   isLoaded: 1
   isActive: 1
