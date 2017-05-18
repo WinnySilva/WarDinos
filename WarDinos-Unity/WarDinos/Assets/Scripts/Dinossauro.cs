@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Dinossauro : MonoBehaviour {
+
 	protected int vida;
 	protected int ataque;
 	protected double velocidadeAtaque;
@@ -19,6 +21,16 @@ public class Dinossauro : MonoBehaviour {
 	protected double MAX_VELOCIDADE_ATAQUE;
 	protected int MAX_VELOCIDADE_DESLOCAMENTO;
 	protected int MAX_ALCANCE_ATAQUE;
+
+	public Transform agent;
+
+	void Update(){
+		if(agent != null){
+			Vector3 p =  new Vector3(agent.position.x,1,agent.position.z+3);
+		this.GetComponent<Transform>().position = p;
+		}
+	}
+
 
 	public int Alcance_ataque {
 		get {

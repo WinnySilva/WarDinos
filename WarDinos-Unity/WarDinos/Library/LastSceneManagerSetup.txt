@@ -1,4 +1,3 @@
 sceneSetups:
-- path: Assets/cena_teste.unity
   isLoaded: 1
   isActive: 1
