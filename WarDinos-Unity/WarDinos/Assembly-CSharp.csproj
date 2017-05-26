@@ -48,7 +48,11 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\AgentBehaviour.cs" />
      <Compile Include="Assets\Scripts\Dinossauro.cs" />
+     <Compile Include="Assets\Scripts\Jogador.cs" />
      <Compile Include="Assets\Scripts\Link.cs" />
+     <Compile Include="Assets\Scripts\LoggerMongo.cs" />
+     <Compile Include="Assets\Scripts\MatchManager.cs" />
+     <Compile Include="Assets\Scripts\Unidade.cs" />
      <None Include="Assets\Imagens\2D_Shooter_ArtPack\2D_ShooterPack\2D_Shooter_notes.txt" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>C:/Users/Winny S/Documents/GitHub/WarDinos/WarDinos-Unity/WarDinos/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>

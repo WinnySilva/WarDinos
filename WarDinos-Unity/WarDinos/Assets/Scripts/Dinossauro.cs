@@ -11,26 +11,15 @@ public class Dinossauro : MonoBehaviour {
 	protected int velocidade_deslocamento;
 	protected int alcance_ataque;
 
-
-	protected int custoVida;
-	protected int custoAtaque;
-	protected int custoVelocidadeAtaque;
+	protected int custoAttrVida;
+	protected int custoAttrAtaque;
+	protected int custoAttrVelocidadeAtaque;
 
 	protected int MAX_VIDA;
 	protected int MAX_ATAQUE;
 	protected double MAX_VELOCIDADE_ATAQUE;
 	protected int MAX_VELOCIDADE_DESLOCAMENTO;
 	protected int MAX_ALCANCE_ATAQUE;
-
-	public Transform agent;
-
-	void Update(){
-		if(agent != null){
-			Vector3 p =  new Vector3(agent.position.x,1,agent.position.z+3);
-		this.GetComponent<Transform>().position = p;
-		}
-	}
-
 
 	public int Alcance_ataque {
 		get {
