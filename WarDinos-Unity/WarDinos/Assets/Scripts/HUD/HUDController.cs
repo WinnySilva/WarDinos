@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class HUDController : MonoBehaviour
 {
+    public KeyCode keyUp;
+    public KeyCode keyDown;
+    public KeyCode keyLeft;
+    public KeyCode keyRight;
+    public KeyCode keyConfirm;
+
     public GameObject imageSelectedDino;
     public Button buttonUnitVelociraptor;
     public Button buttonUnitEstegossauro;
@@ -16,9 +22,20 @@ public class HUDController : MonoBehaviour
     public Button buttonLane2;
     public Button buttonLane3;
 
-    private Selectable selectedButton;
-    private Selectable lastSelectedUnitButton;
-    private Selectable lastSelectedLaneButton;
+    public Button buttonUpgradeVelociraptor;
+    public Button buttonUpgradeEstegossauro;
+    public Button buttonUpgradeTriceratopo;
+    public Button buttonUpgradePterodactilo;
+    public Button buttonUpgradeApatossauro;
+    public Button buttonUpgradeTiranossauro;
+    public Button buttonUpgradeVida;
+    public Button buttonUpgradePAtaque;
+    public Button buttonUpgradeVelAtaque;
+    public Button buttonUpgradeVelDeslocamento;
+
+    private Button selectedButton;
+    private Button lastSelectedUnitButton;
+    private Button lastSelectedLaneButton;
 
     // Use this for initialization
     void Start()
@@ -26,18 +43,17 @@ public class HUDController : MonoBehaviour
         selectedButton = buttonLane1;
         lastSelectedUnitButton = buttonUnitVelociraptor;
         lastSelectedLaneButton = buttonLane1;
-        selectedButton.Select();
+        changeButton(selectedButton);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(keyDown))
         {
             if (selectedButton.FindSelectableOnDown())
             {
-                selectedButton = selectedButton.FindSelectableOnDown();
-                selectedButton.Select();
+                changeButton((Button)selectedButton.FindSelectableOnDown());
 
                 // Change the dinosaur displayed in HUD if button
                 // changed to is a unit button
@@ -47,12 +63,11 @@ public class HUDController : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(keyUp))
         {
             if (selectedButton.FindSelectableOnUp())
             {
-                selectedButton = selectedButton.FindSelectableOnUp();
-                selectedButton.Select();
+                changeButton((Button)selectedButton.FindSelectableOnUp());
 
                 // Change the dinosaur displayed in HUD if button
                 // changed to is a unit button
@@ -63,7 +78,7 @@ public class HUDController : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(keyLeft))
         {
             // If button is
             // Unit button
@@ -75,7 +90,7 @@ public class HUDController : MonoBehaviour
                 Debug.Log("[Pressionou Esquerda] Removeu " + dinoname + " do grupo");
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(keyRight))
         {
             // If button is
             // Unit button
@@ -87,10 +102,9 @@ public class HUDController : MonoBehaviour
                 Debug.Log("[Pressionou Direita] Adicionou " + dinoname + " ao grupo");
             }
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(keyConfirm))
         {
             Button bt = (Button)selectedButton;
-            bt.onClick.Invoke();
             bt.targetGraphic.CrossFadeColor(
                 bt.colors.pressedColor,
                 bt.colors.fadeDuration,
@@ -98,7 +112,7 @@ public class HUDController : MonoBehaviour
                 true
             );
         }
-        if (Input.GetKeyUp(KeyCode.K))
+        if (Input.GetKeyUp(keyConfirm))
         {
             Button bt = (Button)selectedButton;
             bt.targetGraphic.CrossFadeColor(
@@ -132,14 +146,12 @@ public class HUDController : MonoBehaviour
             if (selectedButton.FindSelectableOnLeft())
             {
                 lastSelectedLaneButton = selectedButton;
-                selectedButton = lastSelectedUnitButton;
-                selectedButton.Select();
+                changeButton(lastSelectedUnitButton);
             }
             else if (selectedButton.FindSelectableOnRight())
             {
                 lastSelectedUnitButton = selectedButton;
-                selectedButton = lastSelectedLaneButton;
-                selectedButton.Select();
+                changeButton(lastSelectedLaneButton);
             }
         }
     }
@@ -147,5 +159,12 @@ public class HUDController : MonoBehaviour
     public void TaskButton3()
     {
         Debug.Log("CHEEKI BREEKI!!!");
+    }
+
+    private void changeButton (Button nextButton)
+    {
+        selectedButton.targetGraphic.CrossFadeColor(selectedButton.colors.normalColor, selectedButton.colors.fadeDuration, true, true);
+        selectedButton = nextButton;
+        selectedButton.targetGraphic.CrossFadeColor(selectedButton.colors.highlightedColor, selectedButton.colors.fadeDuration, true, true);
     }
 }
