@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class MatchManager : MonoBehaviour {
 	public GameObject unidade;
-	Jogador[] players;
+	public Jogador[] players;
+
+	// inicio das lanes para spawn dos dinossauro
+	public GameObject[] spawnPointLanes; 
 
 	void Awake(){
-		
+		players = new Jogador[2];
 	}
 	// Use this for initialization
 	void Start () {

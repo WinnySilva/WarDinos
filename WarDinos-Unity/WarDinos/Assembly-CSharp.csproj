@@ -47,16 +47,34 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AgentBehaviour.cs" />
-     <Compile Include="Assets\Scripts\Dinossauro.cs" />
-     <Compile Include="Assets\Scripts\HUD\ButtonUnitVelociraptor.cs" />
+     <Compile Include="Assets\Scripts\DB\LoggerMongo.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Apatossauro.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Dinossauro.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Estegossauro.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Pterodactilo.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Raptor.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\TRex.cs" />
+     <Compile Include="Assets\Scripts\Dinossauros\Triceratopo.cs" />
      <Compile Include="Assets\Scripts\HUD\HUDController.cs" />
+     <Compile Include="Assets\Scripts\HUD\HUDTime.cs" />
+     <Compile Include="Assets\Scripts\HUD\LaneButton.cs" />
      <Compile Include="Assets\Scripts\HUD\UnitButton.cs" />
+     <Compile Include="Assets\Scripts\HUD\WDHudAttributeButton.cs" />
+     <Compile Include="Assets\Scripts\HUD\WDHudUpgradeButton.cs" />
      <Compile Include="Assets\Scripts\Jogador.cs" />
-     <Compile Include="Assets\Scripts\Link.cs" />
-     <Compile Include="Assets\Scripts\LoggerMongo.cs" />
      <Compile Include="Assets\Scripts\MatchManager.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\CrebitosController.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\MenuLocker.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\TextFadeInFadeOut.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\TitleScreenPressButton.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\TitlescreenController.cs" />
      <Compile Include="Assets\Scripts\Unidade.cs" />
-     <None Include="Assets\Imagens\2D_Shooter_ArtPack\2D_ShooterPack\2D_Shooter_notes.txt" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\LightBeamsControlScript.cs" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\LookAtBehaviour.cs" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\LookAtCameraBehaviour.cs" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\RayBehavior.cs" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\RotateBehaviour.cs" />
+     <Compile Include="Assets\Sky FX Pack\Scripts\ScrollBehaviour.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>C:/Users/Winny S/Documents/GitHub/WarDinos/WarDinos-Unity/WarDinos/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>

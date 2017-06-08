@@ -9,18 +9,18 @@ public class Unidade : MonoBehaviour {
 
 	private Dinossauro dino;
 
+
+	void Awake(){
+		dino = dinossauro.GetComponent<Dinossauro>();
+	}
+
 	void Update(){
 		if(agent != null){
 			Vector3 p =  new Vector3(agent.position.x,1,agent.position.z+3);
 			dinossauro.GetComponent<Transform>().position = p;
 		}
 	}
-
-	// Use this for initialization
-	void Start () {
-		dino = Dinossauro.GetComponent<Dinossauro>();
-	}
-
+		
 	public Transform Agent {
 		get {
 			return agent;
@@ -40,12 +40,11 @@ public class Unidade : MonoBehaviour {
 	}
 
 	void Atacar(Unidade uni){
-		GameObject dinoInimigo = uni.Dinossauro;
+		Dinossauro dinoInimigo = uni.dino ;
 		if(this.Distance(uni)< this.dino.Alcance_ataque){
-			
+			dinoInimigo.Vida += dino.Ataque;
 		}
-	
 	}
-	
+
 
 }

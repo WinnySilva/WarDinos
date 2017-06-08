@@ -17,4 +17,10 @@ public class AgentBehaviour : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		Debug.Log(" COLISAO "+collision.gameObject.name);
+	}
+
 }

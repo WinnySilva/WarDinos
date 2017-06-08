@@ -2,12 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Unidade.cs">
     <Files>
-      <File FileName="Assets\Scripts\Dinossauro.cs" Line="10" Column="36" />
       <File FileName="Assets\Scripts\AgentBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\LoggerMongo.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MatchManager.cs" Line="6" Column="28" />
+      <File FileName="Assets\Scripts\MatchManager.cs" Line="29" Column="31" />
       <File FileName="Assets\Scripts\Jogador.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Unidade.cs" Line="40" Column="3" />
+      <File FileName="Assets\Scripts\Unidade.cs" Line="49" Column="2" />
+      <File FileName="Assets\Scripts\Dinossauros\Estegossauro.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
