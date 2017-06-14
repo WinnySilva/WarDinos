@@ -38,6 +38,8 @@ public class HUDController : MonoBehaviour
     public Button buttonUpgradeVelDeslocamento;
     public Button buttonUpgradeHabilidade;
 
+	public MatchManager matchManager;
+
     private Button selectedButton;
     private Button lastSelectedUnitButton;
     private Button lastSelectedLaneButton;
@@ -258,6 +260,7 @@ public class HUDController : MonoBehaviour
                 string dinoname = ub.getDinosaur();
                 Debug.Log("[Pressionou " + dinoname + "] Despachou grupo na Lane["+lastSelectedLaneButton.GetComponent<LaneButton>().getNumber()+"]");
 
+
                 // Reset dinosaurs quantities in groups
                 buttonUnitVelociraptor.GetComponent<UnitButton>().resetQuantityOnGroup();
                 buttonUnitEstegossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
@@ -265,6 +268,7 @@ public class HUDController : MonoBehaviour
                 buttonUnitPterodactilo.GetComponent<UnitButton>().resetQuantityOnGroup();
                 buttonUnitApatossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
                 buttonUnitTiranossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
+
 
                 // Change the cursor from unit selection to lane selection
                 lastSelectedUnitButton = selectedButton;

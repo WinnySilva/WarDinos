@@ -7,7 +7,11 @@ public class AgentBehaviour : MonoBehaviour {
 	private NavMeshAgent agent;
 	public GameObject base_inimiga;
 	void Start(){
+		
 		agent= GetComponent<NavMeshAgent>();
+		if(agent == null){
+			agent = this.gameObject.AddComponent<NavMeshAgent>();
+		}
 		agent.SetDestination(base_inimiga.transform.position);
 	}
 
