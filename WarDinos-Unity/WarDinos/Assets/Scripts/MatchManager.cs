@@ -14,7 +14,8 @@ public class MatchManager : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		
+		int[] i = {1,2,3};
+		DespacharGrupo(1,0,i);
 	}
 	
 	// Update is called once per frame
@@ -23,6 +24,24 @@ public class MatchManager : MonoBehaviour {
 	}
 	public void createUnidade(){
 		GameObject go =  (GameObject)Instantiate(Resources.Load("/Prefabs/"));
+	}
+
+	public void DespacharGrupo(int numPlayer, int numLane, int[] dinoIds ){
+		Debug.Log("DispatchGrupo "+numPlayer+" "+numLane);
+		GameObject[] unidades = new GameObject[dinoIds.Length];
+		int indexUnidades = 0;
+		foreach(int i in dinoIds){
+			unidades[indexUnidades] = this.players[numPlayer].createUnidade(i);
+			/* pega seta o target para a base inimiga */
+			unidades[indexUnidades].GetComponent<Unidade>().agent.GetComponent<AgentBehaviour>().base_inimiga = this.players[ (numPlayer ==0)?1:0].playerBase;
+
+			/*seta na posicao inicial da lane */
+	//		unidades[indexUnidades].  = this.players[numPlayer].lanesStart[numLane].transform;
+
+
+			unidade.SetActive(true);
+			indexUnidades++;
+		}
 	}
 
 }

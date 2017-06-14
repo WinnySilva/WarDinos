@@ -4,38 +4,56 @@ using UnityEngine;
 
 public class Unidade : MonoBehaviour {
 
-	public Transform agent;
+	public GameObject agent;
 	public GameObject dinossauro;
 
 	private Dinossauro dino;
+	private Transform agentTransform;
 
+	private int playerID;
 
+	public Unidade (GameObject ag, GameObject din, int playerId){
+		this.agent = ag;
+		this.dinossauro = din;
+		this.playerID = playerId;
+	}
+
+	public void ReplaceValues(Unidade un){
+		this.agent = un.agent;
+		this.dinossauro = un.dinossauro;
+		this.dino = un.dino;
+		this.agentTransform = un.agentTransform;
+	}
 	void Awake(){
 		dino = dinossauro.GetComponent<Dinossauro>();
+		agentTransform = agent.GetComponent<Transform>();
+		if(dinossauro!=null){
+			dinossauro.transform.SetParent(this.transform);
+		}
+		if(agentTransform !=null){
+			agent.transform.SetParent(this.transform);
+		}
+
 	}
 
 	void Update(){
-		if(agent != null){
-			Vector3 p =  new Vector3(agent.position.x,1,agent.position.z+3);
+		if(agentTransform != null){
+			Vector3 p =  new Vector3(agentTransform.position.x,1,agentTransform.position.z+3);
 			dinossauro.GetComponent<Transform>().position = p;
 		}
 	}
 		
-	public Transform Agent {
-		get {
-			return agent;
-		}
-	}
 
-	public GameObject Dinossauro {
+
+	public int PlayerID {
 		get {
-			return dinossauro;
+			return playerID;
 		}
 	}
 
 	double Distance(Unidade uni){
 		Vector3 p1 = uni.transform.position;
-		Vector3 p2 = this.Agent.position;
+		Vector3 p2 = this.agentTransform.position;
 		return Vector3.Distance(p1,p2);
 	}
 
@@ -45,6 +63,7 @@ public class Unidade : MonoBehaviour {
 			dinoInimigo.Vida += dino.Ataque;
 		}
 	}
+
 
 
 }
