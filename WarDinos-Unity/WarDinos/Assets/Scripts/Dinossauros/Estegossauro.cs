@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Estegossauro : Dinossauro {
+
 	void Awake(){
 		base.alcance_ataque =1;
 		base.ataque=5;
+		base.velocidadeAtaque=1;
+		base.velocidade_deslocamento=1;
+		base.vida=200;
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
@@ -16,9 +20,6 @@ public class Estegossauro : Dinossauro {
 		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
 		base.MAX_VIDA=200;
 		base.playerID=-1;
-		base.velocidadeAtaque=1;
-		base.velocidade_deslocamento=1;
-		base.vida=200;
 
 	}
 	// Use this for initialization
@@ -35,7 +36,15 @@ public class Estegossauro : Dinossauro {
 
 	public override void Habilidade ()
 	{
-		throw new System.NotImplementedException ();
+		/**
+		 * Area damage, all units of the enemy group suffers the damage.
+		 * Lol, just replicate the damage for each enemy unit.
+		 * The problem is, i don't have the enemy units vector.
+		 * Easy to implement.
+		*/
+
+
+		//throw new System.NotImplementedException ();
 	}
 
 	#endregion

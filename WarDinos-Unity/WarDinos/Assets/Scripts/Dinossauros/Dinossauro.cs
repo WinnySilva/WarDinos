@@ -20,6 +20,7 @@ public abstract class Dinossauro : MonoBehaviour {
 
 	protected DinoTypes dinoType;
 	protected int playerID;
+	protected int lane; // necessary only for ptero ability.
 
 	protected int MAX_VIDA;
 	protected int MAX_ATAQUE;

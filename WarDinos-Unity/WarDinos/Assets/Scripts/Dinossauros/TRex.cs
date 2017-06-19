@@ -6,19 +6,19 @@ public class TRex : Dinossauro {
 	void Awake(){
 		base.alcance_ataque =1;
 		base.ataque=5;
+		base.velocidadeAtaque=1;
+		base.velocidade_deslocamento=1;
+		base.vida=200;
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.TREX;
+		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
 		base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=1;
 		base.MAX_VELOCIDADE_ATAQUE=1;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
 		base.MAX_VIDA=200;
 		base.playerID=-1;
-		base.velocidadeAtaque=1;
-		base.velocidade_deslocamento=1;
-		base.vida=200;
 
 	}
 
@@ -36,7 +36,20 @@ public class TRex : Dinossauro {
 
 	public override void Habilidade ()
 	{
-		throw new System.NotImplementedException ();
+		/**
+		 * regenerate life when a unit die.
+		 * regenerate 10% of the total health.
+		 * again, i need the enemy unit vector...
+		*/
+		if( true/*enemy dieded :v*/ && base.vida < base.MAX_VIDA){
+			if ((int) base.vida + 20 > base.MAX_VIDA)
+				base.vida = base.MAX_VIDA;
+			else {
+				base.vida = base.vida + 20;
+			}
+		}
+
+		//throw new System.NotImplementedException ();
 	}
 
 	#endregion
