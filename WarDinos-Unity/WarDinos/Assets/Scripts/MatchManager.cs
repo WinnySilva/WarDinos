@@ -10,7 +10,7 @@ public class MatchManager : MonoBehaviour {
 	public GameObject[] spawnPointLanes; 
 
 	void Awake(){
-		players = new Jogador[2];
+		//players = new Jogador[2];
 	}
 	// Use this for initialization
 	void Start () {
@@ -30,10 +30,13 @@ public class MatchManager : MonoBehaviour {
 		Debug.Log("DispatchGrupo "+numPlayer+" "+numLane);
 		GameObject[] unidades = new GameObject[dinoIds.Length];
 		int indexUnidades = 0;
+		if(players[numPlayer]==null){
+			Debug.Log("player null");
+		}
 		foreach(int i in dinoIds){
-			unidades[indexUnidades] = this.players[numPlayer].createUnidade(i);
+			unidades[indexUnidades] = this.players[numPlayer].createUnidade(i,this.players[ (numPlayer ==0)?1:0].playerBase);
 			/* pega seta o target para a base inimiga */
-			unidades[indexUnidades].GetComponent<Unidade>().agent.GetComponent<AgentBehaviour>().base_inimiga = this.players[ (numPlayer ==0)?1:0].playerBase;
+			//unidades[indexUnidades].GetComponent<Unidade>().agent.GetComponent<AgentBehaviour>().base_inimiga = this.players[ (numPlayer ==0)?1:0].playerBase;
 
 			/*seta na posicao inicial da lane */
 	//		unidades[indexUnidades].  = this.players[numPlayer].lanesStart[numLane].transform;

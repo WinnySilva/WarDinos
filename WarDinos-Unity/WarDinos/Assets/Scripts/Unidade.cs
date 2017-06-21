@@ -13,9 +13,13 @@ public class Unidade : MonoBehaviour {
 	private int playerID;
 
 	public Unidade (GameObject ag, GameObject din, int playerId){
-		this.agent = ag;
-		this.dinossauro = din;
+	//	this.agent = ag;
+	//	this.dinossauro = din;
 		this.playerID = playerId;
+		this.Agent = ag;
+		this.Dinossauro = din;
+		//agent.transform.SetParent(this.transform);
+		//dinossauro.transform.SetParent(this.transform);
 	}
 
 	public void ReplaceValues(Unidade un){
@@ -66,4 +70,26 @@ public class Unidade : MonoBehaviour {
 
 
 
+	public GameObject Agent {
+		get {
+			return agent;
+		}
+		set{
+			agent = value;
+			agent.transform.SetParent(this.transform);
+			this.agentTransform = agent.transform;
+		}
+	}
+
+	public GameObject Dinossauro {
+		get {
+			return dinossauro;
+		}
+		set{
+			dinossauro = value;
+			dinossauro.transform.SetParent(this.transform);
+			this.dino = dinossauro.GetComponent<Dinossauro>();
+
+		}
+	}
 }

@@ -14,7 +14,8 @@ public class Jogador : MonoBehaviour {
 
 	public GameObject playerBase;
 	public GameObject[] lanesStart;
-
+	public GameObject RefDinos;
+	public GameObject unidades;
 
 	void Awake(){
 		dinosRef = new GameObject[6];
@@ -29,7 +30,7 @@ public class Jogador : MonoBehaviour {
 		foreach(GameObject go in dinosRef){
 			go.name=" player ref";
 			go.SetActive(false);
-			go.transform.SetParent(this.transform);
+			go.transform.SetParent(RefDinos.transform);
 		}
 	}
 
@@ -49,15 +50,18 @@ public class Jogador : MonoBehaviour {
 		novoDino.GetComponent<Dinossauro>().PlayerID = id;
 		return novoDino;
 	}
+
 	/*RETORNA UM GAMEOBJECT COM A UNIDADE ATTACHED */
-	public GameObject createUnidade(int dinoNumber){
+	public GameObject createUnidade(int dinoNumber, GameObject base_inimiga){
 		// agente
 		GameObject agente = new GameObject();
 		agente.AddComponent<AgentBehaviour>();
+		agente.GetComponent<AgentBehaviour>().Base_inimiga= base_inimiga;
+		agente.name="agente"+dinoNumber;
 
 		//dinossauro
 		GameObject dino = this.CreateDinoRef(dinoNumber);
-
+		dino.name="dino"+this.id+" "+dinoNumber;
 		//unidade
 		Unidade uni = new Unidade(agente,dino, this.id);
 
@@ -66,8 +70,8 @@ public class Jogador : MonoBehaviour {
 		gb.SetActive(false);
 		gb.AddComponent<Unidade>();
 		gb.GetComponent<Unidade>().ReplaceValues(uni);
-
-
+		gb.name= "unidadePlayer"+this.id; 
+		gb.transform.SetParent(this.unidades.transform);
 
 		return gb;
 	}
