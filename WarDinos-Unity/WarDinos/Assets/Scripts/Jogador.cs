@@ -7,15 +7,19 @@ public class Jogador : MonoBehaviour {
 
 	//tipos de dinossauros do jogador
 	private GameObject[] dinosRef;
+	private GameObject agenteRef;
 	private int id;
 	private int hitPoint = 1000;
 	private int recursos = 300;
-	private Unidade[] grupoDino;
+//	private Unidade[] grupoDino;
 
 	public GameObject playerBase;
 	public GameObject[] lanesStart;
 	public GameObject RefDinos;
-	public GameObject unidades;
+	public List<GameObject> unidades;
+	public GameObject unidadePlaceHolder;
+	public int playerID;
+
 
 	void Awake(){
 		dinosRef = new GameObject[6];
@@ -31,7 +35,12 @@ public class Jogador : MonoBehaviour {
 			go.name=" player ref";
 			go.SetActive(false);
 			go.transform.SetParent(RefDinos.transform);
+			go.transform.localRotation = new Quaternion(90,0,0,0);
 		}
+		agenteRef =  (GameObject)Instantiate(Resources.Load("Prefabs/agente"));
+		agenteRef.SetActive(false);
+		agenteRef.transform.SetParent(RefDinos.transform);
+	//	unidades = List<GameObject>();
 	}
 
 	// Use this for initialization
@@ -54,25 +63,34 @@ public class Jogador : MonoBehaviour {
 	/*RETORNA UM GAMEOBJECT COM A UNIDADE ATTACHED */
 	public GameObject createUnidade(int dinoNumber, GameObject base_inimiga){
 		// agente
-		GameObject agente = new GameObject();
-		agente.AddComponent<AgentBehaviour>();
+		GameObject agente = Instantiate(agenteRef);
+		//agente.AddComponent<AgentBehaviour>();
 		agente.GetComponent<AgentBehaviour>().Base_inimiga= base_inimiga;
 		agente.name="agente"+dinoNumber;
+
 
 		//dinossauro
 		GameObject dino = this.CreateDinoRef(dinoNumber);
 		dino.name="dino"+this.id+" "+dinoNumber;
+	
+		//tamanho do collider
+		Dinossauro d = dino.GetComponent<Dinossauro>();
+		agente.GetComponent<RectTransform>().localScale = new Vector3(d.NSlot/2f,d.NSlot/2f,d.NSlot/2f);
+
+
 		//unidade
-		Unidade uni = new Unidade(agente,dino, this.id);
+	//	Unidade uni = new Unidade(agente,dino, this.id);
 
 		//gameobject da unidade
 		GameObject gb = new GameObject();
 		gb.SetActive(false);
 		gb.AddComponent<Unidade>();
-		gb.GetComponent<Unidade>().ReplaceValues(uni);
+		gb.GetComponent<Unidade>().setUnidade(agente,dino, this.id); //ReplaceValues(uni);
 		gb.name= "unidadePlayer"+this.id; 
-		gb.transform.SetParent(this.unidades.transform);
+		this.unidades.Add(gb);
 
+		agente.SetActive(true);
+		dino.SetActive(true);
 		return gb;
 	}
 

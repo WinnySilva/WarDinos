@@ -19,7 +19,7 @@ public class TRex : Dinossauro {
 		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
 		base.MAX_VIDA=200;
 		base.playerID=-1;
-
+		base.nSlot=4;
 	}
 
 	// Use this for initialization

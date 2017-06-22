@@ -13,13 +13,14 @@ public class Apatossauro : Dinossauro {
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+		base.dinoType= Dinossauro.DinoTypes.APATOSSAURO;
 		base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=1;
 		base.MAX_VELOCIDADE_ATAQUE=1;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
 		base.MAX_VIDA=200;
 		base.playerID=-1;
+		base.nSlot = 2;
 	}
 
 

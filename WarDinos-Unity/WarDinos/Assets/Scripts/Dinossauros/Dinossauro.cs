@@ -28,6 +28,12 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int MAX_VELOCIDADE_DESLOCAMENTO;
 	protected int MAX_ALCANCE_ATAQUE;
 
+	protected int nSlot=1;
+
+	void Start(){
+		Velocidade_deslocamento =1;
+	}
+
 	public int Alcance_ataque {
 		get {
 			return alcance_ataque;
@@ -60,7 +66,7 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 		set{
 			
-			if(value<1){
+			if(value<0){
 				velocidade_deslocamento = 1;
 			}
 			else if(value>MAX_VELOCIDADE_DESLOCAMENTO){
@@ -116,6 +122,12 @@ public abstract class Dinossauro : MonoBehaviour {
 			}else{
 				ataque =value;
 			}
+		}
+	}
+
+	public int NSlot {
+		get {
+			return nSlot;
 		}
 	}
 
