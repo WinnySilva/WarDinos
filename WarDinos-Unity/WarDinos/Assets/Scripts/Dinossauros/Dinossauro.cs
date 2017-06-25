@@ -7,6 +7,7 @@ public abstract class Dinossauro : MonoBehaviour {
 
 	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
 
+    public AudioSource attackSound;
 
 	protected int vida;
 	protected int ataque;
@@ -114,13 +115,13 @@ public abstract class Dinossauro : MonoBehaviour {
 			return vida;
 		}
 		set{
-			if(value<1){
-				vida= 1;
+			if(value<=0){
+				Die();
 			}
 			else if(value>MAX_VIDA ){
 				vida = MAX_VIDA;
 			}else{
-				ataque =value;
+				vida =value;
 			}
 		}
 	}
@@ -132,6 +133,33 @@ public abstract class Dinossauro : MonoBehaviour {
 	}
 
 	public abstract void Habilidade();
+
+    // Return true if it successfully attacked and false when there are no targets
+    public bool Atacar(GroupController gp) {
+        // Select target with the shortest life
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+        foreach (Dinossauro d in gp.DinosDinossauro) {
+            if (d != null && (d.Vida < menorVida || menorVida == -1)) {
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1) {
+            dTarget.Vida = dTarget.Vida - ataque;
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            return true;
+        }
+        else {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+    }
+
+    private void Die() {
+        Destroy(gameObject);
+    }
+
 
 	public void CopyAttr(Dinossauro dino){
 		this.vida= dino.vida;

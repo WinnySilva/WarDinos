@@ -5,10 +5,6 @@ using UnityEngine;
 public class GroupController : MonoBehaviour {
     public enum DinoType {NONE=0, APATOSSAURO=1, ESTEGOSSAURO=2, PTERODACTILO=3, RAPTOR=4, TREX=5, TRICERATOPO=6}
 
-    //-------------------------
-    // DEBUG VARIABLES
-    //-------------------------
-
     // Player who own this group
     public int player;
 
@@ -45,11 +41,14 @@ public class GroupController : MonoBehaviour {
     // List of Dinossauro components in dinoInstances
     private Dinossauro[] dinosDinossauro = new Dinossauro[4];
     // Depending if the group is from Player 1 or 2, there is a different tag, so these variable is used to keep the code the same
-    string myTag;
-    string enemyTag;
+    private string myTag;
+    private string enemyTag;
 
     // Rigid body 2D of this group object
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
+
+    // Enemy group that is being attacked by this group
+    GroupController enemyTargetGroup = null;
 
     void Awake () {
         // Associates Prefabs with DinoTypes
@@ -115,8 +114,18 @@ public class GroupController : MonoBehaviour {
         StartWalking();
     }
 	
-	/*void FixedUpdate () {
-	}*/
+	void Update () {
+        // If there are no more dinosaurs on the group, it is destroyed
+        bool thereAreDinosInGroup = false;
+        foreach (GameObject d in dinosInstances) {
+            if (d != null) {
+                thereAreDinosInGroup = true;
+            }
+        }
+        if (!thereAreDinosInGroup) {
+            Destroy(gameObject);
+        }
+	}
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -128,6 +137,7 @@ public class GroupController : MonoBehaviour {
         else if (other.CompareTag(enemyTag)) {
             StopWalking();
             Debug.Log("Group from Player " + player + ", with ID="+gameObject.GetInstanceID()+" collided with enemy group with ID="+other.gameObject.GetInstanceID());
+            AttackGroup(other.GetComponent<GroupController>());
         }
     }
 
@@ -168,25 +178,68 @@ public class GroupController : MonoBehaviour {
                 ++dinoQuant;
             }
         }
-        mediaVels /= dinoQuant;
-        if (player == 2)
-            mediaVels *= -1;
-        Debug.Log(mediaVels);
-        return mediaVels;
+        if (dinoQuant != 0) {
+            mediaVels /= dinoQuant;
+            if (player == 2)
+                mediaVels *= -1;
+            Debug.Log(mediaVels);
+            return mediaVels;
+        }
+        else
+            return 0.0f;
     }
 
     void StartWalking() {
         // Apply movement to the dinos
         Vector2 vel = new Vector2(VelocidadeMedia(), 0.0f);
         rb.velocity = vel;
+
+        // Animate the dinosaurs
+        foreach (GameObject d in dinosInstances) {
+            if (d != null) {
+                d.GetComponent<Animator>().SetInteger("transicao", 1);
+            }
+        }
     }
     
     void StopWalking() {
         rb.velocity = new Vector2(0.0f, 0.0f);
+        
+        // Animate the dinosaurs
+        foreach (GameObject d in dinosInstances) {
+            if (d != null) {
+                d.GetComponent<Animator>().SetInteger("transicao", 0);
+            }
+        }
     }
 
     void EnteredEnemyBase () {
         //TODO: DIMINUIR VIDA DO OPONENTE
         Destroy(gameObject);
+    }
+
+    void AttackGroup (GroupController enemy) {
+        //enemyTargetGroup = enemy;
+        //yield return new WaitForSeconds(waitTime);
+        foreach (Dinossauro dd in dinosDinossauro) {
+            StartCoroutine(routine: AttackWithDinosaur(dd, enemy));
+        }
+    }
+
+    IEnumerator AttackWithDinosaur (Dinossauro dino, GroupController gp) {
+        bool thereAreTargets = true;
+        while (thereAreTargets && dino != null && gp != null) {
+            dino.gameObject.GetComponent<Animator>().SetTrigger("ataque");
+            yield return new WaitForSeconds((float)dino.VelocidadeAtaque);
+            thereAreTargets = dino.Atacar(gp);
+        }
+
+        yield return null;
+    }
+
+    public Dinossauro[] DinosDinossauro {
+        get {
+            return dinosDinossauro;
+        }
     }
 }
