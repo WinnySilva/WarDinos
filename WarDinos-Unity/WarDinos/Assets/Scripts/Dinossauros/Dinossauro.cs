@@ -33,7 +33,9 @@ public abstract class Dinossauro : MonoBehaviour {
 
 	void Start(){
 		Velocidade_deslocamento =1;
-	}
+        
+        
+    }
 
 	public int Alcance_ataque {
 		get {
@@ -157,6 +159,8 @@ public abstract class Dinossauro : MonoBehaviour {
     }
 
     private void Die() {
+        //gameObject.SetActive(false);
+        //transform.position = new Vector2(999.0f, 999.0f);
         Destroy(gameObject);
     }
 

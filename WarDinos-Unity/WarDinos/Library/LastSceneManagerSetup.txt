@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Cenas/teste_movimentacao.unity
+- path: Assets/Cenas/titlescreen.unity
   isLoaded: 1
   isActive: 1

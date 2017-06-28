@@ -22,7 +22,8 @@ public class Triceratopo : Dinossauro {
 		base.playerID=-1;
 		base.nSlot = 3;
 
-	}
+        
+    }
 
 	// Use this for initialization
 	void Start () {

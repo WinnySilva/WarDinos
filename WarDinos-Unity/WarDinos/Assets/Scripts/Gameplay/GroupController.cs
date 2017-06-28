@@ -43,6 +43,7 @@ public class GroupController : MonoBehaviour {
     // Depending if the group is from Player 1 or 2, there is a different tag, so these variable is used to keep the code the same
     private string myTag;
     private string enemyTag;
+    private bool waitingForDispatch = true;
 
     // Rigid body 2D of this group object
     private Rigidbody2D rb;
@@ -50,7 +51,25 @@ public class GroupController : MonoBehaviour {
     // Enemy group that is being attacked by this group
     GroupController enemyTargetGroup = null;
 
+    public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos) {
+        player = arg_player;
+        laneBegin = arg_laneBegin;
+        laneEnd = arg_laneEnd;
+        for (int i = 0; i < 4; i++)
+            dinos[i] = arg_dinos[i];
+
+        gameObject.SetActive(true);
+    }
+
     void Awake () {
+        
+    }
+
+    // Use this for initialization
+    void Start () {
+        // Set the group to spawn at the beginning of its lane
+        transform.position = laneBegin.transform.position;
+
         // Associates Prefabs with DinoTypes
         prefabList[(int)DinoType.NONE] = null;
         prefabList[(int)DinoType.APATOSSAURO] = prefabApatossauro;
@@ -68,19 +87,18 @@ public class GroupController : MonoBehaviour {
         dispList[(int)DinoType.PTERODACTILO] = dispPterodactilo;
         dispList[(int)DinoType.TRICERATOPO] = dispTriceratopo;
         dispList[(int)DinoType.TREX] = dispTrex;
-    }
 
-    // Use this for initialization
-    void Start () {
         // Get rigid body 2D
         rb = GetComponent<Rigidbody2D>();
 
         // Set tags based on the Player (1 or 2) this group belongs to
         if (player == 1) {
+            tag = "Player 1";
             myTag = "Player 1";
             enemyTag = "Player 2";
         }
         else {
+            tag = "Player 2";
             myTag = "Player 2";
             enemyTag = "Player 1";
         }
@@ -111,10 +129,10 @@ public class GroupController : MonoBehaviour {
             }
         }
 
-        StartWalking();
+        //StartWalking();
     }
 	
-	void Update () {
+	void FixedUpdate () {
         // If there are no more dinosaurs on the group, it is destroyed
         bool thereAreDinosInGroup = false;
         foreach (GameObject d in dinosInstances) {
@@ -131,13 +149,24 @@ public class GroupController : MonoBehaviour {
     {
         // If collided with opponent lane
         if (other.CompareTag(laneEnd.tag)) {
-            Debug.Log(GetInstanceID() + "Colidiu com " + other.GetInstanceID());
             EnteredEnemyBase();
         }
+        // If collided with opponent group
         else if (other.CompareTag(enemyTag)) {
             StopWalking();
-            Debug.Log("Group from Player " + player + ", with ID="+gameObject.GetInstanceID()+" collided with enemy group with ID="+other.gameObject.GetInstanceID());
             AttackGroup(other.GetComponent<GroupController>());
+        }
+        // If collided with friend group
+        else if (other.CompareTag(myTag)) {
+            // The group behind stop walking
+            if (player == 1) {
+                if (transform.position.x <= other.transform.position.x)
+                    StopWalking();
+            }
+            else {
+                if (transform.position.x >= other.transform.position.x)
+                    StopWalking();
+            }
         }
     }
 
@@ -147,7 +176,18 @@ public class GroupController : MonoBehaviour {
         if (other.CompareTag(enemyTag))
         {
             StartWalking();
-            Debug.Log("Group from Player " + player + ", with ID=" + gameObject.GetInstanceID() + " stop colliding with enemy group with ID=" + other.gameObject.GetInstanceID());
+        }
+        // If collided with friend group
+        else if (other.CompareTag(myTag) && !waitingForDispatch) {
+            // The group behind stop walking
+            if (player == 1) {
+                if (transform.position.x < other.transform.position.x)
+                    StartWalking();
+            }
+            else {
+                if (transform.position.x > other.transform.position.x)
+                    StartWalking();
+            }
         }
     }
 
@@ -182,14 +222,13 @@ public class GroupController : MonoBehaviour {
             mediaVels /= dinoQuant;
             if (player == 2)
                 mediaVels *= -1;
-            Debug.Log(mediaVels);
             return mediaVels;
         }
         else
             return 0.0f;
     }
 
-    void StartWalking() {
+    public void StartWalking() {
         // Apply movement to the dinos
         Vector2 vel = new Vector2(VelocidadeMedia(), 0.0f);
         rb.velocity = vel;
@@ -202,7 +241,7 @@ public class GroupController : MonoBehaviour {
         }
     }
     
-    void StopWalking() {
+    public void StopWalking() {
         rb.velocity = new Vector2(0.0f, 0.0f);
         
         // Animate the dinosaurs
@@ -238,8 +277,11 @@ public class GroupController : MonoBehaviour {
     }
 
     public Dinossauro[] DinosDinossauro {
-        get {
-            return dinosDinossauro;
-        }
+        get { return dinosDinossauro; }
+    }
+
+    public bool WaitingForDispatch {
+        get { return waitingForDispatch; }
+        set { waitingForDispatch = value; }
     }
 }

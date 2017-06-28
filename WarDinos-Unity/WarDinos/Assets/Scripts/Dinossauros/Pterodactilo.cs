@@ -6,7 +6,7 @@ using UnityEngine;
 public class Pterodactilo : Dinossauro {
 	void Awake(){
 		base.alcance_ataque =1;
-		base.ataque=5;
+		base.ataque=50;
 		base.velocidadeAtaque=1;
 		base.velocidade_deslocamento=1;
 		base.vida=200;

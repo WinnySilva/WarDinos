@@ -5,6 +5,18 @@ using UnityEngine;
 
 public class HUDController : MonoBehaviour
 {
+    public int player;
+
+    public GameObject dinoGroupPrefab;
+    public GameObject lane1P1;
+    public GameObject lane1P2;
+    public GameObject lane2P1;
+    public GameObject lane2P2;
+    public GameObject lane3P1;
+    public GameObject lane3P2;
+   
+    private int laneToSpawn;
+
     public KeyCode keyUp;
     public KeyCode keyDown;
     public KeyCode keyLeft;
@@ -38,7 +50,10 @@ public class HUDController : MonoBehaviour
     public Button buttonUpgradeVelDeslocamento;
     public Button buttonUpgradeHabilidade;
 
-	public MatchManager matchManager;
+    public Button changeToPesquisas;
+    public Button changeToUnidades;
+
+    public MatchManager matchManager;
 
     private Button selectedButton;
     private Button lastSelectedUnitButton;
@@ -60,7 +75,7 @@ public class HUDController : MonoBehaviour
         selectedButton = buttonLane1;
         lastSelectedUnitButton = buttonUnitVelociraptor;
         lastSelectedLaneButton = buttonLane1;
-        lastSelectedUpgradeUnitButton = buttonUpgradeVelociraptor;
+        lastSelectedUpgradeUnitButton = changeToUnidades;
         lastSelectedUpgradeAttributeButton = buttonUpgradeVida;
         changeButton(selectedButton, false);
 
@@ -77,6 +92,8 @@ public class HUDController : MonoBehaviour
         {
             if (selectedButton.FindSelectableOnDown())
             {
+                // Every button
+                changeButton((Button)selectedButton.FindSelectableOnDown(), false);
                 // If button is
                 // Unit button
                 if (selectedButton.GetComponent<UnitButton>())
@@ -100,8 +117,6 @@ public class HUDController : MonoBehaviour
                     Selectable addB = selectedButton.FindSelectableOnLeft();
                     addB.targetGraphic.CrossFadeColor(addB.colors.normalColor, addB.colors.fadeDuration, true, true);
                 }
-                // Every button
-                changeButton((Button)selectedButton.FindSelectableOnDown(), false);
             }
         }
         // ------------------------------------------------------------------------------------
@@ -112,6 +127,8 @@ public class HUDController : MonoBehaviour
         {
             if (selectedButton.FindSelectableOnUp())
             {
+                // Every button
+                changeButton((Button)selectedButton.FindSelectableOnUp(), false);
                 // If button is
                 // Unit button
                 if (selectedButton.GetComponent<UnitButton>())
@@ -136,8 +153,6 @@ public class HUDController : MonoBehaviour
                     Selectable addB = selectedButton.FindSelectableOnLeft();
                     addB.targetGraphic.CrossFadeColor(addB.colors.normalColor, addB.colors.fadeDuration, true, true);
                 }
-                // Every button
-                changeButton((Button)selectedButton.FindSelectableOnUp(), false);
             }
         }
         // ------------------------------------------------------------------------------------
@@ -203,12 +218,6 @@ public class HUDController : MonoBehaviour
                 Selectable addB = selectedButton.FindSelectableOnRight();
                 addB.targetGraphic.CrossFadeColor(addB.colors.pressedColor, addB.colors.fadeDuration, true, true);
             }
-            // Lane button
-            else if (selectedButton.GetComponent<LaneButton>())
-                switchToUpgradesMenu();
-            // Upgrade Unit button
-            else if (selectedButton.GetComponent<WDHudUpgradeButton>())
-                switchToUnitsMenu();
         }
         if (Input.GetKeyUp(keyRight))
         {
@@ -258,42 +267,135 @@ public class HUDController : MonoBehaviour
 
                 UnitButton ub = selectedButton.GetComponent<UnitButton>();
                 string dinoname = ub.getDinosaur();
-                Debug.Log("[Pressionou " + dinoname + "] Despachou grupo na Lane["+lastSelectedLaneButton.GetComponent<LaneButton>().getNumber()+"]");
+                Debug.Log("[Pressionou " + dinoname + "] Despachou grupo na Lane[" + lastSelectedLaneButton.GetComponent<LaneButton>().getNumber() + "]");
 
 
-                // Reset dinosaurs quantities in groups
-                buttonUnitVelociraptor.GetComponent<UnitButton>().resetQuantityOnGroup();
-                buttonUnitEstegossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
-                buttonUnitTriceratopo.GetComponent<UnitButton>().resetQuantityOnGroup();
-                buttonUnitPterodactilo.GetComponent<UnitButton>().resetQuantityOnGroup();
-                buttonUnitApatossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                // Instantiate the group to be spawned
+                GroupController gc = Instantiate(dinoGroupPrefab).GetComponent<GroupController>();
+
+                // Set parameters to initialize the group and Reset dinosaurs quantities in the HUD
+                GroupController.DinoType[] dinos = new GroupController.DinoType[4];
+
+                int q = buttonUnitTiranossauro.GetComponent<UnitButton>().getQuantityOnGroup();
+                int i = 0;
+                int j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.TREX;
+                    j++;
+                    i++;
+                }
                 buttonUnitTiranossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
 
+                q = buttonUnitTriceratopo.GetComponent<UnitButton>().getQuantityOnGroup();
+                j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.TRICERATOPO;
+                    j++;
+                    i++;
+                }
+                buttonUnitTriceratopo.GetComponent<UnitButton>().resetQuantityOnGroup();
 
+                q = buttonUnitEstegossauro.GetComponent<UnitButton>().getQuantityOnGroup();
+                j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.ESTEGOSSAURO;
+                    j++;
+                    i++;
+                }
+                buttonUnitEstegossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                q = buttonUnitApatossauro.GetComponent<UnitButton>().getQuantityOnGroup();
+                j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.APATOSSAURO;
+                    j++;
+                    i++;
+                }
+                buttonUnitApatossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                q = buttonUnitPterodactilo.GetComponent<UnitButton>().getQuantityOnGroup();
+                j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.PTERODACTILO;
+                    j++;
+                    i++;
+                }
+                buttonUnitPterodactilo.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                q = buttonUnitVelociraptor.GetComponent<UnitButton>().getQuantityOnGroup();
+                j = 0;
+                while (i < 4 && j < q)
+                {
+                    dinos[i] = GroupController.DinoType.RAPTOR;
+                    j++;
+                    i++;
+                }
+                buttonUnitVelociraptor.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                GameObject lb;
+                GameObject le;
+
+                int ln = lastSelectedLaneButton.GetComponent<LaneButton>().getNumber();
+                if (ln == 1)
+                {
+                    lb = lane1P1;
+                    le = lane1P2;
+                }
+                else if (ln == 2)
+                {
+                    lb = lane2P1;
+                    le = lane2P2;
+                }
+                else
+                {
+                    lb = lane3P1;
+                    le = lane3P2;
+                }
+
+                if (player == 1)
+                    gc.initGroup(1, lb, le, dinos);
+                else
+                    gc.initGroup(2, le, lb, dinos);
                 // Change the cursor from unit selection to lane selection
                 lastSelectedUnitButton = selectedButton;
                 changeButton(lastSelectedLaneButton, false);
             }
             // Lane button
-            else if (selectedButton.GetComponent<LaneButton>()) {
+            else if (selectedButton.GetComponent<LaneButton>())
+            {
                 // Change the cursor from lane selection to unit selection
                 lastSelectedLaneButton = selectedButton;
                 changeButton(lastSelectedUnitButton, true);
             }
             // Upgrade unit button
-            else if (selectedButton.GetComponent<WDHudUpgradeButton>()) {
+            else if (selectedButton.GetComponent<WDHudUpgradeButton>())
+            {
                 // Change the cursor from upgrade unit selection to upgrade attribute selection
                 lastSelectedUpgradeUnitButton = selectedButton;
                 changeButton(lastSelectedUpgradeAttributeButton, true);
             }
             // Upgrade Attribute button
-            else if (selectedButton.GetComponent<WDHudAttributeButton>()) {
+            else if (selectedButton.GetComponent<WDHudAttributeButton>())
+            {
                 // Unpress add button
                 Selectable addB = selectedButton.FindSelectableOnLeft();
                 addB.targetGraphic.CrossFadeColor(addB.colors.normalColor, addB.colors.fadeDuration, true, true);
                 // Change the cursor from upgrade attribute selection to upgrade unit selection
                 lastSelectedUpgradeAttributeButton = selectedButton;
                 changeButton(lastSelectedUpgradeUnitButton, false);
+            }
+            // Change Menu button
+            else if (selectedButton.GetComponent<changeMenuButton>()) {
+                if (selectedButton.GetComponent<changeMenuButton>().Menu == 1)
+                    switchToUpgradesMenu();
+                else
+                    switchToUnitsMenu();
             }
         }
         // ------------------------------------------------------------------------------------
