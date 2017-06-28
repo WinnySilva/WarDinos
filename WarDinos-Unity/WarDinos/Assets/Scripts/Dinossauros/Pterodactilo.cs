@@ -13,7 +13,7 @@ public class Pterodactilo : Dinossauro {
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+		base.dinoType= Dinossauro.DinoTypes.PTERODACTILO;
 		base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=1;
 		base.MAX_VELOCIDADE_ATAQUE=1;
@@ -35,7 +35,7 @@ public class Pterodactilo : Dinossauro {
 
 	#region implemented abstract members of Dinossauro
 
-	public override void Habilidade ()
+	public override void Habilidade (DinoTypes types, GroupController enemies)
 	{
 		/**
 		 * Need to know which lane this dino is at.

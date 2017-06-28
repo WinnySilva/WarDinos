@@ -13,7 +13,7 @@ public class Triceratopo : Dinossauro {
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+		base.dinoType= Dinossauro.DinoTypes.TRICERATOPO;
 		base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=1;
 		base.MAX_VELOCIDADE_ATAQUE=1;
@@ -36,7 +36,7 @@ public class Triceratopo : Dinossauro {
 	}
 
 	#region implemented abstract members of Dinossauro
-	public override void Habilidade ()
+	public override void Habilidade (DinoTypes types, GroupController enemies)
 	{
 		/**
 		 * Deals 2x his damage if the enemy group is composed of two units

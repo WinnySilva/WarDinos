@@ -13,7 +13,7 @@ public class Raptor : Dinossauro {
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+		base.dinoType= Dinossauro.DinoTypes.RAPTOR;
 		base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=1;
 		base.MAX_VELOCIDADE_ATAQUE=1;
@@ -36,8 +36,9 @@ public class Raptor : Dinossauro {
 
 	#region implemented abstract members of Dinossauro
 
-	public override void Habilidade ()
+	public override void Habilidade (DinoTypes types, GroupController enemies)
 	{
+		int n_raptors = 0; // just need the allies group, so i can implement this shit...
 		/**
 		 * Needed: Number of raptors on the group.
 		 * 1 Raptor = No bonus damage.
@@ -45,7 +46,11 @@ public class Raptor : Dinossauro {
 		 * 3 Raptors = 75% Bonus damage.
 		 * 4 Raptors = 100% Bonus damage.
 		*/
-		int n_raptors = 1; // just need the allies group, so i can implement this shit... 
+		foreach (DinoTypes t in types) {
+			if (base.dinoType == t)
+				++n_raptors;
+		} 
+		//POWER-UP TIME!!
 		if (n_raptors > 1)
 			base.ataque = base.ataque * n_raptors / 4;
 		

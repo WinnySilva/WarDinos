@@ -28,14 +28,14 @@ public class Apatossauro : Dinossauro {
 
 
 	#region implemented abstract members of Dinossauro
-	public override void Habilidade ()
+	public override void Habilidade (DinoTypes types, GroupController enemies)
 	{
-		/**
-		 * Again, i need the enemy unit vector so i can decrease their attack speed.
-		*/
-		for (int i = 0; i < 4 /*size of the group*/; i++);
+		//i really hope it works like that o.o'
+		foreach(Dinossauro dino in enemies.DinosDinossauro){
+			dino.VelocidadeAtaque = dino.VelocidadeAtaque * 0.5;
+		}
 			/*divide their attack speed by 2*/
-
+		//when an apatassauro dies, the atk spd of the enemy should go back to the original value.
 		//throw new System.NotImplementedException ();
 	}
 	#endregion

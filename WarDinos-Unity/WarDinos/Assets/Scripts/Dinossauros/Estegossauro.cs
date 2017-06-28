@@ -35,7 +35,7 @@ public class Estegossauro : Dinossauro {
 
 	#region implemented abstract members of Dinossauro
 
-	public override void Habilidade ()
+	public override void Habilidade (DinoTypes types, GroupController enemies)
 	{
 		/**
 		 * Area damage, all units of the enemy group suffers the damage.

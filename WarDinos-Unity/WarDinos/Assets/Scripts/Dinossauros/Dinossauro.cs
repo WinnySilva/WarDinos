@@ -18,6 +18,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int custoAttrVida;
 	protected int custoAttrAtaque;
 	protected int custoAttrVelocidadeAtaque;
+	protected int custoAttrVelocidadeDeslocamento;
 
 	protected DinoTypes dinoType;
 	protected int playerID;
@@ -25,17 +26,77 @@ public abstract class Dinossauro : MonoBehaviour {
 
 	protected int MAX_VIDA;
 	protected int MAX_ATAQUE;
-	protected double MAX_VELOCIDADE_ATAQUE;
+	protected int MAX_VELOCIDADE_ATAQUE;
 	protected int MAX_VELOCIDADE_DESLOCAMENTO;
 	protected int MAX_ALCANCE_ATAQUE;
+	protected int MAX_ATTR_VIDA;
+	protected int MAX_ATTR_ATAQUE;
+	protected int MAX_ATTR_VEL_ATQ;
+	protected int MAX_ATTR_VEL_DES;
 
 	protected int nSlot=1;
 
 	void Start(){
 		Velocidade_deslocamento =1;
         
-        
     }
+	public int CustoAttrVida{
+		get{
+			return custoAttrVida;
+		}
+		set{
+			if (value < 1) {
+				custoAttrVida = 1;
+			} else if (value > MAX_ATTR_VIDA) {
+				custoAttrVida = MAX_ATTR_VIDA;
+			} else {
+				custoAttrVida = value;
+			}
+		}
+	}
+
+	public int CustoAttrAtaque{
+		get{
+			return custoAttrAtaque;
+		}
+		set{
+			if (value < 1) {
+				custoAttrAtaque = 1;
+			} else if (value > MAX_ATTR_ATAQUE) {
+				custoAttrAtaque = MAX_ATTR_ATAQUE;
+			} else {
+				custoAttrAtaque = value;
+			}
+		}
+	}
+	public int CustoAttrVelocidadeAtaque{
+		get{
+			return custoAttrVelocidadeAtaque;
+		}
+		set{
+			if (value < 1) {
+				custoAttrVelocidadeAtaque = 1;
+			} else if (value > MAX_VELOCIDADE_ATAQUE) {
+				custoAttrVelocidadeAtaque = MAX_VELOCIDADE_ATAQUE;
+			} else {
+				custoAttrVelocidadeAtaque = value;
+			}
+		}
+	}
+	public int CustoAttrVelocidadeDeslocamento{
+		get{
+			return custoAttrVelocidadeDeslocamento;
+		}
+		set{
+			if (value < 1) {
+				custoAttrVelocidadeDeslocamento = 1;
+			} else if (value > MAX_ATTR_VEL_DES) {
+				custoAttrVelocidadeDeslocamento = MAX_ATTR_VEL_DES;
+			} else {
+				custoAttrVelocidadeDeslocamento = value;
+			}
+		}
+	}
 
 	public int Alcance_ataque {
 		get {
@@ -43,8 +104,8 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 		set{
 			
-			if(value<0){
-				alcance_ataque=0;
+			if(value<1){
+				alcance_ataque=1;
 			}
 			else if(value>MAX_ALCANCE_ATAQUE){
 				alcance_ataque = MAX_ALCANCE_ATAQUE;
@@ -80,7 +141,7 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 	}
 
-	public double VelocidadeAtaque {
+	public int VelocidadeAtaque {
 		get {
 			return velocidadeAtaque;
 		}
@@ -133,13 +194,16 @@ public abstract class Dinossauro : MonoBehaviour {
 			return nSlot;
 		}
 	}
+	//Vou precisar do GroupController para fazer a habilidade do Apata e Estego.
+	//DinoTypes para a habilidade do Raptor.
+	public abstract void Habilidade(DinoTypes types, GroupController enemies);
 
-	public abstract void Habilidade();
-
-    // Return true if it successfully attacked and false when there are no targets
+    // Return true if it successfully attacked OR false when there IS no target.
     public bool Atacar(GroupController gp) {
-        // Select target with the shortest life
-        Dinossauro dTarget = null;
+        // Select target with the shortest life 
+		// wtf? Porque menor vida? Tem que ser random... E outra, comenta em pt-br, teu inglês ta fraco. KAPPA
+        
+		Dinossauro dTarget = null;
         int menorVida = -1;
         foreach (Dinossauro d in gp.DinosDinossauro) {
             if (d != null && (d.Vida < menorVida || menorVida == -1)) {
@@ -158,9 +222,17 @@ public abstract class Dinossauro : MonoBehaviour {
         }
     }
 
-    private void Die() {
+    private void Die(GroupController enemies) {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
+		/**
+		 * Antes do apatassauro desaparecer, os valores das velocidades de ataque dos dinossauros inimigos devem ser restaurados.
+		*/
+		if(this.dinoType == DinoTypes.APATOSSAURO){
+			foreach (Dinossauro d in enemies.DinosDinossauro) {
+				d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
+			}
+		}
         Destroy(gameObject);
     }
 
