@@ -42,10 +42,10 @@ public class TRex : Dinossauro {
 		 * again, i need the enemy unit vector...
 		*/
 		if( true/*enemy dieded :v*/ && base.vida < base.MAX_VIDA){
-			if ((int) base.vida + 20 > base.MAX_VIDA)
+			if ((int) base.vida + 200 > base.MAX_VIDA)
 				base.vida = base.MAX_VIDA;
 			else {
-				base.vida = base.vida + 20;
+				base.vida = base.vida + 200;
 			}
 		}
 

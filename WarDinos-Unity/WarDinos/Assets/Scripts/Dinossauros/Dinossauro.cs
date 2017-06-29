@@ -20,10 +20,13 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int custoAttrVelocidadeAtaque;
 	protected int custoAttrVelocidadeDeslocamento;
 
+	//SOME FLAGS
 	protected DinoTypes dinoType;
 	protected int playerID;
 	protected int lane; // necessary only for ptero ability.
+	protected bool habilidadeOn = false;
 
+	//MAX VALUE OF ATTRIBUTES
 	protected int MAX_VIDA;
 	protected int MAX_ATAQUE;
 	protected int MAX_VELOCIDADE_ATAQUE;

@@ -38,14 +38,19 @@ public class Triceratopo : Dinossauro {
 	#region implemented abstract members of Dinossauro
 	public override void Habilidade(GroupController allies, GroupController enemies)
 	{
+		int nDinos = 0;
 		/**
 		 * Deals 2x his damage if the enemy group is composed of two units
 		 * Deals 3x his damage if the enemy group is composed of three units
 		 * Deals 4x his damage if the enemy group is composed of four units
 		 * I think we should nerf this motherfucker o.O
-		 * Took me 2 secons to implement that...
+		 * Took me 2 seconds to implement that...
+		 * COMPLEX AS FUCK!
 		*/
-		int nDinos = 1; //should be the actual number of dinosaurs on the group, but we don't have a function that does that.
+		foreach (Dinossauro d in enemies.DinosDinossauro) {
+			nDinos++;
+		}
+
 		base.ataque = base.ataque * nDinos;
 		//throw new System.NotImplementedException ();
 	}
