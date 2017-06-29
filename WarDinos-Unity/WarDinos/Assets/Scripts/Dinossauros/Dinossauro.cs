@@ -40,6 +40,12 @@ public abstract class Dinossauro : MonoBehaviour {
 		Velocidade_deslocamento =1;
         
     }
+	public DinoTypes DinoType{
+		get{ 
+			return dinoType;
+		}
+	}
+
 	public int CustoAttrVida{
 		get{
 			return custoAttrVida;
@@ -141,7 +147,7 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 	}
 
-	public int VelocidadeAtaque {
+	public double VelocidadeAtaque {
 		get {
 			return velocidadeAtaque;
 		}
@@ -196,7 +202,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	}
 	//Vou precisar do GroupController para fazer a habilidade do Apata e Estego.
 	//DinoTypes para a habilidade do Raptor.
-	public abstract void Habilidade(DinoTypes types, GroupController enemies);
+	public abstract void Habilidade(GroupController allies, GroupController enemies);
 
     // Return true if it successfully attacked OR false when there IS no target.
     public bool Atacar(GroupController gp) {
@@ -222,17 +228,18 @@ public abstract class Dinossauro : MonoBehaviour {
         }
     }
 
-    private void Die(GroupController enemies) {
+    private void Die() {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
+
 		/**
 		 * Antes do apatassauro desaparecer, os valores das velocidades de ataque dos dinossauros inimigos devem ser restaurados.
-		*/
-		if(this.dinoType == DinoTypes.APATOSSAURO){
+		 * if(this.dinoType == DinoTypes.APATOSSAURO){
 			foreach (Dinossauro d in enemies.DinosDinossauro) {
 				d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
 			}
 		}
+		*/
         Destroy(gameObject);
     }
 

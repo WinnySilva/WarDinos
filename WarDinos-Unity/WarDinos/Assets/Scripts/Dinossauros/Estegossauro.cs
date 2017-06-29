@@ -6,19 +6,19 @@ public class Estegossauro : Dinossauro {
 
 	void Awake(){
 		base.alcance_ataque =1;
-		base.ataque=50;
-		base.velocidadeAtaque=1;
-		base.velocidade_deslocamento=1;
-		base.vida=200;
+		base.ataque=5;
+		base.velocidadeAtaque=5;
+		base.velocidade_deslocamento=5;
+		base.vida=600;
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
 		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
 		base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=1;
-		base.MAX_VELOCIDADE_ATAQUE=1;
-		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
-		base.MAX_VIDA=200;
+		base.MAX_ATAQUE=10;
+		base.MAX_VELOCIDADE_ATAQUE=10;
+		base.MAX_VELOCIDADE_DESLOCAMENTO=10;
+		base.MAX_VIDA=1200;
 		base.playerID=-1;
 		base.nSlot =2;
 
@@ -35,7 +35,7 @@ public class Estegossauro : Dinossauro {
 
 	#region implemented abstract members of Dinossauro
 
-	public override void Habilidade (DinoTypes types, GroupController enemies)
+	public override void Habilidade(GroupController allies, GroupController enemies)
 	{
 		/**
 		 * Area damage, all units of the enemy group suffers the damage.

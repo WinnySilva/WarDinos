@@ -6,19 +6,19 @@ public class Raptor : Dinossauro {
 
 	void Awake(){
 		base.alcance_ataque =1;
-		base.ataque=5;
-		base.velocidadeAtaque=1;
-		base.velocidade_deslocamento=10;
-		base.vida=50;
+		base.ataque=10;
+		base.velocidadeAtaque=15;
+		base.velocidade_deslocamento=15;
+		base.vida=200;
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
 		base.dinoType= Dinossauro.DinoTypes.RAPTOR;
 		base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=1;
-		base.MAX_VELOCIDADE_ATAQUE=1;
-		base.MAX_VELOCIDADE_DESLOCAMENTO=1;
-		base.MAX_VIDA=200;
+		base.MAX_ATAQUE=20;
+		base.MAX_VELOCIDADE_ATAQUE=30;
+		base.MAX_VELOCIDADE_DESLOCAMENTO=30;
+		base.MAX_VIDA=400;
 		base.playerID=-1;
 		base.nSlot =1;
 
@@ -36,7 +36,7 @@ public class Raptor : Dinossauro {
 
 	#region implemented abstract members of Dinossauro
 
-	public override void Habilidade (DinoTypes types, GroupController enemies)
+	public override void Habilidade(GroupController allies, GroupController enemies)
 	{
 		int n_raptors = 0; // just need the allies group, so i can implement this shit...
 		/**
@@ -46,8 +46,8 @@ public class Raptor : Dinossauro {
 		 * 3 Raptors = 75% Bonus damage.
 		 * 4 Raptors = 100% Bonus damage.
 		*/
-		foreach (DinoTypes t in types) {
-			if (base.dinoType == t)
+		foreach (Dinossauro d in allies.DinosDinossauro) {
+			if (d.DinoType == base.DinoType)
 				++n_raptors;
 		} 
 		//POWER-UP TIME!!
