@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Triceratopo : Dinossauro {
 
-	void Awake(){
+	public Triceratopo (){
+        base.custo = 50;
 		base.alcance_ataque =1;
 		base.ataque=10;
 		base.velocidadeAtaque=5;

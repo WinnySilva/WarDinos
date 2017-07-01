@@ -8,6 +8,7 @@ public class WDHudAttributeButton : MonoBehaviour {
     /// </summary>
 
     public string Attribute;
+    public Attributes AttrType;
 
     public string getAttribute ()
     {

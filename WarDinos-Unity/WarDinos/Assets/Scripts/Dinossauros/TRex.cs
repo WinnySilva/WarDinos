@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TRex : Dinossauro {
-	void Awake(){
-		base.alcance_ataque =1;
+	public TRex(){
+        base.custo = 100;
+        base.alcance_ataque =1;
 		base.ataque=30;
 		base.velocidadeAtaque=5;
 		base.velocidade_deslocamento=5;

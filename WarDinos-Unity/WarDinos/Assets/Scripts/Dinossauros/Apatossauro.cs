@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Apatossauro : Dinossauro {
 
-	void Awake(){
-		base.alcance_ataque =1;
+	public Apatossauro() {
+        base.custo = 35;
+        base.alcance_ataque =1;
 		base.ataque=5;
 		base.velocidadeAtaque=1;
 		base.velocidade_deslocamento=1;

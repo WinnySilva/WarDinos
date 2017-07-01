@@ -57,8 +57,10 @@
      <Compile Include="Assets\Scripts\Dinossauros\Triceratopo.cs" />
      <Compile Include="Assets\Scripts\Gameplay\GroupController.cs" />
      <Compile Include="Assets\Scripts\Gameplay\LaneController.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Player.cs" />
      <Compile Include="Assets\Scripts\Grupo.cs" />
      <Compile Include="Assets\Scripts\HUD\HUDController.cs" />
+     <Compile Include="Assets\Scripts\HUD\HUDPlayerAttributes.cs" />
      <Compile Include="Assets\Scripts\HUD\HUDTime.cs" />
      <Compile Include="Assets\Scripts\HUD\LaneButton.cs" />
      <Compile Include="Assets\Scripts\HUD\UnitButton.cs" />

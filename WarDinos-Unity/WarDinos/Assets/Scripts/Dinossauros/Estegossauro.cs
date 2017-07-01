@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Estegossauro : Dinossauro {
 
-	void Awake(){
-		base.alcance_ataque =1;
+	public Estegossauro () {
+        base.custo = 25;
+        base.alcance_ataque =1;
 		base.ataque=5;
 		base.velocidadeAtaque=5;
 		base.velocidade_deslocamento=5;

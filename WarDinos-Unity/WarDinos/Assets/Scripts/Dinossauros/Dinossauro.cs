@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public abstract class Dinossauro : MonoBehaviour {
+    private GroupController gc;
+    private Player playerSelf;
+    private Player playerEnemy;
 
 	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
 
-    public AudioSource attackSound;
+    protected int custo;
 
 	protected int vida;
 	protected int ataque;
@@ -20,8 +23,13 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int custoAttrVelocidadeAtaque;
 	protected int custoAttrVelocidadeDeslocamento;
 
-	//SOME FLAGS
-	protected DinoTypes dinoType;
+    protected int vida_upg;
+    protected int ataque_upg;
+    protected double velocidadeAtaque_upg;
+    protected int velocidade_deslocamento_upg;
+
+    //SOME FLAGS
+    protected DinoTypes dinoType;
 	protected int playerID;
 	protected int lane; // necessary only for ptero ability.
 	protected bool habilidadeOn = false;
@@ -48,6 +56,8 @@ public abstract class Dinossauro : MonoBehaviour {
 			return dinoType;
 		}
 	}
+
+    public int Custo { get { return custo; } }
 
 	public int CustoAttrVida{
 		get{
@@ -198,12 +208,18 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 	}
 
-	public int NSlot {
+    public int Vida_upg { get { return vida_upg; } }
+    public int Ataque_upg { get { return vida_upg; } }
+    public int VelocidadeAtaque_upg { get { return vida_upg; } }
+    public int Velocidade_deslocamento_upg { get { return vida_upg; } }
+
+    public int NSlot {
 		get {
 			return nSlot;
 		}
 	}
 	//Vou precisar do GroupController para fazer a habilidade do Apata e Estego.
+    // DONE (variavel gc)
 	//DinoTypes para a habilidade do Raptor.
 	public abstract void Habilidade(GroupController allies, GroupController enemies);
 
@@ -211,6 +227,8 @@ public abstract class Dinossauro : MonoBehaviour {
     public bool Atacar(GroupController gp) {
         // Select target with the shortest life 
 		// wtf? Porque menor vida? Tem que ser random... E outra, comenta em pt-br, teu inglês ta fraco. KAPPA
+        // Soh um exemplo... um siga o modelo. Sinta-se livre para balancear como quiseres
+        // (on a side note) Troca de mensagens via codigo eh soh pra quem eh supreme go horse master lmao
         
 		Dinossauro dTarget = null;
         int menorVida = -1;
@@ -235,7 +253,7 @@ public abstract class Dinossauro : MonoBehaviour {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
 
-		/**
+        /**
 		 * Antes do apatassauro desaparecer, os valores das velocidades de ataque dos dinossauros inimigos devem ser restaurados.
 		 * if(this.dinoType == DinoTypes.APATOSSAURO){
 			foreach (Dinossauro d in enemies.DinosDinossauro) {
@@ -243,12 +261,30 @@ public abstract class Dinossauro : MonoBehaviour {
 			}
 		}
 		*/
+        // When the dinosaur is destroyed, the enemy player is rewarded with Dodo Meth
+        playerEnemy.incrementarRecursos(vida);
         Destroy(gameObject);
     }
 
+    public Player PlayerSelf {
+        get { return playerSelf; }
+        set { playerSelf = value; }
+    }
 
-	public void CopyAttr(Dinossauro dino){
-		this.vida= dino.vida;
+    public Player PlayerEnemy {
+        get { return playerEnemy; }
+        set { playerEnemy = value; }
+    }
+
+    public GroupController Gc {
+        get { return gc; }
+        set { gc = value; }
+    }
+
+    public void CopyAttr(Dinossauro dino){
+        this.custo = dino.custo;
+
+        this.vida= dino.vida;
 		this.ataque= dino.ataque;
 		this.velocidadeAtaque= dino.velocidadeAtaque;
 		this.velocidade_deslocamento= dino.velocidade_deslocamento;
@@ -257,6 +293,7 @@ public abstract class Dinossauro : MonoBehaviour {
 		this.custoAttrVida= dino.custoAttrVida;
 		this.custoAttrAtaque= dino.custoAttrAtaque;
 		this.custoAttrVelocidadeAtaque= dino.custoAttrVelocidadeAtaque;
+        this.custoAttrVelocidadeDeslocamento = dino.custoAttrVelocidadeDeslocamento;
 
 		this.dinoType = dino.dinoType;
 
