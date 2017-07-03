@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class GroupController : MonoBehaviour {
     public enum DinoType {NONE=0, APATOSSAURO=1, ESTEGOSSAURO=2, PTERODACTILO=3, RAPTOR=4, TREX=5, TRICERATOPO=6}
 
+    private GameObject collidedFriend = null;
+    private bool collidedWithFriend = false;
+
     // Player who own this group
     public int player;
 
@@ -62,6 +65,8 @@ public class GroupController : MonoBehaviour {
     // Players
     private Player playerSelf;
     private Player playerEnemy;
+
+    public GameObject gameWinnerObject;
 
     public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos,
         GameObject arg_prefabVelociraptor,
@@ -203,6 +208,11 @@ public class GroupController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+        if (collidedFriend == null && collidedWithFriend == true) {
+            collidedWithFriend = false;
+            StartWalking();
+        }
+
         // If there are no more dinosaurs on the group, it is destroyed
         bool thereAreDinosInGroup = false;
         foreach (GameObject d in dinosInstances) {
@@ -229,10 +239,15 @@ public class GroupController : MonoBehaviour {
             playerEnemy.reduzirVida(reducedLife);
             playerSelf.incrementarRecursos(reducedLife);
 
-            // TODO: Ir pra tela de remake
             // Finishes the game if the player reachs zero life
             if (other.GetComponent<LaneController>().player.GetComponent<Player>().Vida <= 0) {
-                SceneManager.LoadScene("titlescreen");
+                GameObject gwo = Instantiate(
+                    gameWinnerObject,
+                    transform.position,
+                    transform.rotation
+                );
+                gwo.GetComponent<GameWinnerController>().Player = player;
+                gwo.SetActive(true);
             }
 
             Destroy(gameObject);
@@ -246,12 +261,22 @@ public class GroupController : MonoBehaviour {
         else if (other.CompareTag(myTag)) {
             // The group behind stop walking
             if (player == 1) {
-                if (transform.position.x <= other.transform.position.x)
+                if (transform.position.x <= other.transform.position.x) {
                     StopWalking();
+                    if (collidedWithFriend == false) {
+                        collidedWithFriend = true;
+                        collidedFriend = other.gameObject;
+                    }
+                }
             }
             else {
-                if (transform.position.x >= other.transform.position.x)
+                if (transform.position.x >= other.transform.position.x) {
                     StopWalking();
+                    if (collidedWithFriend == false) {
+                        collidedWithFriend = true;
+                        collidedFriend = other.gameObject;
+                    }
+                }
             }
         }
     }
