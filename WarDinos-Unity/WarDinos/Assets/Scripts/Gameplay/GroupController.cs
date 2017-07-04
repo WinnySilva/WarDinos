@@ -60,7 +60,7 @@ public class GroupController : MonoBehaviour {
     private Rigidbody2D rb;
 
     // Enemy group that is being attacked by this group
-    GroupController enemyTargetGroup = null;
+    public GroupController enemyTargetGroup = null;
 
     // Players
     private Player playerSelf;
@@ -382,7 +382,7 @@ public class GroupController : MonoBehaviour {
     }
 
     void AttackGroup (GroupController enemy) {
-        //enemyTargetGroup = enemy;
+        enemyTargetGroup = enemy;
         //yield return new WaitForSeconds(waitTime);
         foreach (Dinossauro dd in dinosDinossauro) {
             StartCoroutine(routine: AttackWithDinosaur(dd, enemy));

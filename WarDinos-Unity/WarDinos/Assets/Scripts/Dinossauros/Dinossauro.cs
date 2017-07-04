@@ -11,6 +11,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
 
     protected int custo;
+    protected int abilityCost;
 
 	protected int vida;
 	protected int ataque;
@@ -18,6 +19,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int velocidade_deslocamento;
 	protected int alcance_ataque;
 
+     
 	protected int custoAttrVida;
 	protected int custoAttrAtaque;
 	protected int custoAttrVelocidadeAtaque;
@@ -37,7 +39,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	//MAX VALUE OF ATTRIBUTES
 	protected int MAX_VIDA;
 	protected int MAX_ATAQUE;
-	protected int MAX_VELOCIDADE_ATAQUE;
+	protected double MAX_VELOCIDADE_ATAQUE;
 	protected int MAX_VELOCIDADE_DESLOCAMENTO;
 	protected int MAX_ALCANCE_ATAQUE;
 	protected int MAX_ATTR_VIDA;
@@ -56,6 +58,16 @@ public abstract class Dinossauro : MonoBehaviour {
 			return dinoType;
 		}
 	}
+
+    public bool HabilidadeOn {
+        get
+        {
+            return habilidadeOn;
+        }
+        set {
+            habilidadeOn = value;
+        }
+    }
 
     public int Custo { get { return custo; } }
 
@@ -95,8 +107,8 @@ public abstract class Dinossauro : MonoBehaviour {
 		set{
 			if (value < 1) {
 				custoAttrVelocidadeAtaque = 1;
-			} else if (value > MAX_VELOCIDADE_ATAQUE) {
-				custoAttrVelocidadeAtaque = MAX_VELOCIDADE_ATAQUE;
+			} else if (value > MAX_ATTR_VEL_ATQ) {
+				custoAttrVelocidadeAtaque = MAX_ATTR_VEL_ATQ;
 			} else {
 				custoAttrVelocidadeAtaque = value;
 			}
@@ -218,20 +230,19 @@ public abstract class Dinossauro : MonoBehaviour {
 			return nSlot;
 		}
 	}
-	//Vou precisar do GroupController para fazer a habilidade do Apata e Estego.
-    // DONE (variavel gc)
-	//DinoTypes para a habilidade do Raptor.
-	public abstract void Habilidade(GroupController allies, GroupController enemies);
+
+	public abstract void Habilidade(GroupController gp);
 
     // Return true if it successfully attacked OR false when there IS no target.
     public bool Atacar(GroupController gp) {
-        // Select target with the shortest life 
-		// wtf? Porque menor vida? Tem que ser random... E outra, comenta em pt-br, teu inglês ta fraco. KAPPA
-        // Soh um exemplo... um siga o modelo. Sinta-se livre para balancear como quiseres
-        // (on a side note) Troca de mensagens via codigo eh soh pra quem eh supreme go horse master lmao
         
 		Dinossauro dTarget = null;
         int menorVida = -1;
+
+        if (habilidadeOn) {
+            Habilidade(gp);
+        }
+
         foreach (Dinossauro d in gp.DinosDinossauro) {
             if (d != null && (d.Vida < menorVida || menorVida == -1)) {
                 dTarget = d;
@@ -253,16 +264,10 @@ public abstract class Dinossauro : MonoBehaviour {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
 
-        /**
-		 * Antes do apatassauro desaparecer, os valores das velocidades de ataque dos dinossauros inimigos devem ser restaurados.
-		 * if(this.dinoType == DinoTypes.APATOSSAURO){
-			foreach (Dinossauro d in enemies.DinosDinossauro) {
-				d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
-			}
-		}
-		*/
+        
+		
         // When the dinosaur is destroyed, the enemy player is rewarded with Dodo Meth
-        playerEnemy.incrementarRecursos(vida);
+        playerEnemy.incrementarRecursos(custo);
         Destroy(gameObject);
     }
 

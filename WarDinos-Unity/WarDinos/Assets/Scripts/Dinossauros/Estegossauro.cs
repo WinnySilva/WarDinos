@@ -6,21 +6,35 @@ public class Estegossauro : Dinossauro {
 
 	public Estegossauro () {
         base.custo = 25;
+        base.abilityCost = 100;
         base.alcance_ataque =1;
-		base.ataque=5;
-		base.velocidadeAtaque=5;
-		base.velocidade_deslocamento=5;
+		base.ataque=10;
+		base.velocidadeAtaque=2.0;
+		base.velocidade_deslocamento=2;
 		base.vida=600;
-		base.custoAttrAtaque=1;
-		base.custoAttrVelocidadeAtaque=1;
-		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
-		base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=10;
-		base.MAX_VELOCIDADE_ATAQUE=10;
-		base.MAX_VELOCIDADE_DESLOCAMENTO=10;
+
+        base.custoAttrAtaque = 1;
+        base.custoAttrVelocidadeAtaque = 1;
+        base.custoAttrVida = 1;
+        base.custoAttrVelocidadeDeslocamento = 1;
+
+        base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+
+        base.MAX_ALCANCE_ATAQUE=1;
+		base.MAX_ATAQUE=20;
+		base.MAX_VELOCIDADE_ATAQUE=1.75;
+		base.MAX_VELOCIDADE_DESLOCAMENTO=4;
 		base.MAX_VIDA=1200;
-		base.playerID=-1;
+        base.MAX_ATTR_VIDA = 10;
+        base.MAX_ATTR_ATAQUE = 10;
+        base.MAX_ATTR_VEL_ATQ = 10;
+        base.MAX_ATTR_VEL_DES = 2;
+        base.ataque_upg = 1;
+        base.velocidadeAtaque_upg = -0.025;
+        base.velocidade_deslocamento_upg = 1;
+        base.vida_upg = 60;
+
+        base.playerID=-1;
 		base.nSlot =2;
 
 	}
@@ -34,16 +48,14 @@ public class Estegossauro : Dinossauro {
 		
 	}
 
-	#region implemented abstract members of Dinossauro
+    #region implemented abstract members of Dinossauro
 
-	public override void Habilidade(GroupController allies, GroupController enemies)
-	{
-		/**
-		 * Area damage, all units of the enemy group suffers the damage.
-		 * Lol, just replicate the damage for each enemy unit.
-		 * The problem is, i don't have the enemy units vector.
-		 * Easy to implement.
-		*/
+    public override void Habilidade(GroupController gp)
+    {
+
+        foreach (Dinossauro d in gp.enemyTargetGroup.DinosDinossauro) {
+            d.Vida = d.Vida - base.ataque;
+        }
 
 
 		//throw new System.NotImplementedException ();
