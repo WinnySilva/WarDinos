@@ -211,19 +211,23 @@ public class GroupController : MonoBehaviour {
 
 		this.totalVida = 0;
 		foreach( Dinossauro d in this.dinosDinossauro ){
+			if(d!=null)
 			totalVida += d.Vida;
 		}
     }
 
 	void Update(){
 		if(totalVida>=-5000){
+			Debug.Log(" UPDATE VIDA>500");
 			int atualVida = 0;
 			foreach( Dinossauro d in this.dinosDinossauro ){
-				atualVida += d.Vida;
+				if(d!=null)
+					atualVida += d.Vida;
+
 			}
 			float scalevida = atualVida/this.totalVida;
 			Vector3 v = new Vector3(scalevida,1,1);
-			this.barraDeVida.GetComponent<RectTransform>().localScale = v;
+		//	this.barraDeVida.GetComponent<RectTransform>().localScale = v;
 		}
 
 	}
