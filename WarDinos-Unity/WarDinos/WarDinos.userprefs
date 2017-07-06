@@ -1,14 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Dinossauros\Apatossauro.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DB\ConexaoMongo.cs">
     <Files>
-      <File FileName="Assets\Scripts\AgentBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MatchManager.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Jogador.cs" Line="60" Column="19" />
-      <File FileName="Assets\Scripts\Unidade.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Dinossauros\Dinossauro.cs" Line="208" Column="58" />
-      <File FileName="Assets\Scripts\Gameplay\GroupController.cs" Line="5" Column="14" />
-      <File FileName="Assets\Scripts\Dinossauros\Apatossauro.cs" Line="31" Column="34" />
+      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="4" Column="17" />
+      <File FileName="Assets\Scripts\DB\MongoDriver\CSharpDriver-2.4.4\license.txt" Line="15" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
