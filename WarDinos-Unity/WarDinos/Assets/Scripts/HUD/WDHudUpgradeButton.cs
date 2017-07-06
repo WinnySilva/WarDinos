@@ -8,6 +8,7 @@ public class WDHudUpgradeButton : MonoBehaviour {
     /// </summary>
 
     public string Dinosaur;
+    public GroupController.DinoType DinoType;
 
     public string getDinosaur() {
         return Dinosaur;

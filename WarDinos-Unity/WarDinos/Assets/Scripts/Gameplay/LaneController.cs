@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaneController : MonoBehaviour {
     Queue<GameObject> dispatchQueue = new Queue<GameObject>();
     public string myPlayerTag;
+    public GameObject player;
     private bool someoneIsWalking = false;
     
     void FixedUpdate () {

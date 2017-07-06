@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GroupController : MonoBehaviour {
     public enum DinoType {NONE=0, APATOSSAURO=1, ESTEGOSSAURO=2, PTERODACTILO=3, RAPTOR=4, TREX=5, TRICERATOPO=6}
+
+    private GameObject collidedFriend = null;
+    private bool collidedWithFriend = false;
 
     // Player who own this group
     public int player;
@@ -15,13 +19,20 @@ public class GroupController : MonoBehaviour {
 
     public GameObject laneBegin, laneEnd;
 
-    // Prefabs of each dinosaur
+    // Prefabs of each dinosaur that should be instantiated
     public GameObject prefabVelociraptor;
     public GameObject prefabEstegossauro;
     public GameObject prefabApatossauro;
     public GameObject prefabPterodactilo;
     public GameObject prefabTriceratopo;
     public GameObject prefabTrex;
+    // Dinosaurs with the actual upgrades. Their attributes are copied to the original prefabs when they are instantiated
+    private GameObject actualVelociraptor;
+    private GameObject actualEstegossauro;
+    private GameObject actualApatossauro;
+    private GameObject actualPterodactilo;
+    private GameObject actualTriceratopo;
+    private GameObject actualTrex;
     // Displacements of dinosaurs position. This is required because the prefabs of the dinosaurs are bugged, so their posistions must be compensated
     public Vector2 dispVelociraptor;
     public Vector2 dispEstegossauro;
@@ -49,24 +60,88 @@ public class GroupController : MonoBehaviour {
     private Rigidbody2D rb;
 
     // Enemy group that is being attacked by this group
-    GroupController enemyTargetGroup = null;
+    public GroupController enemyTargetGroup = null;
 
-    public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos) {
+    // Players
+    private Player playerSelf;
+    private Player playerEnemy;
+
+    public GameObject gameWinnerObject;
+
+    public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos,
+        GameObject arg_prefabVelociraptor,
+        GameObject arg_prefabEstegossauro,
+        GameObject arg_prefabApatossauro,
+        GameObject arg_prefabPterodactilo,
+        GameObject arg_prefabTriceratopo,
+        GameObject arg_prefabTrex)
+    {
         player = arg_player;
         laneBegin = arg_laneBegin;
         laneEnd = arg_laneEnd;
-        for (int i = 0; i < 4; i++)
-            dinos[i] = arg_dinos[i];
+
+        actualVelociraptor = arg_prefabVelociraptor;
+        actualEstegossauro = arg_prefabEstegossauro;
+        actualApatossauro = arg_prefabApatossauro;
+        actualPterodactilo = arg_prefabPterodactilo;
+        actualTriceratopo = arg_prefabTriceratopo;
+        actualTrex = arg_prefabTrex;
+
+        int i = 0;
+        int j = 0;
+        int NSlot;
+
+        while (i < 4) {
+            if (arg_dinos[j] == DinoType.APATOSSAURO) {
+                NSlot = prefabApatossauro.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if (arg_dinos[j] == DinoType.ESTEGOSSAURO) {
+                NSlot = prefabEstegossauro.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if (arg_dinos[j] == DinoType.PTERODACTILO) {
+                NSlot = prefabPterodactilo.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if (arg_dinos[j] == DinoType.RAPTOR) {
+                NSlot = prefabVelociraptor.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if (arg_dinos[j] == DinoType.TREX){
+                NSlot = prefabTrex.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if (arg_dinos[j] == DinoType.TRICERATOPO) {
+                NSlot = prefabTriceratopo.GetComponent<Dinossauro>().NSlot;
+                if (4 - i - NSlot >= 0)
+                    dinos[i] = arg_dinos[j];
+                i += NSlot;
+            }
+            else if ((arg_dinos[j] == DinoType.NONE)) {
+                i++;
+            }
+            j++;
+        }
 
         gameObject.SetActive(true);
     }
 
-    void Awake () {
-        
-    }
-
     // Use this for initialization
     void Start () {
+        playerSelf = laneBegin.GetComponent<LaneController>().player.GetComponent<Player>();
+        playerEnemy = laneEnd.GetComponent<LaneController>().player.GetComponent<Player>();
+
         // Set the group to spawn at the beginning of its lane
         transform.position = laneBegin.transform.position;
 
@@ -133,6 +208,11 @@ public class GroupController : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
+        if (collidedFriend == null && collidedWithFriend == true) {
+            collidedWithFriend = false;
+            StartWalking();
+        }
+
         // If there are no more dinosaurs on the group, it is destroyed
         bool thereAreDinosInGroup = false;
         foreach (GameObject d in dinosInstances) {
@@ -149,7 +229,28 @@ public class GroupController : MonoBehaviour {
     {
         // If collided with opponent lane
         if (other.CompareTag(laneEnd.tag)) {
-            EnteredEnemyBase();
+            // Reduce life from the enemy player equal to the sum of the dinosaurs lifes in the group
+            // Also increase resources of the player by that same amount
+            int reducedLife = 0;
+            foreach (Dinossauro d in dinosDinossauro) {
+                if (d != null)
+                    reducedLife += d.Vida;
+            }
+            playerEnemy.reduzirVida(reducedLife);
+            playerSelf.incrementarRecursos(reducedLife);
+
+            // Finishes the game if the player reachs zero life
+            if (other.GetComponent<LaneController>().player.GetComponent<Player>().Vida <= 0) {
+                GameObject gwo = Instantiate(
+                    gameWinnerObject,
+                    transform.position,
+                    transform.rotation
+                );
+                gwo.GetComponent<GameWinnerController>().Player = player;
+                gwo.SetActive(true);
+            }
+
+            Destroy(gameObject);
         }
         // If collided with opponent group
         else if (other.CompareTag(enemyTag)) {
@@ -160,12 +261,22 @@ public class GroupController : MonoBehaviour {
         else if (other.CompareTag(myTag)) {
             // The group behind stop walking
             if (player == 1) {
-                if (transform.position.x <= other.transform.position.x)
+                if (transform.position.x <= other.transform.position.x) {
                     StopWalking();
+                    if (collidedWithFriend == false) {
+                        collidedWithFriend = true;
+                        collidedFriend = other.gameObject;
+                    }
+                }
             }
             else {
-                if (transform.position.x >= other.transform.position.x)
+                if (transform.position.x >= other.transform.position.x) {
                     StopWalking();
+                    if (collidedWithFriend == false) {
+                        collidedWithFriend = true;
+                        collidedFriend = other.gameObject;
+                    }
+                }
             }
         }
     }
@@ -204,8 +315,26 @@ public class GroupController : MonoBehaviour {
                 trans
             );
         }
+        
+        // Update the attributes of the dinosaurs by the upgrades of the player
+        if (dinos[groupPosition] == DinoType.APATOSSAURO)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualApatossauro.GetComponent<Dinossauro>());
+        else if (dinos[groupPosition] == DinoType.ESTEGOSSAURO)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualEstegossauro.GetComponent<Dinossauro>());
+        else if (dinos[groupPosition] == DinoType.PTERODACTILO)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualPterodactilo.GetComponent<Dinossauro>());
+        else if (dinos[groupPosition] == DinoType.RAPTOR)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualVelociraptor.GetComponent<Dinossauro>());
+        else if (dinos[groupPosition] == DinoType.TREX)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualTrex.GetComponent<Dinossauro>());
+        else if (dinos[groupPosition] == DinoType.TRICERATOPO)
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().CopyAttr(actualTriceratopo.GetComponent<Dinossauro>());
 
-        // TODO: AQUI VIRAO AS MUDANCAS DE ATRIBUTOS REFERENTES AS EVOLUCOES DOS DINOSSAUROS
+        if (dinosInstances[groupPosition] != null) {
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().PlayerSelf = playerSelf;
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().PlayerEnemy = playerEnemy;
+            dinosInstances[groupPosition].GetComponent<Dinossauro>().Gc = this;
+        }
     }
 
     float VelocidadeMedia () {
@@ -252,13 +381,8 @@ public class GroupController : MonoBehaviour {
         }
     }
 
-    void EnteredEnemyBase () {
-        //TODO: DIMINUIR VIDA DO OPONENTE
-        Destroy(gameObject);
-    }
-
     void AttackGroup (GroupController enemy) {
-        //enemyTargetGroup = enemy;
+        enemyTargetGroup = enemy;
         //yield return new WaitForSeconds(waitTime);
         foreach (Dinossauro dd in dinosDinossauro) {
             StartCoroutine(routine: AttackWithDinosaur(dd, enemy));

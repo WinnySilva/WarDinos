@@ -4,22 +4,40 @@ using UnityEngine;
 
 public class Triceratopo : Dinossauro {
 
-	void Awake(){
-		base.alcance_ataque =1;
+	public Triceratopo (){
+
+        base.custo = 50;
+        base.abilityCost = 100;
+        base.alcance_ataque =1;
 		base.ataque=10;
-		base.velocidadeAtaque=5;
-		base.velocidade_deslocamento=10;
+		base.velocidadeAtaque=2;
+		base.velocidade_deslocamento=3;
 		base.vida=600;
+
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
 		base.custoAttrVida=1;
+        base.custoAttrVelocidadeDeslocamento = 1;
+
 		base.dinoType= Dinossauro.DinoTypes.TRICERATOPO;
-		base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=20;
-		base.MAX_VELOCIDADE_ATAQUE=10;
-		base.MAX_VELOCIDADE_DESLOCAMENTO=20;
+
+        base.MAX_ALCANCE_ATAQUE=1;
+		base.MAX_ATAQUE=30;
+		base.MAX_VELOCIDADE_ATAQUE=1.75;
+		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
 		base.MAX_VIDA=1200;
-		base.playerID=-1;
+
+        base.MAX_ATTR_VIDA = 10;
+        base.MAX_ATTR_ATAQUE = 10;
+        base.MAX_ATTR_VEL_ATQ = 10;
+        base.MAX_ATTR_VEL_DES = 3;
+
+        base.vida_upg = 60;
+        base.ataque_upg = 2;
+        base.velocidadeAtaque_upg = -0.025;
+        base.velocidade_deslocamento_upg = 1;
+
+        base.playerID=-1;
 		base.nSlot = 3;
 
         
@@ -36,7 +54,7 @@ public class Triceratopo : Dinossauro {
 	}
 
 	#region implemented abstract members of Dinossauro
-	public override void Habilidade(GroupController allies, GroupController enemies)
+	public override void Habilidade()
 	{
 		int nDinos = 0;
 		/**
@@ -47,7 +65,7 @@ public class Triceratopo : Dinossauro {
 		 * Took me 2 seconds to implement that...
 		 * COMPLEX AS FUCK!
 		*/
-		foreach (Dinossauro d in enemies.DinosDinossauro) {
+		foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
 			nDinos++;
 		}
 

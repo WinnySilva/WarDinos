@@ -55,10 +55,15 @@
      <Compile Include="Assets\Scripts\Dinossauros\Raptor.cs" />
      <Compile Include="Assets\Scripts\Dinossauros\TRex.cs" />
      <Compile Include="Assets\Scripts\Dinossauros\Triceratopo.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\GameWinnerController.cs" />
      <Compile Include="Assets\Scripts\Gameplay\GroupController.cs" />
      <Compile Include="Assets\Scripts\Gameplay\LaneController.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Player.cs" />
+     <Compile Include="Assets\Scripts\Generic\GlobalParameters.cs" />
+     <Compile Include="Assets\Scripts\Generic\PlayTrackList.cs" />
      <Compile Include="Assets\Scripts\Grupo.cs" />
      <Compile Include="Assets\Scripts\HUD\HUDController.cs" />
+     <Compile Include="Assets\Scripts\HUD\HUDPlayerAttributes.cs" />
      <Compile Include="Assets\Scripts\HUD\HUDTime.cs" />
      <Compile Include="Assets\Scripts\HUD\LaneButton.cs" />
      <Compile Include="Assets\Scripts\HUD\UnitButton.cs" />
@@ -67,6 +72,7 @@
      <Compile Include="Assets\Scripts\HUD\changeMenuButton.cs" />
      <Compile Include="Assets\Scripts\Jogador.cs" />
      <Compile Include="Assets\Scripts\MatchManager.cs" />
+     <Compile Include="Assets\Scripts\Remakescreen\RemakeController.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\CrebitosController.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\MenuLocker.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\TextFadeInFadeOut.cs" />

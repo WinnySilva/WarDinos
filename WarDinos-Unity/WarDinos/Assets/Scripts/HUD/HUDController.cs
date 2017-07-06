@@ -6,6 +6,9 @@ using UnityEngine;
 public class HUDController : MonoBehaviour
 {
     public int player;
+    // GameObject of the player
+    public GameObject pgo;
+    private Player pgoPlayer;
 
     public GameObject dinoGroupPrefab;
     public GameObject lane1P1;
@@ -72,6 +75,8 @@ public class HUDController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        pgoPlayer = pgo.GetComponent<Player>();
+
         selectedButton = buttonLane1;
         lastSelectedUnitButton = buttonUnitVelociraptor;
         lastSelectedLaneButton = buttonLane1;
@@ -180,6 +185,17 @@ public class HUDController : MonoBehaviour
                 // Press add button
                 Selectable addB = selectedButton.FindSelectableOnLeft();
                 addB.targetGraphic.CrossFadeColor(addB.colors.pressedColor, addB.colors.fadeDuration, true, true);
+
+                // Efetua a compra caso haja recursos. Caso contrario TODO: emite uma mensagem avisando que nao tem recursos
+                Debug.Log(selectedButton + " ___ " +selectedButton.GetComponent<WDHudAttributeButton>());
+                if (pgoPlayer.Upgrade(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType,
+                    selectedButton.GetComponent<WDHudAttributeButton>().AttrType) == 1)
+                    Debug.Log("Tem recursos");
+                else
+                    Debug.Log("Nao tem recursos suficientes"); // Isso nao eh o TODO... tem ser mensagem ingame
+
+                Debug.Log(pgoPlayer.GetComponent<Player>().Recursos);
+
             }
         }
         if (Input.GetKeyUp(keyLeft))
@@ -280,11 +296,13 @@ public class HUDController : MonoBehaviour
                 int q = buttonUnitTiranossauro.GetComponent<UnitButton>().getQuantityOnGroup();
                 int i = 0;
                 int j = 0;
+                int totalCost = 0;
                 while (i < 4 && j < q)
                 {
                     dinos[i] = GroupController.DinoType.TREX;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goTrex.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitTiranossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
 
@@ -295,6 +313,7 @@ public class HUDController : MonoBehaviour
                     dinos[i] = GroupController.DinoType.TRICERATOPO;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goTriceratopo.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitTriceratopo.GetComponent<UnitButton>().resetQuantityOnGroup();
 
@@ -305,6 +324,7 @@ public class HUDController : MonoBehaviour
                     dinos[i] = GroupController.DinoType.ESTEGOSSAURO;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goEstegossauro.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitEstegossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
 
@@ -315,6 +335,7 @@ public class HUDController : MonoBehaviour
                     dinos[i] = GroupController.DinoType.APATOSSAURO;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goApatossauro.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitApatossauro.GetComponent<UnitButton>().resetQuantityOnGroup();
 
@@ -325,6 +346,7 @@ public class HUDController : MonoBehaviour
                     dinos[i] = GroupController.DinoType.PTERODACTILO;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goPterodactilo.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitPterodactilo.GetComponent<UnitButton>().resetQuantityOnGroup();
 
@@ -335,8 +357,11 @@ public class HUDController : MonoBehaviour
                     dinos[i] = GroupController.DinoType.RAPTOR;
                     j++;
                     i++;
+                    totalCost += pgoPlayer.goVelociraptor.GetComponent<Dinossauro>().Custo;
                 }
                 buttonUnitVelociraptor.GetComponent<UnitButton>().resetQuantityOnGroup();
+
+                Debug.Log("CUSTO DO GRUPO: " + totalCost);
 
                 GameObject lb;
                 GameObject le;
@@ -358,10 +383,31 @@ public class HUDController : MonoBehaviour
                     le = lane3P2;
                 }
 
-                if (player == 1)
-                    gc.initGroup(1, lb, le, dinos);
-                else
-                    gc.initGroup(2, le, lb, dinos);
+                if (totalCost < pgoPlayer.Recursos)
+                {
+                    pgoPlayer.reduzirRecursos(totalCost);
+                    if (player == 1)
+                        gc.initGroup(1, lb, le, dinos,
+                        pgoPlayer.goVelociraptor,
+                        pgoPlayer.goEstegossauro,
+                        pgoPlayer.goApatossauro,
+                        pgoPlayer.goPterodactilo,
+                        pgoPlayer.goTriceratopo,
+                        pgoPlayer.goTrex);
+                    else
+                        gc.initGroup(2, le, lb, dinos,
+                        pgoPlayer.goVelociraptor,
+                        pgoPlayer.goEstegossauro,
+                        pgoPlayer.goApatossauro,
+                        pgoPlayer.goPterodactilo,
+                        pgoPlayer.goTriceratopo,
+                        pgoPlayer.goTrex);
+                }
+                else {
+                    // TODO: Colocar mensagem de verdade que apareca no jogo
+                    Debug.Log("Nao tem Dodo Meth suficiente");
+                }
+
                 // Change the cursor from unit selection to lane selection
                 lastSelectedUnitButton = selectedButton;
                 changeButton(lastSelectedLaneButton, false);
