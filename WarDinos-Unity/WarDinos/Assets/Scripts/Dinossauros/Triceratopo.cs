@@ -54,7 +54,7 @@ public class Triceratopo : Dinossauro {
 	}
 
 	#region implemented abstract members of Dinossauro
-	public override void Habilidade(GroupController gp)
+	public override void Habilidade()
 	{
 		int nDinos = 0;
 		/**
@@ -65,7 +65,7 @@ public class Triceratopo : Dinossauro {
 		 * Took me 2 seconds to implement that...
 		 * COMPLEX AS FUCK!
 		*/
-		foreach (Dinossauro d in gp.enemyTargetGroup.DinosDinossauro) {
+		foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
 			nDinos++;
 		}
 

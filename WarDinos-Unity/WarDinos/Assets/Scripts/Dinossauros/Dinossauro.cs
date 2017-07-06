@@ -33,7 +33,6 @@ public abstract class Dinossauro : MonoBehaviour {
     //SOME FLAGS
     protected DinoTypes dinoType;
 	protected int playerID;
-	protected int lane; // necessary only for ptero ability.
 	protected bool habilidadeOn = false;
 
 	//MAX VALUE OF ATTRIBUTES
@@ -231,17 +230,14 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 	}
 
-	public abstract void Habilidade(GroupController gp);
+	public abstract void Habilidade();
 
     // Return true if it successfully attacked OR false when there IS no target.
     public bool Atacar(GroupController gp) {
-        
+        Gc = gp;
 		Dinossauro dTarget = null;
         int menorVida = -1;
 
-        if (habilidadeOn) {
-            Habilidade(gp);
-        }
 
         foreach (Dinossauro d in gp.DinosDinossauro) {
             if (d != null && (d.Vida < menorVida || menorVida == -1)) {
@@ -263,7 +259,13 @@ public abstract class Dinossauro : MonoBehaviour {
     private void Die() {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
-
+        if (DinoType == DinoTypes.APATOSSAURO) {
+            foreach(Dinossauro d in gc.enemyTargetGroup.DinosDinossauro)
+            {
+                //Reverse Apatasaur ability
+                d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
+            }
+        }
         
 		
         // When the dinosaur is destroyed, the enemy player is rewarded with Dodo Meth

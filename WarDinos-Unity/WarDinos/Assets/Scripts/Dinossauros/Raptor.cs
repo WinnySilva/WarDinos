@@ -73,7 +73,7 @@ public class Raptor : Dinossauro {
 
     #region implemented abstract members of Dinossauro
 
-    public override void Habilidade(GroupController gp)
+    public override void Habilidade()
     {
 		int n_raptors = 0; // just need the allies group, so i can implement this shit...
 		/**
@@ -83,7 +83,7 @@ public class Raptor : Dinossauro {
 		 * 3 Raptors = 75% Bonus damage.
 		 * 4 Raptors = 100% Bonus damage.
 		*/
-		foreach (Dinossauro d in gp.DinosDinossauro) {
+		foreach (Dinossauro d in Gc.DinosDinossauro) {
 			if (d.DinoType == base.DinoType)
 				++n_raptors;
 		} 

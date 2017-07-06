@@ -50,10 +50,10 @@ public class Estegossauro : Dinossauro {
 
     #region implemented abstract members of Dinossauro
 
-    public override void Habilidade(GroupController gp)
+    public override void Habilidade()
     {
 
-        foreach (Dinossauro d in gp.enemyTargetGroup.DinosDinossauro) {
+        foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
             d.Vida = d.Vida - base.ataque;
         }
 

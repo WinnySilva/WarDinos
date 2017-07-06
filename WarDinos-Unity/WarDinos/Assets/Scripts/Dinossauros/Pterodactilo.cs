@@ -52,10 +52,12 @@ public class Pterodactilo : Dinossauro {
 
     #region implemented abstract members of Dinossauro
 
-    public override void Habilidade(GroupController gp)
+    public override void Habilidade()
     {
-		
-		throw new System.NotImplementedException ();
+        foreach (Dinossauro d in Gc.DinosDinossauro)
+        {
+            Velocidade_deslocamento++;
+        }
 	}
 
 	#endregion

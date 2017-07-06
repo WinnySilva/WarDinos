@@ -52,7 +52,7 @@ public class TRex : Dinossauro {
 
     #region implemented abstract members of Dinossauro
 
-    public override void Habilidade(GroupController gp)
+    public override void Habilidade()
     {
         /**
 		 * life steal.

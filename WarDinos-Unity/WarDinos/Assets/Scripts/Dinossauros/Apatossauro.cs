@@ -44,10 +44,10 @@ public class Apatossauro : Dinossauro {
 
 
     #region implemented abstract members of Dinossauro
-    public override void Habilidade(GroupController gp)
+    public override void Habilidade()
     {
 		//i really hope it works like that o.o'
-		foreach(Dinossauro dino in gp.enemyTargetGroup.DinosDinossauro){
+		foreach(Dinossauro dino in Gc.enemyTargetGroup.DinosDinossauro){
 			dino.VelocidadeAtaque = dino.VelocidadeAtaque * 0.5;
 		}
 			/*divide their attack speed by 2*/
