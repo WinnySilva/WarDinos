@@ -41,6 +41,7 @@ public class GroupController : MonoBehaviour {
     public Vector2 dispTriceratopo;
     public Vector2 dispTrex;
 
+
     // You can find a dinosaur type prefab by writing "prefabList[DinoType.APATOSSAURO]"
     private GameObject[] prefabList = new GameObject[7];
 
@@ -55,6 +56,7 @@ public class GroupController : MonoBehaviour {
     private string myTag;
     private string enemyTag;
     private bool waitingForDispatch = true;
+	private int totalVida=-5000;
 
     // Rigid body 2D of this group object
     private Rigidbody2D rb;
@@ -67,6 +69,7 @@ public class GroupController : MonoBehaviour {
     private Player playerEnemy;
 
     public GameObject gameWinnerObject;
+	public GameObject barraDeVida;
 
     public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos,
         GameObject arg_prefabVelociraptor,
@@ -205,8 +208,26 @@ public class GroupController : MonoBehaviour {
         }
 
         //StartWalking();
+
+		this.totalVida = 0;
+		foreach( Dinossauro d in this.dinosDinossauro ){
+			totalVida += d.Vida;
+		}
     }
-	
+
+	void Update(){
+		if(totalVida>=-5000){
+			int atualVida = 0;
+			foreach( Dinossauro d in this.dinosDinossauro ){
+				atualVida += d.Vida;
+			}
+			float scalevida = atualVida/this.totalVida;
+			Vector3 v = new Vector3(scalevida,1,1);
+			this.barraDeVida.GetComponent<RectTransform>().localScale = v;
+		}
+
+	}
+
 	void FixedUpdate () {
         if (collidedFriend == null && collidedWithFriend == true) {
             collidedWithFriend = false;
