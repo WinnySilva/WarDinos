@@ -12,7 +12,7 @@ public class Pterodactilo : Dinossauro {
 		base.ataque=15;
 		base.velocidadeAtaque=2;
 		base.velocidade_deslocamento=5;
-		base.vida=150;
+		base.vida=50;
 
         base.custoAttrAtaque = 1;
         base.custoAttrVelocidadeAtaque = 1;
@@ -25,7 +25,7 @@ public class Pterodactilo : Dinossauro {
 		base.MAX_ATAQUE=30;
 		base.MAX_VELOCIDADE_ATAQUE=1.75;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=10;
-		base.MAX_VIDA=300;
+		base.MAX_VIDA=80;
         base.MAX_ATTR_VIDA = 10;
         base.MAX_ATTR_ATAQUE = 5;
         base.MAX_ATTR_VEL_ATQ = 10;
@@ -34,7 +34,7 @@ public class Pterodactilo : Dinossauro {
         base.ataque_upg = 3;
         base.velocidadeAtaque_upg = -0.025;
         base.velocidade_deslocamento_upg = 1;
-        base.vida_upg = 15;
+        base.vida_upg = 3;
 
         base.playerID=-1;
 		base.nSlot=1;

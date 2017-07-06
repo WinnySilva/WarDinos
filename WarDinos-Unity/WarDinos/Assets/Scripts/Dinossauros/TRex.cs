@@ -12,7 +12,7 @@ public class TRex : Dinossauro {
 		base.ataque=30;
 		base.velocidadeAtaque=1.5;
 		base.velocidade_deslocamento=3;
-		base.vida=750;
+		base.vida=100;
         life = base.vida;
         base.custoAttrAtaque = 1;
         base.custoAttrVelocidadeAtaque = 1;
@@ -25,13 +25,13 @@ public class TRex : Dinossauro {
 		base.MAX_ATAQUE=60;
 		base.MAX_VELOCIDADE_ATAQUE=1.25;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
-		base.MAX_VIDA=1500;
+		base.MAX_VIDA=200;
         base.MAX_ATTR_VIDA = 10;
         base.MAX_ATTR_ATAQUE = 10;
         base.MAX_ATTR_VEL_ATQ = 10;
         base.MAX_ATTR_VEL_DES = 3;
 
-        base.vida_upg = 75;
+        base.vida_upg = 10;
         base.ataque_upg = 3;
         base.velocidadeAtaque_upg = -0.025;
         base.velocidade_deslocamento_upg = 1;

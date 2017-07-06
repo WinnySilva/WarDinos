@@ -6,13 +6,13 @@ public class Raptor : Dinossauro {
 
     public Raptor (){
 
-        base.custo = 10;
+        base.custo = 20;
         base.abilityCost = 200;
         base.alcance_ataque = 1;
         base.ataque = 5;
         base.velocidadeAtaque = 1;
         base.velocidade_deslocamento = 4;
-        base.vida = 200;
+        base.vida = 50;
 
         base.custoAttrAtaque = 1;
         base.custoAttrVelocidadeAtaque = 1;
@@ -26,7 +26,7 @@ public class Raptor : Dinossauro {
         base.MAX_ATAQUE = 10;
         base.MAX_VELOCIDADE_ATAQUE = 0.5;
         base.MAX_VELOCIDADE_DESLOCAMENTO = 8;
-        base.MAX_VIDA = 400;
+        base.MAX_VIDA = 100;
         base.MAX_ATTR_VIDA = 10;
         base.MAX_ATTR_ATAQUE = 5;
         base.MAX_ATTR_VEL_ATQ = 10;
@@ -35,7 +35,7 @@ public class Raptor : Dinossauro {
         base.ataque_upg = 1;
         base.velocidadeAtaque_upg = -0.05;
         base.velocidade_deslocamento_upg = 1;
-        base.vida_upg = 20;
+        base.vida_upg = 5;
         //ID's and number of slots occupied by this kind of dino.
         base.playerID = -1;
         base.nSlot = 1;

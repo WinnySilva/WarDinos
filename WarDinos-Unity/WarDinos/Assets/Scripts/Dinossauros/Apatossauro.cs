@@ -11,7 +11,7 @@ public class Apatossauro : Dinossauro {
 		base.ataque=5;
 		base.velocidadeAtaque=2.5;
 		base.velocidade_deslocamento=2;
-		base.vida=1000;
+		base.vida=200;
 
         base.custoAttrAtaque = 1;
         base.custoAttrVelocidadeAtaque = 1;
@@ -24,7 +24,7 @@ public class Apatossauro : Dinossauro {
 		base.MAX_ATAQUE=15;
 		base.MAX_VELOCIDADE_ATAQUE=2.25;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=4;
-		base.MAX_VIDA=2000;
+		base.MAX_VIDA=400;
         base.MAX_ATTR_VIDA = 5;
         base.MAX_ATTR_ATAQUE = 10;
         base.MAX_ATTR_VEL_ATQ = 10;
@@ -33,7 +33,7 @@ public class Apatossauro : Dinossauro {
         base.ataque_upg = 1;
         base.velocidadeAtaque_upg = -0.025;
         base.velocidade_deslocamento_upg = 1;
-        base.vida_upg = 200;
+        base.vida_upg = 40;
 
         base.playerID=-1;
 		base.nSlot = 2;

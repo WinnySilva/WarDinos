@@ -12,7 +12,7 @@ public class Triceratopo : Dinossauro {
 		base.ataque=10;
 		base.velocidadeAtaque=2;
 		base.velocidade_deslocamento=3;
-		base.vida=600;
+		base.vida=100;
 
 		base.custoAttrAtaque=1;
 		base.custoAttrVelocidadeAtaque=1;
@@ -25,14 +25,14 @@ public class Triceratopo : Dinossauro {
 		base.MAX_ATAQUE=30;
 		base.MAX_VELOCIDADE_ATAQUE=1.75;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
-		base.MAX_VIDA=1200;
+		base.MAX_VIDA=200;
 
         base.MAX_ATTR_VIDA = 10;
         base.MAX_ATTR_ATAQUE = 10;
         base.MAX_ATTR_VEL_ATQ = 10;
         base.MAX_ATTR_VEL_DES = 3;
 
-        base.vida_upg = 60;
+        base.vida_upg = 10;
         base.ataque_upg = 2;
         base.velocidadeAtaque_upg = -0.025;
         base.velocidade_deslocamento_upg = 1;
