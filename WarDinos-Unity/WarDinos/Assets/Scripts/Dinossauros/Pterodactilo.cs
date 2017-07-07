@@ -9,8 +9,8 @@ public class Pterodactilo : Dinossauro {
         base.custo = 10;
         base.abilityCost = 100;
         base.alcance_ataque =5;
-		base.ataque=15;
-		base.velocidadeAtaque=2;
+		base.ataque=10;
+		base.velocidadeAtaque=2.0;
 		base.velocidade_deslocamento=5;
 		base.vida=50;
 
@@ -39,12 +39,11 @@ public class Pterodactilo : Dinossauro {
         base.playerID=-1;
 		base.nSlot=1;
 
-        if (habilidadeOn)
-        {
-            Habilidade();
-        }
     }
-
+    private void Start()
+    {
+        Habilidade();
+    }
     #region implemented abstract members of Dinossauro
 
     public override void Habilidade()
@@ -72,7 +71,7 @@ public class Pterodactilo : Dinossauro {
         }
         if (menorVida != -1)
         {
-            dTarget.Vida = dTarget.Vida - ataque;
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
             Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
             return true;
         }

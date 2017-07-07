@@ -6,11 +6,11 @@ public class Raptor : Dinossauro {
 
     public Raptor (){
 
-        base.custo = 20;
+        base.custo = 10;
         base.abilityCost = 200;
         base.alcance_ataque = 1;
         base.ataque = 5;
-        base.velocidadeAtaque = 1;
+        base.velocidadeAtaque = 1.0;
         base.velocidade_deslocamento = 4;
         base.vida = 50;
 
@@ -39,6 +39,10 @@ public class Raptor : Dinossauro {
         //ID's and number of slots occupied by this kind of dino.
         base.playerID = -1;
         base.nSlot = 1;
+
+    }
+    private void Start()
+    {
 
     }
 
@@ -90,7 +94,7 @@ public class Raptor : Dinossauro {
             {
                 Habilidade();
             }
-            dTarget.Vida = dTarget.Vida - ataque;
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
             ataque = realataque;
             Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
             return true;

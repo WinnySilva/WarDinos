@@ -9,8 +9,8 @@ public class TRex : Dinossauro {
         base.custo = 100;
         base.abilityCost = 100;
         base.alcance_ataque =1;
-		base.ataque=30;
-		base.velocidadeAtaque=1.5;
+		base.ataque=50;
+		base.velocidadeAtaque=2;
 		base.velocidade_deslocamento=3;
 		base.vida=100;
         life = base.vida;
@@ -22,7 +22,7 @@ public class TRex : Dinossauro {
         base.dinoType= Dinossauro.DinoTypes.TREX;
 
         base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=60;
+		base.MAX_ATAQUE=80;
 		base.MAX_VELOCIDADE_ATAQUE=1.25;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
 		base.MAX_VIDA=200;
@@ -39,6 +39,10 @@ public class TRex : Dinossauro {
         base.playerID=-1;
 		base.nSlot=4;
 	}
+    private void Start()
+    {
+
+    }
 
 
     #region implemented abstract members of Dinossauro
@@ -50,11 +54,9 @@ public class TRex : Dinossauro {
 		*/
         if (base.vida + base.ataque < life)
         {
-            base.vida = base.vida + base.ataque;
+            base.vida = base.vida + (int) base.ataque/2;
         }
-        else {
-            base.vida = life;
-        }
+        
 		
 
 		//throw new System.NotImplementedException ();
@@ -62,11 +64,9 @@ public class TRex : Dinossauro {
 
     public override bool Atacar(GroupController gp)
     {
-        
         Gc = gp;
         Dinossauro dTarget = null;
         int menorVida = -1;
-
 
         foreach (Dinossauro d in gp.DinosDinossauro)
         {
@@ -78,7 +78,7 @@ public class TRex : Dinossauro {
         }
         if (menorVida != -1)
         {
-            dTarget.Vida = dTarget.Vida - ataque;
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1,ataque/2) ) ;
             if (habilidadeOn) {
                 Habilidade();
             }

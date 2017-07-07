@@ -38,18 +38,18 @@ public class Estegossauro : Dinossauro {
 		base.nSlot =2;
 
 	}
-	
-
-    #region implemented abstract members of Dinossauro
-
-    public override void Habilidade()
+    private void Start()
     {
 
-        foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
-            if (d != null) ;
-                d.Vida = d.Vida - base.ataque;
-        }
+    }
 
+    #region implemented abstract members of Dinossauro
+    
+    /**
+     * Habilidade implementada direto no ataque 
+     */
+    public override void Habilidade()
+    {
 
 		//throw new System.NotImplementedException ();
 	}
@@ -62,7 +62,9 @@ public class Estegossauro : Dinossauro {
         //Habilidade on = Ataque em área
         if (habilidadeOn)
         {
-            Habilidade();
+            foreach (Dinossauro d in gp.DinosDinossauro) {
+                d.Vida = d.Vida - (ataque - Random.Range(1, ataque / 2)) ;
+            }
             return true;
         }
         //se não, single
@@ -78,7 +80,7 @@ public class Estegossauro : Dinossauro {
             }
             if (menorVida != -1)
             {
-                dTarget.Vida = dTarget.Vida - ataque;
+                dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
                 Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
                 return true;
             }

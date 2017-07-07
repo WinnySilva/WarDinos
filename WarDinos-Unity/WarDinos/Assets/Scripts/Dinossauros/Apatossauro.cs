@@ -42,7 +42,10 @@ public class Apatossauro : Dinossauro {
         
     }
 
+    private void Start()
+    {
 
+    }
 
 
 
@@ -52,7 +55,7 @@ public class Apatossauro : Dinossauro {
 		//i really hope it works like that o.o'
 		foreach(Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro){
             if(d != null)
-			    d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
+			    d.VelocidadeAtaque = d.VelocidadeAtaque * 1.5;
 		}
 			/*divide their attack speed by 2*/
 		//when an apatassauro dies, the atk spd of the enemy should go back to the original value.
@@ -83,7 +86,7 @@ public class Apatossauro : Dinossauro {
         }
         if (menorVida != -1)
         {
-            dTarget.Vida = dTarget.Vida - ataque;
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
             Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
             return true;
         }

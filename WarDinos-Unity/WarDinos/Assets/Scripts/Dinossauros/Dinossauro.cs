@@ -33,7 +33,7 @@ public abstract class Dinossauro : MonoBehaviour {
     //SOME FLAGS
     protected DinoTypes dinoType;
 	protected int playerID;
-	protected bool habilidadeOn = false;
+	protected bool habilidadeOn = true;
 
 	//MAX VALUE OF ATTRIBUTES
 	protected int MAX_VIDA;
@@ -224,6 +224,37 @@ public abstract class Dinossauro : MonoBehaviour {
     public int VelocidadeAtaque_upg { get { return vida_upg; } }
     public int Velocidade_deslocamento_upg { get { return vida_upg; } }
 
+    public void UpgradeVida() {
+        if (custoAttrVida <= MAX_ATTR_VIDA)
+        {
+            vida++;
+            custoAttrVida++;
+        }
+    }
+    public void UpgradeAtaque()
+    {
+        if (custoAttrAtaque <= MAX_ATTR_ATAQUE)
+        {
+            ataque++;
+            custoAttrAtaque++;
+        }       
+    }
+    public void UpgradeVelAtq()
+    {
+        if (custoAttrVelocidadeAtaque <= MAX_ATTR_VEL_ATQ)
+        {
+            velocidadeAtaque++;
+            custoAttrVelocidadeAtaque++;
+        }       
+    }
+    public void UpgradeVelDes()
+    {
+        if(custoAttrVelocidadeDeslocamento <= MAX_ATTR_VEL_DES)
+        {
+            velocidade_deslocamento++;
+            custoAttrVelocidadeDeslocamento++;
+        }
+    }
     public int NSlot {
 		get {
 			return nSlot;

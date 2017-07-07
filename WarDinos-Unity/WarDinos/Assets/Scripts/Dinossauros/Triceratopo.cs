@@ -42,42 +42,33 @@ public class Triceratopo : Dinossauro {
 
         
     }
+    private void Start()
+    {
 
+    }
 
-	#region implemented abstract members of Dinossauro
-	public override void Habilidade()
+    #region implemented abstract members of Dinossauro
+
+    /**
+     * Habilidade implementada direto no ataque 
+     */
+    public override void Habilidade()
 	{
-		int nDinos = 0;
-		/**
-		 * Deals 2x his damage if the enemy group is composed of two units
-		 * Deals 3x his damage if the enemy group is composed of three units
-		 * Deals 4x his damage if the enemy group is composed of four units
-		 * I think we should nerf this motherfucker o.O
-		 * Took me 2 seconds to implement that...
-		 * COMPLEX AS FUCK!
-		*/
-		foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
-            if(d != null)
-                nDinos++;
-		}
-
-		base.ataque = base.ataque * nDinos;
 		//throw new System.NotImplementedException ();
 	}
 
     public override bool Atacar(GroupController gp) {
-        //dumb mode on
-        //after atacking, tricera attack has to go back to it's original value.
-        int realataque = ataque;
-
+        int nDinos = 0;
         //attack implemented by alex-sama
         Gc = gp;
         Dinossauro dTarget = null;
         int menorVida = -1;
 
-
         foreach (Dinossauro d in gp.DinosDinossauro)
         {
+            if (d != null)
+                nDinos++;
+
             if (d != null && (d.Vida < menorVida || menorVida == -1))
             {
                 dTarget = d;
@@ -89,12 +80,16 @@ public class Triceratopo : Dinossauro {
             if (habilidadeOn)
             {
                 //Atack * number of enemy dinosaurs
-                Habilidade();
+                dTarget.Vida = dTarget.Vida - ataque*nDinos;
+                Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+                return true;
             }
-            dTarget.Vida = dTarget.Vida - ataque;
-            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-            ataque = realataque;
-            return true;
+            else
+            {
+                dTarget.Vida = dTarget.Vida - ataque;
+                Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+                return true;
+            }
         }
         else
         {
