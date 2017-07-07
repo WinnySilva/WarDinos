@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Apatossauro : Dinossauro {
-
+    protected GroupController oldGroup;
 	public Apatossauro() {
+        oldGroup = null;
         base.custo = 35;
         base.abilityCost = 200;
         base.alcance_ataque =1;
@@ -37,7 +38,9 @@ public class Apatossauro : Dinossauro {
 
         base.playerID=-1;
 		base.nSlot = 2;
-	}
+
+        
+    }
 
 
 
@@ -47,12 +50,48 @@ public class Apatossauro : Dinossauro {
     public override void Habilidade()
     {
 		//i really hope it works like that o.o'
-		foreach(Dinossauro dino in Gc.enemyTargetGroup.DinosDinossauro){
-			dino.VelocidadeAtaque = dino.VelocidadeAtaque * 0.5;
+		foreach(Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro){
+            if(d != null)
+			    d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
 		}
 			/*divide their attack speed by 2*/
 		//when an apatassauro dies, the atk spd of the enemy should go back to the original value.
 		//throw new System.NotImplementedException ();
 	}
-	#endregion
+
+    public override bool Atacar(GroupController gp)
+    {
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+
+
+        foreach (Dinossauro d in gp.DinosDinossauro)
+        {
+            if (d != null && (d.Vida < menorVida || menorVida == -1))
+            {
+                //Apatasaur ability only will work one time per group;
+                if(Gc != oldGroup)
+                {
+                    oldGroup = Gc;
+                    if (habilidadeOn)
+                        Habilidade();
+                }
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1)
+        {
+            dTarget.Vida = dTarget.Vida - ataque;
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            return true;
+        }
+        else
+        {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+    }
+    #endregion
 }

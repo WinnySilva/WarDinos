@@ -39,37 +39,8 @@ public class Raptor : Dinossauro {
         //ID's and number of slots occupied by this kind of dino.
         base.playerID = -1;
         base.nSlot = 1;
+
     }
-
-	void Awake(){
-		base.alcance_ataque =1;
-		base.ataque=10;
-		base.velocidadeAtaque=15;
-		base.velocidade_deslocamento=15;
-		base.vida=200;
-		base.custoAttrAtaque=1;
-		base.custoAttrVelocidadeAtaque=1;
-		base.custoAttrVida=1;
-		base.dinoType= Dinossauro.DinoTypes.RAPTOR;
-		base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=20;
-		base.MAX_VELOCIDADE_ATAQUE=30;
-		base.MAX_VELOCIDADE_DESLOCAMENTO=30;
-		base.MAX_VIDA=400;
-		base.playerID=-1;
-		base.nSlot =1;
-
-	}
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     #region implemented abstract members of Dinossauro
 
@@ -84,8 +55,11 @@ public class Raptor : Dinossauro {
 		 * 4 Raptors = 100% Bonus damage.
 		*/
 		foreach (Dinossauro d in Gc.DinosDinossauro) {
-			if (d.DinoType == base.DinoType)
-				++n_raptors;
+            if(d != null)
+            {
+                if (d.DinoType == base.DinoType)
+                    ++n_raptors;
+            }
 		} 
 		//POWER-UP TIME!!
 		if (n_raptors > 1)
@@ -94,5 +68,39 @@ public class Raptor : Dinossauro {
 		//throw new System.NotImplementedException ();
 	}
 
-	#endregion
+    public override bool Atacar(GroupController gp)
+    {
+        int realataque = ataque;
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+
+
+        foreach (Dinossauro d in gp.DinosDinossauro)
+        {
+            if (d != null && (d.Vida < menorVida || menorVida == -1))
+            {
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1)
+        {
+            if (habilidadeOn)
+            {
+                Habilidade();
+            }
+            dTarget.Vida = dTarget.Vida - ataque;
+            ataque = realataque;
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            return true;
+        }
+        else
+        {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+
+    }
+    #endregion
 }

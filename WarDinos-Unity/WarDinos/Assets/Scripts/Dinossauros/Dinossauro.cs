@@ -18,7 +18,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected double velocidadeAtaque;
 	protected int velocidade_deslocamento;
 	protected int alcance_ataque;
-
+    
      
 	protected int custoAttrVida;
 	protected int custoAttrAtaque;
@@ -233,6 +233,9 @@ public abstract class Dinossauro : MonoBehaviour {
 	public abstract void Habilidade();
 
     // Return true if it successfully attacked OR false when there IS no target.
+    public abstract bool Atacar(GroupController gp);
+
+    /*
     public bool Atacar(GroupController gp) {
         Gc = gp;
 		Dinossauro dTarget = null;
@@ -255,19 +258,19 @@ public abstract class Dinossauro : MonoBehaviour {
             return false;
         }
     }
-
+    */
     private void Die() {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
-        if (DinoType == DinoTypes.APATOSSAURO) {
+        if (DinoType == DinoTypes.APATOSSAURO && habilidadeOn) {
             foreach(Dinossauro d in gc.enemyTargetGroup.DinosDinossauro)
             {
                 //Reverse Apatasaur ability
-                d.VelocidadeAtaque = d.VelocidadeAtaque * 2;
+                if (d != null)
+                    d.VelocidadeAtaque = d.VelocidadeAtaque / 2;
+
             }
         }
-        
-		
         // When the dinosaur is destroyed, the enemy player is rewarded with Dodo Meth
         playerEnemy.incrementarRecursos(custo);
         Destroy(gameObject);

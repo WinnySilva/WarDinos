@@ -40,15 +40,6 @@ public class TRex : Dinossauro {
 		base.nSlot=4;
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     #region implemented abstract members of Dinossauro
 
@@ -69,5 +60,38 @@ public class TRex : Dinossauro {
 		//throw new System.NotImplementedException ();
 	}
 
-	#endregion
+    public override bool Atacar(GroupController gp)
+    {
+        
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+
+
+        foreach (Dinossauro d in gp.DinosDinossauro)
+        {
+            if (d != null && (d.Vida < menorVida || menorVida == -1))
+            {
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1)
+        {
+            dTarget.Vida = dTarget.Vida - ataque;
+            if (habilidadeOn) {
+                Habilidade();
+            }
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            return true;
+        }
+        else
+        {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+
+    }
+
+    #endregion
 }

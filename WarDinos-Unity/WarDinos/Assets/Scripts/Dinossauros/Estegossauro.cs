@@ -38,15 +38,7 @@ public class Estegossauro : Dinossauro {
 		base.nSlot =2;
 
 	}
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     #region implemented abstract members of Dinossauro
 
@@ -54,12 +46,50 @@ public class Estegossauro : Dinossauro {
     {
 
         foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
-            d.Vida = d.Vida - base.ataque;
+            if (d != null) ;
+                d.Vida = d.Vida - base.ataque;
         }
 
 
 		//throw new System.NotImplementedException ();
 	}
 
-	#endregion
+    public override bool Atacar(GroupController gp)
+    {
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+        //Habilidade on = Ataque em área
+        if (habilidadeOn)
+        {
+            Habilidade();
+            return true;
+        }
+        //se não, single
+        else
+        {
+            foreach (Dinossauro d in gp.DinosDinossauro)
+            {
+                if (d != null && (d.Vida < menorVida || menorVida == -1))
+                {
+                    dTarget = d;
+                    menorVida = d.Vida;
+                }
+            }
+            if (menorVida != -1)
+            {
+                dTarget.Vida = dTarget.Vida - ataque;
+                Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+                return true;
+            }
+            else
+            {
+                Debug.Log(GetInstanceID() + "Attacked but there were no target");
+                return false;
+            }
+        }
+
+    }
+
+    #endregion
 }

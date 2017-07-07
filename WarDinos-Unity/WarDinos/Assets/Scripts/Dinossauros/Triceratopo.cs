@@ -43,15 +43,6 @@ public class Triceratopo : Dinossauro {
         
     }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	#region implemented abstract members of Dinossauro
 	public override void Habilidade()
@@ -66,11 +57,50 @@ public class Triceratopo : Dinossauro {
 		 * COMPLEX AS FUCK!
 		*/
 		foreach (Dinossauro d in Gc.enemyTargetGroup.DinosDinossauro) {
-			nDinos++;
+            if(d != null)
+                nDinos++;
 		}
 
 		base.ataque = base.ataque * nDinos;
 		//throw new System.NotImplementedException ();
 	}
+
+    public override bool Atacar(GroupController gp) {
+        //dumb mode on
+        //after atacking, tricera attack has to go back to it's original value.
+        int realataque = ataque;
+
+        //attack implemented by alex-sama
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
+
+
+        foreach (Dinossauro d in gp.DinosDinossauro)
+        {
+            if (d != null && (d.Vida < menorVida || menorVida == -1))
+            {
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1)
+        {
+            if (habilidadeOn)
+            {
+                //Atack * number of enemy dinosaurs
+                Habilidade();
+            }
+            dTarget.Vida = dTarget.Vida - ataque;
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            ataque = realataque;
+            return true;
+        }
+        else
+        {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+    }
 	#endregion
 }

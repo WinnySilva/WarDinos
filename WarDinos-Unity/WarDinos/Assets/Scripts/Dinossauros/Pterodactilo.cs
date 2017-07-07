@@ -39,16 +39,11 @@ public class Pterodactilo : Dinossauro {
         base.playerID=-1;
 		base.nSlot=1;
 
-	}
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        if (habilidadeOn)
+        {
+            Habilidade();
+        }
+    }
 
     #region implemented abstract members of Dinossauro
 
@@ -56,9 +51,37 @@ public class Pterodactilo : Dinossauro {
     {
         foreach (Dinossauro d in Gc.DinosDinossauro)
         {
-            Velocidade_deslocamento++;
+            if(d != null)
+                Velocidade_deslocamento++;
         }
 	}
+    public override bool Atacar(GroupController gp)
+    {
+        Gc = gp;
+        Dinossauro dTarget = null;
+        int menorVida = -1;
 
-	#endregion
+
+        foreach (Dinossauro d in gp.DinosDinossauro)
+        {
+            if (d != null && (d.Vida < menorVida || menorVida == -1))
+            {
+                dTarget = d;
+                menorVida = d.Vida;
+            }
+        }
+        if (menorVida != -1)
+        {
+            dTarget.Vida = dTarget.Vida - ataque;
+            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+            return true;
+        }
+        else
+        {
+            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            return false;
+        }
+
+    }
+    #endregion
 }
