@@ -9,7 +9,7 @@ public class Apatossauro : Dinossauro {
         base.custo = 35;
         base.abilityCost = 200;
         base.alcance_ataque =1;
-		base.ataque=5;
+		base.ataque=15;
 		base.velocidadeAtaque=2.5;
 		base.velocidade_deslocamento=2;
 		base.vida=200;
@@ -22,7 +22,7 @@ public class Apatossauro : Dinossauro {
         base.dinoType= Dinossauro.DinoTypes.APATOSSAURO;
 
         base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=15;
+		base.MAX_ATAQUE=25;
 		base.MAX_VELOCIDADE_ATAQUE=2.25;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=4;
 		base.MAX_VIDA=400;
@@ -86,7 +86,7 @@ public class Apatossauro : Dinossauro {
         }
         if (menorVida != -1)
         {
-            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0, ataque / 2) );
             Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
             return true;
         }

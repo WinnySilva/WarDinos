@@ -9,7 +9,7 @@ public class Raptor : Dinossauro {
         base.custo = 10;
         base.abilityCost = 200;
         base.alcance_ataque = 1;
-        base.ataque = 5;
+        base.ataque = 10;
         base.velocidadeAtaque = 1.0;
         base.velocidade_deslocamento = 4;
         base.vida = 50;
@@ -23,7 +23,7 @@ public class Raptor : Dinossauro {
         
         //MAX STATS AND ATTRIBUTE VALUES
         base.MAX_ALCANCE_ATAQUE = 1;
-        base.MAX_ATAQUE = 10;
+        base.MAX_ATAQUE = 20;
         base.MAX_VELOCIDADE_ATAQUE = 0.5;
         base.MAX_VELOCIDADE_DESLOCAMENTO = 8;
         base.MAX_VIDA = 100;
@@ -94,7 +94,7 @@ public class Raptor : Dinossauro {
             {
                 Habilidade();
             }
-            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0, ataque / 2) );
             ataque = realataque;
             Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
             return true;

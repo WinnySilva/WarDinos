@@ -78,7 +78,7 @@ public class TRex : Dinossauro {
         }
         if (menorVida != -1)
         {
-            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1,ataque/2) ) ;
+            dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0,ataque/2) ) ;
             if (habilidadeOn) {
                 Habilidade();
             }

@@ -8,7 +8,7 @@ public class Estegossauro : Dinossauro {
         base.custo = 25;
         base.abilityCost = 100;
         base.alcance_ataque =1;
-		base.ataque=10;
+		base.ataque=15;
 		base.velocidadeAtaque=2.0;
 		base.velocidade_deslocamento=2;
 		base.vida=100;
@@ -21,7 +21,7 @@ public class Estegossauro : Dinossauro {
         base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
 
         base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=20;
+		base.MAX_ATAQUE=25;
 		base.MAX_VELOCIDADE_ATAQUE=1.75;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=4;
 		base.MAX_VIDA=200;
@@ -63,7 +63,8 @@ public class Estegossauro : Dinossauro {
         if (habilidadeOn)
         {
             foreach (Dinossauro d in gp.DinosDinossauro) {
-                d.Vida = d.Vida - (ataque - Random.Range(1, ataque / 2)) ;
+                if(d != null)
+                    d.Vida = d.Vida - (ataque - Random.Range(0, (ataque/2))) ;
             }
             return true;
         }

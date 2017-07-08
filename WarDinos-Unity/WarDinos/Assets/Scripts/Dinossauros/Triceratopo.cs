@@ -80,7 +80,7 @@ public class Triceratopo : Dinossauro {
             if (habilidadeOn)
             {
                 //Atack * number of enemy dinosaurs
-                dTarget.Vida = dTarget.Vida - ataque*nDinos;
+                dTarget.Vida = dTarget.Vida - (ataque*nDinos - (Random.Range(0, ataque / 2)) );
                 Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
                 return true;
             }
