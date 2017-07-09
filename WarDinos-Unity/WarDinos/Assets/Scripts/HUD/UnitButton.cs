@@ -10,7 +10,9 @@ public class UnitButton : MonoBehaviour {
 
     public Sprite spriteInFrame;
     public string dinosaur;
+    public string description;
     public GameObject quantityText;
+    public GroupController.DinoType dinosaurType;
 
     private int quantityOnGroup = 0;
 
@@ -34,16 +36,22 @@ public class UnitButton : MonoBehaviour {
         quantityOnGroup++;
         quantityText.GetComponent<Text>().text = quantityOnGroup.ToString();
     }
-    public void decQuantityOnGroup()
+    public bool decQuantityOnGroup()
     {
         if (quantityOnGroup > 0) {
             quantityOnGroup--;
             quantityText.GetComponent<Text>().text = quantityOnGroup.ToString();
+            return true;
         }
+        else
+            return false;
     }
     public void resetQuantityOnGroup()
     {
         quantityOnGroup = 0;
         quantityText.GetComponent<Text>().text = quantityOnGroup.ToString();
+    }
+    public GroupController.DinoType DinosaurType {
+        get { return dinosaurType; }
     }
 }
