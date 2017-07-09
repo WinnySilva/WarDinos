@@ -233,7 +233,7 @@ public class GroupController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-        if (collidedFriend == null && collidedWithFriend == true) {
+        if (collidedFriend == null && collidedWithFriend == true && !waitingForDispatch) {
             collidedWithFriend = false;
             StartWalking();
         }
@@ -278,12 +278,12 @@ public class GroupController : MonoBehaviour {
             Destroy(gameObject);
         }
         // If collided with opponent group
-        else if (other.CompareTag(enemyTag)) {
+        else if (other.CompareTag(enemyTag) && !waitingForDispatch) {
             StopWalking();
             AttackGroup(other.GetComponent<GroupController>());
         }
         // If collided with friend group
-        else if (other.CompareTag(myTag)) {
+        else if (other.CompareTag(myTag) && !waitingForDispatch) {
             // The group behind stop walking
             if (player == 1) {
                 if (transform.position.x <= other.transform.position.x) {
@@ -309,7 +309,7 @@ public class GroupController : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other)
     {
         // If is not colliding with enemy group anymore
-        if (other.CompareTag(enemyTag))
+        if (other.CompareTag(enemyTag) && !waitingForDispatch)
         {
             StartWalking();
         }
