@@ -71,38 +71,71 @@ public class Player : MonoBehaviour {
     }
 
     // Faz o upgrade. Retorna 1 se ocorreu ok;
-    // Retorna -1; se não ou
+    // Retorna -1, se nao tiver recursos suficiente;
+    // Retorna -2, se ja esta no nivel maximo.
+    // Retorna 2, se ocorreu ok, mas chegou no nivel maximo
     public int Upgrade (GroupController.DinoType dino, Attributes attr) {
-        //TODO: Implementar o que precisa na classe Dinossauro pra poder terminar esse metodo
-        // Terminar = Aumentar a quantidade certa
-        // = Ter um nivel maximo pra cada atributo
-
 
         if (attr == Attributes.ATK) {
             if (reduzirRecursos(goDinos[(int)dino].CustoAttrAtaque)) {
-                goDinos[(int)dino].Ataque += goDinos[(int)dino].Ataque_upg;
+                if (!goDinos[(int)dino].UpgradeAtaque())
+                {
+                    incrementarRecursos(goDinos[(int)dino].CustoAttrAtaque);
+                    return -2;
+                }
+                else if (goDinos[(int)dino].CustoAttrAtaque > goDinos[(int)dino].GET_MAX_ATTR_ATAQUE)
+                    return 2;
             }
             else return -1;
         }
         else if (attr == Attributes.VIDA) {
             if (reduzirRecursos(goDinos[(int)dino].CustoAttrVida)) {
-                goDinos[(int)dino].Vida += goDinos[(int)dino].Vida_upg;
+                if (!goDinos[(int)dino].UpgradeVida()) {
+                    incrementarRecursos(goDinos[(int)dino].CustoAttrVida);
+                    return -2;
+                }
+                else if (goDinos[(int)dino].CustoAttrVida > goDinos[(int)dino].GET_MAX_ATTR_VIDA)
+                    return 2;
             }
             else return -1;
         }
         else if (attr == Attributes.VEL_ATK) {
             if (reduzirRecursos(goDinos[(int)dino].CustoAttrVelocidadeAtaque)) {
-                goDinos[(int)dino].VelocidadeAtaque += goDinos[(int)dino].VelocidadeAtaque_upg;
+                if (!goDinos[(int)dino].UpgradeVelAtq()) {
+                    incrementarRecursos(goDinos[(int)dino].CustoAttrVelocidadeAtaque);
+                    return -2;
+                }
+                else if (goDinos[(int)dino].CustoAttrVelocidadeAtaque > goDinos[(int)dino].GET_MAX_ATTR_VEL_ATQ)
+                    return 2;
             }
             else return -1;
         }
         else if (attr == Attributes.VEL_DES) {
             if (reduzirRecursos(goDinos[(int)dino].CustoAttrVelocidadeDeslocamento)) {
-                goDinos[(int)dino].Velocidade_deslocamento += goDinos[(int)dino].Velocidade_deslocamento_upg;
+                if (!goDinos[(int)dino].UpgradeVelDes()) {
+                    incrementarRecursos(goDinos[(int)dino].CustoAttrVelocidadeDeslocamento);
+                    return -2;
+                }
+                else if (goDinos[(int)dino].CustoAttrVelocidadeDeslocamento > goDinos[(int)dino].GET_MAX_ATTR_VEL_DES)
+                    return 2;
             }
             else return -1;
         }
-        
+        else if (attr == Attributes.HAB)
+        {
+            if (reduzirRecursos(goDinos[(int)dino].AbilityCost))
+            {
+                if (!goDinos[(int)dino].UpgradeAbility())
+                {
+                    incrementarRecursos(goDinos[(int)dino].AbilityCost);
+                    return -2;
+                }
+                else if (goDinos[(int)dino].HabilidadeOn)
+                    return 2;
+            }
+            else return -1;
+        }
+
         return 1;
     }
 }

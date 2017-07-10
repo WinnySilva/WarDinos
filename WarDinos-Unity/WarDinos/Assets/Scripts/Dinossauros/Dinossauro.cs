@@ -33,7 +33,7 @@ public abstract class Dinossauro : MonoBehaviour {
     //SOME FLAGS
     protected DinoTypes dinoType;
 	protected int playerID;
-	protected bool habilidadeOn = true;
+	protected bool habilidadeOn = false;
 
 	//MAX VALUE OF ATTRIBUTES
 	protected int MAX_VIDA;
@@ -219,41 +219,66 @@ public abstract class Dinossauro : MonoBehaviour {
 		}
 	}
 
+    public int AbilityCost
+    {
+        get
+        {
+            return abilityCost;
+        }
+    }
+
     public int Vida_upg { get { return vida_upg; } }
     public int Ataque_upg { get { return vida_upg; } }
     public int VelocidadeAtaque_upg { get { return vida_upg; } }
     public int Velocidade_deslocamento_upg { get { return vida_upg; } }
 
-    public void UpgradeVida() {
+    public bool UpgradeVida() {
         if (custoAttrVida <= MAX_ATTR_VIDA)
         {
             vida++;
             custoAttrVida++;
+            return true;
         }
+        else return false;
     }
-    public void UpgradeAtaque()
+    public bool UpgradeAtaque()
     {
         if (custoAttrAtaque <= MAX_ATTR_ATAQUE)
         {
             ataque++;
             custoAttrAtaque++;
-        }       
+            return true;
+        }
+        else return false;
     }
-    public void UpgradeVelAtq()
+    public bool UpgradeVelAtq()
     {
         if (custoAttrVelocidadeAtaque <= MAX_ATTR_VEL_ATQ)
         {
             velocidadeAtaque++;
             custoAttrVelocidadeAtaque++;
-        }       
+            return true;
+        }
+        else return false;
     }
-    public void UpgradeVelDes()
+    public bool UpgradeVelDes()
     {
         if(custoAttrVelocidadeDeslocamento <= MAX_ATTR_VEL_DES)
         {
             velocidade_deslocamento++;
             custoAttrVelocidadeDeslocamento++;
+            return true;
         }
+        else return false;
+    }
+    public bool UpgradeAbility()
+    {
+        if (habilidadeOn == false)
+        {
+            habilidadeOn = true;
+            return true;
+        }
+        else return false;
     }
     public int NSlot {
 		get {
@@ -322,6 +347,13 @@ public abstract class Dinossauro : MonoBehaviour {
         set { gc = value; }
     }
 
+    public int GET_MAX_ATTR_VIDA { get { return MAX_ATTR_VIDA; } }
+    public int GET_MAX_ATTR_ATAQUE { get { return MAX_ATTR_ATAQUE; } }
+    public int GET_MAX_ATTR_VEL_ATQ { get { return MAX_ATTR_VEL_ATQ; } }
+    public int GET_MAX_ATTR_VEL_DES { get { return MAX_ATTR_VEL_DES; } }
+
+
+
     public void CopyAttr(Dinossauro dino){
         this.custo = dino.custo;
 
@@ -335,6 +367,7 @@ public abstract class Dinossauro : MonoBehaviour {
 		this.custoAttrAtaque= dino.custoAttrAtaque;
 		this.custoAttrVelocidadeAtaque= dino.custoAttrVelocidadeAtaque;
         this.custoAttrVelocidadeDeslocamento = dino.custoAttrVelocidadeDeslocamento;
+        this.abilityCost = dino.abilityCost;
 
 		this.dinoType = dino.dinoType;
 
@@ -343,6 +376,8 @@ public abstract class Dinossauro : MonoBehaviour {
 		this.MAX_VELOCIDADE_ATAQUE= dino.MAX_VELOCIDADE_ATAQUE;
 		this.MAX_VELOCIDADE_DESLOCAMENTO= dino.MAX_VELOCIDADE_DESLOCAMENTO;
 		this.MAX_ALCANCE_ATAQUE= dino.MAX_ALCANCE_ATAQUE;
+
+        this.habilidadeOn = dino.habilidadeOn;
 	}
 
 

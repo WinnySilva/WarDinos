@@ -89,6 +89,7 @@ public class HUDController : MonoBehaviour
     private bool isMessagingLoja = false;
 
     public GameObject dinoSkill;
+    public Sprite maxLevelSprite;
 
     public Image[] dinoGroupFrames;
     public Sprite dinoGroupFreeSlotSprite;
@@ -199,6 +200,7 @@ public class HUDController : MonoBehaviour
                         changeTooltipLojaText(wdhub.getDinosaur(), 16);
                         // Change the ability icon
                         dinoSkill.GetComponent<Image>().sprite = wdhub.SpriteHabilidade;
+                        updateUpgradeIcons();
                     }
                     else
                         changeTooltipLojaText("Para Menu de Unidades", 14);
@@ -207,6 +209,14 @@ public class HUDController : MonoBehaviour
                 else if (selectedButton.GetComponent<changeMenuButton>()) {
                     changeMenuButton cmb = selectedButton.GetComponent<changeMenuButton>();
                     changeButton((Button)selectedButton.FindSelectableOnDown(), false);
+                    WDHudUpgradeButton wdhub = selectedButton.GetComponent<WDHudUpgradeButton>();
+                    if (wdhub != null)
+                    {
+                        changeTooltipLojaText(wdhub.getDinosaur(), 16);
+                        // Change the ability icon
+                        dinoSkill.GetComponent<Image>().sprite = wdhub.SpriteHabilidade;
+                        updateUpgradeIcons();
+                    }
                     if (cmb.Menu == 2)
                         changeTooltipLojaText(selectedButton.GetComponent<WDHudUpgradeButton>().getDinosaur(), 16);
                     else
@@ -276,6 +286,7 @@ public class HUDController : MonoBehaviour
                         changeTooltipLojaText(wdhub.getDinosaur(), 16);
                         // Change the ability icon
                         dinoSkill.GetComponent<Image>().sprite = wdhub.SpriteHabilidade;
+                        updateUpgradeIcons();
                     }
                     else
                     {
@@ -287,8 +298,17 @@ public class HUDController : MonoBehaviour
                 {
                     changeMenuButton cmb = selectedButton.GetComponent<changeMenuButton>();
                     changeButton((Button)selectedButton.FindSelectableOnUp(), false);
-                    if (cmb.Menu == 2)
+                    WDHudUpgradeButton wdhub = selectedButton.GetComponent<WDHudUpgradeButton>();
+                    if (wdhub != null)
+                    {
+                        changeTooltipLojaText(wdhub.getDinosaur(), 16);
+                        // Change the ability icon
+                        dinoSkill.GetComponent<Image>().sprite = wdhub.SpriteHabilidade;
+                        updateUpgradeIcons();
+                    }
+                    if (cmb.Menu == 2) {
                         changeTooltipLojaText(selectedButton.GetComponent<WDHudUpgradeButton>().getDinosaur(), 16);
+                    }
                     else
                         changeTooltipText("Seleciona Lane " + selectedButton.GetComponent<LaneButton>().getNumber() + " para Despacho", 14);
                 }
@@ -385,11 +405,17 @@ public class HUDController : MonoBehaviour
 
                 // Efetua a compra caso haja recursos. Caso contrario emite uma mensagem avisando que nao tem recursos
                 Debug.Log(selectedButton + " ___ " + selectedButton.GetComponent<WDHudAttributeButton>());
-                if (pgoPlayer.Upgrade(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType,
-                    selectedButton.GetComponent<WDHudAttributeButton>().AttrType) == 1)
-                    Debug.Log("Tem recursos");
-                else
+                int upgradeFlag = pgoPlayer.Upgrade(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType,
+                    selectedButton.GetComponent<WDHudAttributeButton>().AttrType);
+                if (upgradeFlag == -1)
                     displayMessageLoja("Requer mais DODO METH", 4.0f, 16);
+                else if (upgradeFlag == -2) {
+                    displayMessageLoja("Impossivel, Nivel Maximo", 4.0f, 14);
+                }
+                else if (upgradeFlag == 2) {
+                    lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().attributesInMaxLevel[(int)selectedButton.GetComponent<WDHudAttributeButton>().AttrType] = true; // PRO CODING INC
+                    selectedButton.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
+                }
 
                 Debug.Log(pgoPlayer.GetComponent<Player>().Recursos);
 
@@ -1049,5 +1075,34 @@ public class HUDController : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    private void updateUpgradeIcons () {
+        bool[] attrs = selectedButton.GetComponent<WDHudUpgradeButton>().attributesInMaxLevel;
+
+        if (!attrs[(int)Attributes.ATK])
+            buttonUpgradePAtaque.GetComponentsInChildren<Image>()[1].sprite = buttonUpgradePAtaque.GetComponent<WDHudAttributeButton>().SpriteAttribute;
+        else
+            buttonUpgradePAtaque.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
+
+        if (!attrs[(int)Attributes.HAB])
+            { }
+        else
+            buttonUpgradeHabilidade.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
+
+        if (!attrs[(int)Attributes.VEL_ATK])
+            buttonUpgradeVelAtaque.GetComponentsInChildren<Image>()[1].sprite = buttonUpgradeVelAtaque.GetComponent<WDHudAttributeButton>().SpriteAttribute;
+        else
+            buttonUpgradeVelAtaque.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
+
+        if (!attrs[(int)Attributes.VEL_DES])
+            buttonUpgradeVelDeslocamento.GetComponentsInChildren<Image>()[1].sprite = buttonUpgradeVelDeslocamento.GetComponent<WDHudAttributeButton>().SpriteAttribute;
+        else
+            buttonUpgradeVelDeslocamento.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
+
+        if (!attrs[(int)Attributes.VIDA])
+            buttonUpgradeVida.GetComponentsInChildren<Image>()[1].sprite = buttonUpgradeVida.GetComponent<WDHudAttributeButton>().SpriteAttribute;
+        else
+            buttonUpgradeVida.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
     }
 }

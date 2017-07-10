@@ -11,6 +11,13 @@ public class WDHudUpgradeButton : MonoBehaviour {
     public GroupController.DinoType DinoType;
     public Sprite SpriteHabilidade;
 
+    public bool[] attributesInMaxLevel;
+
+    void Start ()
+    {
+        attributesInMaxLevel = new bool[5] { false, false, false, false, false };
+    }
+
     public string getDinosaur() {
         return Dinosaur;
     }
