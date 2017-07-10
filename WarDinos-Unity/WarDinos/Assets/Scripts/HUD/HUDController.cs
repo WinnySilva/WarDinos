@@ -26,17 +26,6 @@ public class HUDController : MonoBehaviour
    
     private int laneToSpawn;
 
-    public KeyCode keyUp;
-    public KeyCode keyDown;
-    public KeyCode keyLeft;
-    public KeyCode keyRight;
-    public KeyCode keyConfirm;
-    public KeyCode keyUpJS;
-    public KeyCode keyDownJS;
-    public KeyCode keyLeftJS;
-    public KeyCode keyRightJS;
-    public KeyCode keyConfirmJS;
-
     public GameObject panelUnits;
     public GameObject panelUpgrades;
     public float PanelUpgradesXTranslation;
