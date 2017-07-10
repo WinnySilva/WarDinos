@@ -178,9 +178,6 @@ public class HUDController : MonoBehaviour
                     // Change the dinosaur displayed in HUD if button
                     // changed to is a unit button
                     updateDinoFrameInfo();
-
-                    // Display tooltip
-                    changeTooltipText(ub.description, 12);
                 }
                 // Attribute Upgrade button
                 else if (selectedButton.GetComponent<WDHudAttributeButton>()) {
@@ -190,6 +187,8 @@ public class HUDController : MonoBehaviour
 
                     changeButton((Button)selectedButton.FindSelectableOnDown(), false);
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                    if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
+                        changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
                 }
                 // Upgrade Unit button
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
@@ -264,9 +263,6 @@ public class HUDController : MonoBehaviour
                     // Change the dinosaur displayed in HUD if button
                     // changed to is a unit button
                     updateDinoFrameInfo();
-
-                    // Display tooltip
-                    changeTooltipText(ub.description, 12);
                 }
                 // Attribute Upgrade button
                 else if (selectedButton.GetComponent<WDHudAttributeButton>())
@@ -277,6 +273,8 @@ public class HUDController : MonoBehaviour
 
                     changeButton((Button)selectedButton.FindSelectableOnUp(), false);
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                    if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
+                        changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
                 }
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
                 {
@@ -611,7 +609,7 @@ public class HUDController : MonoBehaviour
                 lastSelectedLaneButton = selectedButton;
                 changeButton(lastSelectedUnitButton, true);
 
-                changeTooltipText(selectedButton.GetComponent<UnitButton>().description, 12);
+                updateDinoGroupInfo();
             }
             // Upgrade unit button
             else if (selectedButton.GetComponent<WDHudUpgradeButton>())
@@ -621,6 +619,8 @@ public class HUDController : MonoBehaviour
                 changeButton(lastSelectedUpgradeAttributeButton, true);
 
                 changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
+                    changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
             }
             // Upgrade Attribute button
             else if (selectedButton.GetComponent<WDHudAttributeButton>())
@@ -768,6 +768,8 @@ public class HUDController : MonoBehaviour
         imageSelectedDino.GetComponent<Image>().sprite = ub.getSpriteInFrame();
         GroupController.DinoType dt = ub.dinosaurType;
 
+        int fontSize = 15;
+             
         if (dt == GroupController.DinoType.APATOSSAURO)
         {
             dpt.Vida.text = pgoPlayerApato.Vida.ToString();
@@ -775,6 +777,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerApato.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerApato.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerApato.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerApato.Custo + " Dodo Meth", fontSize);
         }
         if (dt == GroupController.DinoType.ESTEGOSSAURO)
         {
@@ -783,6 +786,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerEstego.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerEstego.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerEstego.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerEstego.Custo + " Dodo Meth", fontSize);
         }
         if (dt == GroupController.DinoType.PTERODACTILO)
         {
@@ -791,6 +795,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerPtero.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerPtero.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerPtero.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerPtero.Custo + " Dodo Meth", fontSize);
         }
         if (dt == GroupController.DinoType.RAPTOR)
         {
@@ -799,6 +804,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerVeloci.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerVeloci.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerVeloci.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerVeloci.Custo + " Dodo Meth", fontSize);
         }
         if (dt == GroupController.DinoType.TREX)
         {
@@ -807,6 +813,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerTRex.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerTRex.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerTRex.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerTRex.Custo + " Dodo Meth", fontSize);
         }
         if (dt == GroupController.DinoType.TRICERATOPO)
         {
@@ -815,6 +822,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerTricera.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerTricera.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerTricera.NSlot.ToString();
+            changeTooltipText("" + ub.description + pgoPlayerTricera.Custo + " Dodo Meth", fontSize);
         }
     }
 
