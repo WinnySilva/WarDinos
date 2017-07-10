@@ -31,6 +31,11 @@ public class HUDController : MonoBehaviour
     public KeyCode keyLeft;
     public KeyCode keyRight;
     public KeyCode keyConfirm;
+    public KeyCode keyUpJS;
+    public KeyCode keyDownJS;
+    public KeyCode keyLeftJS;
+    public KeyCode keyRightJS;
+    public KeyCode keyConfirmJS;
 
     public GameObject panelUnits;
     public GameObject panelUpgrades;
@@ -107,6 +112,19 @@ public class HUDController : MonoBehaviour
         public Text Vel;
         public Text Tam;
     }
+
+    // For pressing DOWN buttons
+    private bool pressingRight = false;
+    private bool pressingLeft = false;
+    private bool pressingUp = false;
+    private bool pressingDown = false;
+
+    // For pressing UP buttons
+    private bool pressingRight2 = false;
+    private bool pressingLeft2 = false;
+    private bool pressingUp2 = false;
+    private bool pressingDown2 = false;
+
     public DinoPanelTexts dpt;
 
     private int freeSlots = 4;
@@ -148,7 +166,7 @@ public class HUDController : MonoBehaviour
     void Update()
     {
         // ------ KEY RIGHT --------------------------------------------------------------------
-        if (Input.GetKeyDown(keyRight))
+        if (getAxisRightDown())
         {
             if (selectedButton.FindSelectableOnDown())
             {
@@ -224,7 +242,8 @@ public class HUDController : MonoBehaviour
 
 
         // ------- KEY LEFT ---------------------------------------------------------------------
-        if (Input.GetKeyDown(keyLeft))
+        //if ((Input.GetButtonDown("HorizontalP1") && horiP1 < 0 && player == 1) || (Input.GetButtonDown("HorizontalP2") && horiP2 < 0 && player == 2))
+        if (getAxisLeftDown())
         {
             if (selectedButton.FindSelectableOnUp())
             {
@@ -304,7 +323,7 @@ public class HUDController : MonoBehaviour
 
 
         // ------ KEY DOWN --------------------------------------------------------------------
-        if (Input.GetKeyDown(keyDown))
+        if (getAxisDownDown())
         {
             // If button is
             // Unit button
@@ -328,7 +347,7 @@ public class HUDController : MonoBehaviour
                 subB.targetGraphic.CrossFadeColor(subB.colors.pressedColor, subB.colors.fadeDuration, true, true);
             }
         }
-        if (Input.GetKeyUp(keyDown))
+        if (getAxisDownUp())
         {
             // If button is
             // Upgrade Unit button
@@ -343,7 +362,7 @@ public class HUDController : MonoBehaviour
 
 
         // ------ KEY UP --------------------------------------------------------------------
-        if (Input.GetKeyDown(keyUp))
+        if (getAxisUpDown())
         {
             // If button is
             // Unit button
@@ -387,7 +406,7 @@ public class HUDController : MonoBehaviour
 
             }
         }
-        if (Input.GetKeyUp(keyUp))
+        if (getAxisUpUp())
         {
             // If button is
             // Unit button
@@ -409,7 +428,7 @@ public class HUDController : MonoBehaviour
 
 
         // ----- KEY CONFIRM -------------------------------------------------------------------
-        if (Input.GetKeyDown(keyConfirm))
+        if ((Input.GetButtonDown("ConfirmP1") && player == 1) || (Input.GetButtonDown("ConfirmP2") && player == 2))
         {
             Button bt = (Button)selectedButton;
             bt.targetGraphic.CrossFadeColor(
@@ -419,7 +438,7 @@ public class HUDController : MonoBehaviour
                 true
             );
         }
-        if (Input.GetKeyUp(keyConfirm))
+        if ((Input.GetButtonUp("ConfirmP1") && player == 1) || (Input.GetButtonUp("ConfirmP2") && player == 2))
         {
             // Update the info in dinos frame, so if the player upgraded his/her dinos
             // the information is correct
@@ -898,5 +917,148 @@ public class HUDController : MonoBehaviour
         isMessaging = false;
         tooltipLojaText.text = lastMessageStringLoja;
         tooltipLojaText.fontSize = lastMessageFontSizeLoja;
+    }
+
+    private bool getAxisRightDown () {
+        float horiP1 = Input.GetAxis("HorizontalP1");
+        float horiP2 = Input.GetAxis("HorizontalP2");
+        
+        if ((pressingRight == false) && ((horiP1 > 0 && player == 1) || (horiP2 > 0 && player == 2)))
+        {
+            pressingRight = true;
+            return true;
+        }
+        else if ((pressingRight == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingRight = false;
+            return false;
+        }
+        else return false;
+    }
+
+    private bool getAxisLeftDown()
+    {
+        float horiP1 = Input.GetAxis("HorizontalP1");
+        float horiP2 = Input.GetAxis("HorizontalP2");
+
+        if ((pressingLeft == false) && ((horiP1 < 0 && player == 1) || (horiP2 < 0 && player == 2)))
+        {
+            pressingLeft = true;
+            return true;
+        }
+        else if ((pressingLeft == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingLeft = false;
+            return false;
+        }
+        else return false;
+    }
+
+    private bool getAxisUpDown()
+    {
+        float horiP1 = Input.GetAxis("VerticalP1");
+        float horiP2 = Input.GetAxis("VerticalP2");
+
+        if ((pressingUp == false) && ((horiP1 > 0 && player == 1) || (horiP2 > 0 && player == 2)))
+        {
+            pressingUp = true;
+            return true;
+        }
+        else if ((pressingUp == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingUp = false;
+            return false;
+        }
+        else return false;
+    }
+
+    private bool getAxisDownDown()
+    {
+        float horiP1 = Input.GetAxis("VerticalP1");
+        float horiP2 = Input.GetAxis("VerticalP2");
+
+        if ((pressingDown == false) && ((horiP1 < 0 && player == 1) || (horiP2 < 0 && player == 2)))
+        {
+            pressingDown = true;
+            return true;
+        }
+        else if ((pressingDown == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingDown = false;
+            return false;
+        }
+        else return false;
+    }
+
+    private bool getAxisUpUp()
+    {
+        float horiP1 = Input.GetAxis("VerticalP1");
+        float horiP2 = Input.GetAxis("VerticalP2");
+
+        if ((pressingUp2 == false) && ((horiP1 > 0 && player == 1) || (horiP2 > 0 && player == 2)))
+        {
+            pressingUp2 = true;
+            return false;
+        }
+        else if ((pressingUp2 == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingUp2 = false;
+            return true;
+        }
+        else return false;
+    }
+
+    private bool getAxisDownUp()
+    {
+        float horiP1 = Input.GetAxis("VerticalP1");
+        float horiP2 = Input.GetAxis("VerticalP2");
+
+        if ((pressingDown2 == false) && ((horiP1 < 0 && player == 1) || (horiP2 < 0 && player == 2)))
+        {
+            pressingDown2 = true;
+            return false;
+        }
+        else if ((pressingDown2 == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingDown2 = false;
+            return true;
+        }
+        else return false;
+    }
+
+    private bool getAxisRightUp()
+    {
+        float horiP1 = Input.GetAxis("HorizontalP1");
+        float horiP2 = Input.GetAxis("HorizontalP2");
+
+        if ((pressingRight2 == false) && ((horiP1 > 0 && player == 1) || (horiP2 > 0 && player == 2)))
+        {
+            pressingRight2 = true;
+            return false;
+        }
+        else if ((pressingRight2 == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingRight2 = false;
+            return true;
+        }
+        else return false;
+    }
+
+    private bool getAxisLeftUp()
+    {
+        float horiP1 = Input.GetAxis("HorizontalP1");
+        float horiP2 = Input.GetAxis("HorizontalP2");
+
+        if ((pressingLeft2 == false) && ((horiP1 < 0 && player == 1) || (horiP2 < 0 && player == 2)))
+        {
+            pressingLeft2 = true;
+            return false;
+        }
+        else if ((pressingLeft2 == true) && ((horiP1 == 0 && player == 1) || (horiP2 == 0 && player == 2)))
+        {
+            pressingLeft2 = false;
+            return true;
+        }
+        else return false;
     }
 }
