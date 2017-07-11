@@ -17,7 +17,7 @@ public class PlayerIA : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		Invoke("Jogar",1f);
+		InvokeRepeating("Jogar",1f,1f);
 	}
 	
 	// Update is called once per frame
@@ -34,8 +34,10 @@ public class PlayerIA : MonoBehaviour {
 		Debug.Log(this.playerHudController.keyDown );
 		Debug.Log(this.playerHudController.keyConfirm);
 */
+		Debug.Log(" "+KeyCode.RightArrow.ToString() );
 
-		Event e = Event.KeyboardEvent(""+this.playerHudController.keyRight +"");
+		Event e = Event.KeyboardEvent( KeyCode.RightArrow.ToString() );
+
 		e.Use();
 	}
 
