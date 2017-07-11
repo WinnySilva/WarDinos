@@ -235,7 +235,7 @@ public abstract class Dinossauro : MonoBehaviour {
     public bool UpgradeVida() {
         if (custoAttrVida <= MAX_ATTR_VIDA)
         {
-            vida++;
+            vida = vida + vida_upg;
             custoAttrVida++;
             return true;
         }
@@ -245,7 +245,7 @@ public abstract class Dinossauro : MonoBehaviour {
     {
         if (custoAttrAtaque <= MAX_ATTR_ATAQUE)
         {
-            ataque++;
+            ataque = ataque + ataque_upg;
             custoAttrAtaque++;
             return true;
         }
@@ -255,7 +255,7 @@ public abstract class Dinossauro : MonoBehaviour {
     {
         if (custoAttrVelocidadeAtaque <= MAX_ATTR_VEL_ATQ)
         {
-            velocidadeAtaque++;
+            velocidadeAtaque = velocidadeAtaque + velocidadeAtaque_upg;
             custoAttrVelocidadeAtaque++;
             return true;
         }
@@ -265,7 +265,7 @@ public abstract class Dinossauro : MonoBehaviour {
     {
         if(custoAttrVelocidadeDeslocamento <= MAX_ATTR_VEL_DES)
         {
-            velocidade_deslocamento++;
+            velocidade_deslocamento = velocidade_deslocamento + velocidade_deslocamento_upg;
             custoAttrVelocidadeDeslocamento++;
             return true;
         }
