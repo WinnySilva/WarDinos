@@ -6,7 +6,7 @@ public class Triceratopo : Dinossauro {
 
 	public Triceratopo (){
 
-        base.custo = 60;
+        base.custo = 45;
         base.abilityCost = 100;
         base.alcance_ataque =1;
 		base.ataque=20;
@@ -38,7 +38,7 @@ public class Triceratopo : Dinossauro {
         base.velocidade_deslocamento_upg = 1;
 
         base.playerID=-1;
-		base.nSlot = 3;
+		base.nSlot = 2;
 
         
     }
