@@ -225,7 +225,9 @@ public class GroupController : MonoBehaviour {
 					atualVida += d.Vida;
 
 			}
-			float scalevida = (float)atualVida/(float)this.totalVida;
+            float scalevida = 0.0f;
+            if (totalVida > 0)
+			    scalevida = (float)atualVida/(float)this.totalVida;
 			Vector3 v = new Vector3(scalevida,1f,1f);
 			this.barraDeVida.transform.localScale = v;
 		}

@@ -11,7 +11,6 @@ public class TitlescreenController : MonoBehaviour {
     public Button sairButton;
     public string singleplayerScene;
     public string multiplayerScene;
-    public string crebitosScene;
     public GameObject gameObjectTitlescreen;
     public GameObject gameObjectCrebitos;
 
@@ -32,7 +31,7 @@ public class TitlescreenController : MonoBehaviour {
     void TaskOnClickSingleplayer ()
     {
         Debug.Log("Clicou no botao Singleplayer");
-        SceneManager.LoadScene(singleplayerScene);
+        //SceneManager.LoadScene(singleplayerScene);
     }
 
     void TaskOnClickMultiplayer()

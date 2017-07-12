@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TitleScreenPressButton : MonoBehaviour {
-    public KeyCode button;
     public GameObject gui;
     public GameObject music;
     public GameObject textObjectToModify;
@@ -14,7 +13,7 @@ public class TitleScreenPressButton : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (!pressed && Input.GetKeyDown(button)) {
+        if (!pressed && Input.GetButtonDown("Submit")) {
             pressed = true;
 
             gui.SetActive(true);

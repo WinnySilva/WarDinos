@@ -12,10 +12,12 @@ public class CrebitosController : MonoBehaviour
 
     private MenuLocker titlescreenLocker;
     private MenuLocker crebitosLocker;
+    private CanvasGroup canvasG;
 
     // Use this for initialization
     void Start()
     {
+        canvasG = GetComponent<CanvasGroup>();
         crebitosLocker = GetComponent<MenuLocker>();
         titlescreenLocker = gameObjectTitlescreen.GetComponent<MenuLocker>();
     }
@@ -23,11 +25,10 @@ public class CrebitosController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(button))
-            Debug.Log("Voltou da tela de Crebitos para Titlescreen" + "  " + titlescreenLocker.isLocked() + "  " + crebitosLocker.isLocked());
         if (!titlescreenLocker.isLocked() &&
             !crebitosLocker.isLocked() &&
-            Input.GetKeyUp(button))
+            Input.GetButtonUp("Submit")
+            && canvasG.alpha == 1.0f)
         {
             Debug.Log("Voltou da tela de Crebitos para Titlescreen");
 
