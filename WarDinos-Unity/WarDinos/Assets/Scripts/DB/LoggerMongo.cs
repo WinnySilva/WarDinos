@@ -17,7 +17,7 @@ public class LoggerMongo {
 	public string habilidade{get;set;}
 	public int habilidadeID{get;set;}
 	public string acao{get;set;}
-
+	public string hora{get;set;}
 	public void writeLog(){
 		ConexaoMongo.writeLog(this);
 	}
