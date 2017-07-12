@@ -6,7 +6,7 @@ using UnityEngine;
 public class Pterodactilo : Dinossauro {
 	public Pterodactilo (){
 
-        base.custo = 10;
+        base.custo = 30;
         base.abilityCost = 100;
         base.alcance_ataque =5;
 		base.ataque=15;

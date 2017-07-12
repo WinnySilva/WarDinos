@@ -6,23 +6,23 @@ public class Triceratopo : Dinossauro {
 
 	public Triceratopo (){
 
-        base.custo = 50;
+        base.custo = 60;
         base.abilityCost = 100;
         base.alcance_ataque =1;
-		base.ataque=10;
+		base.ataque=20;
 		base.velocidadeAtaque=2;
 		base.velocidade_deslocamento=3;
 		base.vida=100;
 
-		base.custoAttrAtaque=1;
-		base.custoAttrVelocidadeAtaque=1;
-		base.custoAttrVida=1;
+        base.custoAttrAtaque = 1;
+        base.custoAttrVelocidadeAtaque = 1;
+        base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-		base.dinoType= Dinossauro.DinoTypes.TRICERATOPO;
+        base.dinoType= Dinossauro.DinoTypes.TRICERATOPO;
 
         base.MAX_ALCANCE_ATAQUE=1;
-		base.MAX_ATAQUE=30;
+		base.MAX_ATAQUE=40;
 		base.MAX_VELOCIDADE_ATAQUE=1.75;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
 		base.MAX_VIDA=200;

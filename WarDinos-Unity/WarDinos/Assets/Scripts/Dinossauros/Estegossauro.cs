@@ -5,7 +5,7 @@ using UnityEngine;
 public class Estegossauro : Dinossauro {
 
 	public Estegossauro () {
-        base.custo = 25;
+        base.custo = 45;
         base.abilityCost = 100;
         base.alcance_ataque =1;
 		base.ataque=15;

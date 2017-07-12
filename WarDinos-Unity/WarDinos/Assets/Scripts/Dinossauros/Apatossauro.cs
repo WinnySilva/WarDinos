@@ -6,7 +6,7 @@ public class Apatossauro : Dinossauro {
     protected GroupController oldGroup;
 	public Apatossauro() {
         oldGroup = null;
-        base.custo = 35;
+        base.custo = 45;
         base.abilityCost = 200;
         base.alcance_ataque =1;
 		base.ataque=15;

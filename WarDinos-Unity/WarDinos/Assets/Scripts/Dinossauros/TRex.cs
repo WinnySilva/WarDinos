@@ -6,13 +6,13 @@ public class TRex : Dinossauro {
     protected int life;
     public TRex(){
 
-        base.custo = 100;
+        base.custo = 150;
         base.abilityCost = 100;
         base.alcance_ataque =1;
 		base.ataque=50;
-		base.velocidadeAtaque=2;
+		base.velocidadeAtaque=1.5;
 		base.velocidade_deslocamento=3;
-		base.vida=100;
+		base.vida=150;
         life = base.vida;
         base.custoAttrAtaque = 1;
         base.custoAttrVelocidadeAtaque = 1;
@@ -25,13 +25,13 @@ public class TRex : Dinossauro {
 		base.MAX_ATAQUE=80;
 		base.MAX_VELOCIDADE_ATAQUE=1.25;
 		base.MAX_VELOCIDADE_DESLOCAMENTO=6;
-		base.MAX_VIDA=200;
+		base.MAX_VIDA=300;
         base.MAX_ATTR_VIDA = 10;
         base.MAX_ATTR_ATAQUE = 10;
         base.MAX_ATTR_VEL_ATQ = 10;
         base.MAX_ATTR_VEL_DES = 3;
 
-        base.vida_upg = 10;
+        base.vida_upg = 15;
         base.ataque_upg = 3;
         base.velocidadeAtaque_upg = -0.025;
         base.velocidade_deslocamento_upg = 1;
