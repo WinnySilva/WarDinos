@@ -96,37 +96,37 @@ public class GroupController : MonoBehaviour {
 
         while (i < 4) {
             if (arg_dinos[j] == DinoType.APATOSSAURO) {
-                NSlot = prefabApatossauro.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualApatossauro.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
             }
             else if (arg_dinos[j] == DinoType.ESTEGOSSAURO) {
-                NSlot = prefabEstegossauro.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualEstegossauro.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
             }
             else if (arg_dinos[j] == DinoType.PTERODACTILO) {
-                NSlot = prefabPterodactilo.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualPterodactilo.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
             }
             else if (arg_dinos[j] == DinoType.RAPTOR) {
-                NSlot = prefabVelociraptor.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualVelociraptor.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
             }
             else if (arg_dinos[j] == DinoType.TREX){
-                NSlot = prefabTrex.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualTrex.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
             }
             else if (arg_dinos[j] == DinoType.TRICERATOPO) {
-                NSlot = prefabTriceratopo.GetComponent<Dinossauro>().NSlot;
+                NSlot = actualTriceratopo.GetComponent<Dinossauro>().NSlot;
                 if (4 - i - NSlot >= 0)
                     dinos[i] = arg_dinos[j];
                 i += NSlot;
