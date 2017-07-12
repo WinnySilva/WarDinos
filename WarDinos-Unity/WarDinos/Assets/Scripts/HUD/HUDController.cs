@@ -148,6 +148,7 @@ public class HUDController : MonoBehaviour
         buttonUnitTiranossauroUB = buttonUnitTiranossauro.GetComponent<UnitButton>();
 
         updateDinoFrameInfo();
+        changeTooltipText("Seleciona Lane " + selectedButton.GetComponent<LaneButton>().getNumber() + " para Despacho", 14);
         displayMessage("Initiating Battlefield Control...", 4.0f, 15);
     }
 
