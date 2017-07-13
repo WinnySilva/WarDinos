@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     public GameObject goPterodactilo;
     public GameObject goTriceratopo;
     public GameObject goTrex;
+	public GameObject dodoMethHud;
 
     private Dinossauro[] goDinos = new Dinossauro[7];
 
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour {
             if (recursos > MAX_RECURSOS) {
                 recursos = MAX_RECURSOS;
             }
+			dodoMethHud.GetComponent<Animator>().Play("AumentarRecursos");
         }
     }
 
