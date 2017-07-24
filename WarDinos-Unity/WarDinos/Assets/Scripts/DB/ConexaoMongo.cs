@@ -78,11 +78,11 @@ public class ConexaoMongo : MonoBehaviour {
 				"\n acao:"+log.acao
 				+"\n tipo excecao: "+e.GetType() );
 		//Desativa o write log
-				ConexaoMongo.ativo = false;
+			//	ConexaoMongo.ativo = false;
 			return;
 		}
 		catch(MongoConnectionException e ){
-
+			ConexaoMongo.ativo = false;
 		}
 	}
 
