@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using UnityEngine;
+using System;
 
 public class ConexaoMongo : MonoBehaviour {
 	protected static MongoClient _client;
@@ -21,6 +22,7 @@ public class ConexaoMongo : MonoBehaviour {
 	public static string HABILIDADE_ID = "HABILIDADE_ID";
 	public static string ACAO = "ACAO";
 	public static string MSG  = "MENSAGEM";
+	public static bool ativo = true;
 
 	void Awake(){
 		_client = new MongoClient();
@@ -58,20 +60,34 @@ public class ConexaoMongo : MonoBehaviour {
 			{ "building", "1480" },
 			{ "coord", new BsonArray { 73.9557413, 40.7720266 } }
 		};
-
-
 		return document;
-
-
 	}
-
-
+		
 	public static void writeLog(LoggerMongo log){
-		MongoCollection col = ConexaoMongo.getLogCollection();
-		col.Insert(log);
+		if (!ConexaoMongo.ativo)
+			return;
+		try{
+			MongoCollection col = ConexaoMongo.getLogCollection();
+			col.Insert(log);
+		}
+		catch(BsonSerializationException e){
+			Debug.LogError("NÃO FOI POSSÍVEL GRAVAR LOG " +
+				"\n classe: "+log.className +"" +
+				"\n msg: " +e.Message+"" +
+				"\n obg: "+log.attachedObj+"" +
+				"\n acao:"+log.acao
+				+"\n tipo excecao: "+e.GetType() );
+		//Desativa o write log
+				ConexaoMongo.ativo = false;
+			return;
+		}
+		catch(MongoConnectionException e ){
+
+		}
 	}
 
-
-
-
+	public static void writeLog(System.Object ob){
+		MongoCollection col = ConexaoMongo.getLogCollection();
+		col.Insert(ob);
+	}
 }

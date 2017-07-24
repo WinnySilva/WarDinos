@@ -16,6 +16,11 @@ public class HUDPlayerAttributes : MonoBehaviour {
     static private float INCOME_INTERVAL = 5.0f;
     private float tElapsed;
     private float tStart;
+	private LoggerMongo logg ;
+
+	void Awake(){
+		logg = new LoggerMongo (this.GetType ());
+	}
 
     // Use this for initialization
     void Start () {
@@ -25,6 +30,10 @@ public class HUDPlayerAttributes : MonoBehaviour {
 
         tStart = Time.realtimeSinceStartup;
         tElapsed = Time.realtimeSinceStartup;
+
+		logg.acao= "HUD START";
+		logg.msg ="INICIANDO HUDPlayerAttributes";
+		logg.writeLog ();
     }
 	
 	// Update is called once per frame

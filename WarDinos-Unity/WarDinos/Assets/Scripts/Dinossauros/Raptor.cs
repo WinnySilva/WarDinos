@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MongoDB.Bson.Serialization.Attributes;
 
 public class Raptor : Dinossauro {
 
@@ -18,6 +19,7 @@ public class Raptor : Dinossauro {
         base.custoAttrVelocidadeAtaque = 1;
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
+
 
         base.dinoType = Dinossauro.DinoTypes.RAPTOR;
         
@@ -40,10 +42,17 @@ public class Raptor : Dinossauro {
         base.playerID = -1;
         base.nSlot = 1;
 
-    }
-    private void Start()
-    {
 
+
+    }
+    private void Awake()
+    {
+		logg = new LoggerMongo (this.GetType() );
+		logg.grupoID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="INICIANDO";
+		logg.msg ="INICIANDO DINO";
+		logg.writeLog ();
     }
 
     #region implemented abstract members of Dinossauro
@@ -68,7 +77,10 @@ public class Raptor : Dinossauro {
 		//POWER-UP TIME!!
 		if (n_raptors > 1)
 			base.ataque = base.ataque * n_raptors / 4;
-		
+		logg.grupoID = this.GetInstanceID ();
+		logg.acao ="HABILIDADE";
+		logg.writeLog ();
+
 		//throw new System.NotImplementedException ();
 	}
 
@@ -88,6 +100,8 @@ public class Raptor : Dinossauro {
                 menorVida = d.Vida;
             }
         }
+		logg.dinossauroID = GetInstanceID ();
+		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {
             if (habilidadeOn)
@@ -96,12 +110,19 @@ public class Raptor : Dinossauro {
             }
             dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0, ataque / 2) );
             ataque = realataque;
-            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-            return true;
+			string msg;
+			msg =(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+			Debug.Log (msg);
+			logg.msg = msg;
+			logg.writeLog ();
+			return true;
         }
         else
         {
-            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+			string msg;
+			msg=(GetInstanceID() + "Attacked but there were no target");
+			Debug.Log (msg);
+			logg.msg = msg;
             return false;
         }
 

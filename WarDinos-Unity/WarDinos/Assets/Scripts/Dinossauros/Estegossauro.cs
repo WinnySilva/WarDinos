@@ -40,7 +40,7 @@ public class Estegossauro : Dinossauro {
 	}
     private void Start()
     {
-
+		logg = new LoggerMongo (this.GetType() );
     }
 
     #region implemented abstract members of Dinossauro
@@ -52,6 +52,11 @@ public class Estegossauro : Dinossauro {
     {
 
 		//throw new System.NotImplementedException ();
+
+		logg.grupoID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="HABILIDADE";
+		logg.writeLog ();
 	}
 
     public override bool Atacar(GroupController gp)
@@ -71,7 +76,10 @@ public class Estegossauro : Dinossauro {
         //se não, single
         else
         {
-            foreach (Dinossauro d in gp.DinosDinossauro)
+			logg.dinossauroID = this.GetInstanceID ();
+			logg.attachedObj = this;
+			logg.acao ="ATAQUE";
+			foreach (Dinossauro d in gp.DinosDinossauro)
             {
                 if (d != null && (d.Vida < menorVida || menorVida == -1))
                 {
@@ -82,12 +90,19 @@ public class Estegossauro : Dinossauro {
             if (menorVida != -1)
             {
                 dTarget.Vida = dTarget.Vida - (ataque - Random.Range(1, ataque / 2) );
-                Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-                return true;
+				string msg;
+				msg =(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+				Debug.Log (msg);
+				logg.msg = msg;
+				logg.writeLog ();
+				return true;
             }
             else
             {
-                Debug.Log(GetInstanceID() + "Attacked but there were no target");
+				string msg;
+				msg=(GetInstanceID() + "Attacked but there were no target");
+				Debug.Log (msg);
+				logg.msg = msg;
                 return false;
             }
         }

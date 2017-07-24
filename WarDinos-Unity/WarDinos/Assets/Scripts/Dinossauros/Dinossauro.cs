@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using MongoDB.Bson.Serialization.Attributes;
 
 public abstract class Dinossauro : MonoBehaviour {
-    private GroupController gc;
-    private Player playerSelf;
-    private Player playerEnemy;
+	[BsonIgnoreAttribute] 
+	private GroupController gc;
+	[BsonIgnoreAttribute] 
+	private Player playerSelf;
+	[BsonIgnoreAttribute] 
+	private Player playerEnemy;
+
 
 	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
 
@@ -31,6 +36,7 @@ public abstract class Dinossauro : MonoBehaviour {
     protected int velocidade_deslocamento_upg;
 
     //SOME FLAGS
+	[BsonIgnoreAttribute] 
     protected DinoTypes dinoType;
 	protected int playerID;
 	protected bool habilidadeOn = false;
@@ -47,6 +53,8 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected int MAX_ATTR_VEL_DES;
 
 	protected int nSlot=1;
+
+	protected LoggerMongo logg;
 
 	void Start(){
 		Velocidade_deslocamento =1;

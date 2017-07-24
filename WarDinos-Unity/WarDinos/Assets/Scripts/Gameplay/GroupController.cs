@@ -2,55 +2,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MongoDB.Bson.Serialization.Attributes;
 
 public class GroupController : MonoBehaviour {
-    public enum DinoType {NONE=0, APATOSSAURO=1, ESTEGOSSAURO=2, PTERODACTILO=3, RAPTOR=4, TREX=5, TRICERATOPO=6}
 
-    private GameObject collidedFriend = null;
-    private bool collidedWithFriend = false;
+
+	public enum DinoType {NONE=0, APATOSSAURO=1, ESTEGOSSAURO=2, PTERODACTILO=3, RAPTOR=4, TREX=5, TRICERATOPO=6}
+
+	[BsonIgnoreAttribute] 
+	private GameObject collidedFriend = null;
+	[BsonIgnoreAttribute] 
+	private bool collidedWithFriend = false;
 
     // Player who own this group
     public int player;
 
+	[BsonIgnoreAttribute] 
     // Dinos which the group is composed of
     public DinoType[] dinos = new DinoType[4];
     // Instances of the dinosaurs in group
+	[BsonIgnoreAttribute]
     private GameObject[] dinosInstances = new GameObject[4];
 
-    public GameObject laneBegin, laneEnd;
+	[BsonIgnoreAttribute] 
+	public GameObject laneBegin, laneEnd;
 
     // Prefabs of each dinosaur that should be instantiated
-    public GameObject prefabVelociraptor;
-    public GameObject prefabEstegossauro;
-    public GameObject prefabApatossauro;
-    public GameObject prefabPterodactilo;
-    public GameObject prefabTriceratopo;
-    public GameObject prefabTrex;
+	[BsonIgnoreAttribute] public GameObject prefabVelociraptor;
+	[BsonIgnoreAttribute] public GameObject prefabEstegossauro;
+	[BsonIgnoreAttribute] public GameObject prefabApatossauro;
+	[BsonIgnoreAttribute] public GameObject prefabPterodactilo;
+	[BsonIgnoreAttribute] public GameObject prefabTriceratopo;
+	[BsonIgnoreAttribute] public GameObject prefabTrex;
     // Dinosaurs with the actual upgrades. Their attributes are copied to the original prefabs when they are instantiated
-    private GameObject actualVelociraptor;
-    private GameObject actualEstegossauro;
-    private GameObject actualApatossauro;
-    private GameObject actualPterodactilo;
-    private GameObject actualTriceratopo;
-    private GameObject actualTrex;
+	[BsonIgnoreAttribute]private GameObject actualVelociraptor;
+	[BsonIgnoreAttribute]private GameObject actualEstegossauro;
+	[BsonIgnoreAttribute]private GameObject actualApatossauro;
+	[BsonIgnoreAttribute]private GameObject actualPterodactilo;
+	[BsonIgnoreAttribute]private GameObject actualTriceratopo;
+	[BsonIgnoreAttribute]private GameObject actualTrex;
     // Displacements of dinosaurs position. This is required because the prefabs of the dinosaurs are bugged, so their posistions must be compensated
-    public Vector2 dispVelociraptor;
-    public Vector2 dispEstegossauro;
-    public Vector2 dispApatossauro;
-    public Vector2 dispPterodactilo;
-    public Vector2 dispTriceratopo;
-    public Vector2 dispTrex;
+	[BsonIgnoreAttribute]
+	public Vector2 dispVelociraptor;
+	[BsonIgnoreAttribute]
+	public Vector2 dispEstegossauro;
+	[BsonIgnoreAttribute]
+	public Vector2 dispApatossauro;
+	[BsonIgnoreAttribute]
+	public Vector2 dispPterodactilo;
+	[BsonIgnoreAttribute]
+	public Vector2 dispTriceratopo;
+	[BsonIgnoreAttribute]
+	public Vector2 dispTrex;
 
 
     // You can find a dinosaur type prefab by writing "prefabList[DinoType.APATOSSAURO]"
-    private GameObject[] prefabList = new GameObject[7];
+	[BsonIgnoreAttribute] private GameObject[] prefabList = new GameObject[7];
 
     // You can find a displacement position by writing "dispList[DinoType.APATOSSAURO]"
-    private Vector2[] dispList = new Vector2[7];
+	[BsonIgnoreAttribute] private Vector2[] dispList = new Vector2[7];
 
     // Transform of this game object, this group object
-    private Transform trans;
+	[BsonIgnoreAttribute] private Transform trans;
     // List of Dinossauro components in dinoInstances
+
     private Dinossauro[] dinosDinossauro = new Dinossauro[4];
     // Depending if the group is from Player 1 or 2, there is a different tag, so these variable is used to keep the code the same
     private string myTag;
@@ -59,17 +74,27 @@ public class GroupController : MonoBehaviour {
 	private int totalVida=-5000;
 
     // Rigid body 2D of this group object
-    private Rigidbody2D rb;
+	[BsonIgnoreAttribute] private Rigidbody2D rb;
 
     // Enemy group that is being attacked by this group
-    public GroupController enemyTargetGroup = null;
+	[BsonIgnoreAttribute]
+	public GroupController enemyTargetGroup = null;
 
     // Players
+	[BsonIgnoreAttribute]
     private Player playerSelf;
+	[BsonIgnoreAttribute]
     private Player playerEnemy;
 
-    public GameObject gameWinnerObject;
-	public GameObject barraDeVida;
+	[BsonIgnoreAttribute] public GameObject gameWinnerObject;
+	[BsonIgnoreAttribute] public GameObject barraDeVida;
+
+	[BsonIgnoreAttribute]
+	private LoggerMongo logg;
+
+	void Awake(){
+		logg = new LoggerMongo(this.GetType() );
+	}
 
     public void initGroup (int arg_player, GameObject arg_laneBegin, GameObject arg_laneEnd, DinoType[] arg_dinos,
         GameObject arg_prefabVelociraptor,
@@ -138,6 +163,12 @@ public class GroupController : MonoBehaviour {
         }
 
         gameObject.SetActive(true);
+		logg.attachedObj = this;
+		logg.msg ="INICIANDO GRUPO "+this.GetInstanceID();
+		logg.acao = "INICIANDO GRUPO";
+		logg.grupoID = this.GetInstanceID ();
+		logg.writeLog ();
+
     }
 
     // Use this for initialization
@@ -214,6 +245,13 @@ public class GroupController : MonoBehaviour {
 			if(d!=null)
 			totalVida += d.Vida;
 		}
+
+
+		logg.msg ="DESPACHANDO GRUPO "+this.GetInstanceID();
+		logg.grupoID = this.GetInstanceID ();
+		logg.acao ="DESPACHANDO GRUPO ";
+		//logg.attachedObj = this;
+		logg.writeLog ();
     }
 
 	void Update(){
@@ -266,6 +304,12 @@ public class GroupController : MonoBehaviour {
             playerEnemy.reduzirVida(reducedLife);
             playerSelf.incrementarRecursos(reducedLife);
 
+		//	logg.attachedObj = this;
+			logg.grupoID = this.GetInstanceID ();
+			logg.acao ="ENTROU NA BASE";
+			logg.msg ="ENTROU NA BASE GRUPO "+this.GetInstanceID();
+			logg.writeLog ();
+
             // Finishes the game if the player reachs zero life
             if (other.GetComponent<LaneController>().player.GetComponent<Player>().Vida <= 0) {
                 GameObject gwo = Instantiate(
@@ -275,6 +319,12 @@ public class GroupController : MonoBehaviour {
                 );
                 gwo.GetComponent<GameWinnerController>().Player = player;
                 gwo.SetActive(true);
+
+		//		logg.attachedObj = this;
+				logg.grupoID = this.GetInstanceID();
+				logg.acao ="FIM JOGO";
+				logg.writeLog ();
+
             }
 
             Destroy(gameObject);
@@ -283,6 +333,7 @@ public class GroupController : MonoBehaviour {
         else if (other.CompareTag(enemyTag) && !waitingForDispatch) {
             StopWalking();
             AttackGroup(other.GetComponent<GroupController>());
+
         }
         // If collided with friend group
         else if (other.CompareTag(myTag) && !waitingForDispatch) {
@@ -414,6 +465,13 @@ public class GroupController : MonoBehaviour {
         foreach (Dinossauro dd in dinosDinossauro) {
             StartCoroutine(routine: AttackWithDinosaur(dd, enemy));
         }
+
+	/*	logg.grupoID = this.GetInstanceID ();
+		logg.enemyGrupoID = enemy.GetInstanceID ();
+		logg.acao ="ATACAR";
+		logg.msg =" GRUPO "+this.GetInstanceID()+" ATACAR "+enemy.GetInstanceID();
+		//logg.attachedObj = this;
+		logg.writeLog ();*/
     }
 
     IEnumerator AttackWithDinosaur (Dinossauro dino, GroupController gp) {

@@ -38,13 +38,12 @@ public class Apatossauro : Dinossauro {
 
         base.playerID=-1;
 		base.nSlot = 2;
-
         
     }
 
     private void Start()
     {
-
+		base.logg = new LoggerMongo (this.GetType()); 
     }
 
 
@@ -57,6 +56,11 @@ public class Apatossauro : Dinossauro {
             if(d != null)
 			    d.VelocidadeAtaque = d.VelocidadeAtaque * 1.5;
 		}
+
+		logg.grupoID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="HABILIDADE";
+		logg.writeLog ();
 			/*divide their attack speed by 2*/
 		//when an apatassauro dies, the atk spd of the enemy should go back to the original value.
 		//throw new System.NotImplementedException ();
@@ -84,15 +88,27 @@ public class Apatossauro : Dinossauro {
                 menorVida = d.Vida;
             }
         }
+		logg.dinossauroID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="ATAQUE";
+	
+		string msg = "";
         if (menorVida != -1)
         {
             dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0, ataque / 2) );
-            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-            return true;
+            
+			msg =(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+			Debug.Log (msg);
+			logg.msg = msg;
+			logg.writeLog ();
+
+			return true;
         }
         else
         {
-            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+            msg=(GetInstanceID() + "Attacked but there were no target");
+			Debug.Log (msg);
+			logg.msg = msg;
             return false;
         }
     }

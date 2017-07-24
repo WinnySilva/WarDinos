@@ -40,9 +40,13 @@ public class Pterodactilo : Dinossauro {
 		base.nSlot=1;
 
     }
+	void Awake(){
+		logg = new LoggerMongo (this.GetType() );
+	}
     private void Start()
     {
         Habilidade();
+
     }
     #region implemented abstract members of Dinossauro
 
@@ -53,6 +57,12 @@ public class Pterodactilo : Dinossauro {
             if(d != null)
                 Velocidade_deslocamento++;
         }
+
+		logg.dinossauroID = GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="HABILIDADE";
+		logg.writeLog ();
+
 	}
     public override bool Atacar(GroupController gp)
     {
@@ -69,15 +79,25 @@ public class Pterodactilo : Dinossauro {
                 menorVida = d.Vida;
             }
         }
+		logg.dinossauroID = GetInstanceID();
+		logg.attachedObj = this;
+		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {
             dTarget.Vida = dTarget.Vida - (ataque - Random.Range(0, ataque / 2) );
-            Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-            return true;
+			string msg;
+			msg =(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+			Debug.Log (msg);
+			logg.msg = msg;
+			logg.writeLog ();
+			return true;
         }
         else
         {
-            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+			string msg;
+			msg=(GetInstanceID() + "Attacked but there were no target");
+			Debug.Log (msg);
+			logg.msg = msg;
             return false;
         }
 

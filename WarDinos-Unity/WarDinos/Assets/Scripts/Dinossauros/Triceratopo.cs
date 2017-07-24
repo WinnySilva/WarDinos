@@ -44,7 +44,7 @@ public class Triceratopo : Dinossauro {
     }
     private void Start()
     {
-
+		logg = new LoggerMongo (this.GetType() );
     }
 
     #region implemented abstract members of Dinossauro
@@ -55,6 +55,10 @@ public class Triceratopo : Dinossauro {
     public override void Habilidade()
 	{
 		//throw new System.NotImplementedException ();
+		logg.grupoID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="HABILIDADE";
+		logg.writeLog ();
 	}
 
     public override bool Atacar(GroupController gp) {
@@ -75,6 +79,9 @@ public class Triceratopo : Dinossauro {
                 menorVida = d.Vida;
             }
         }
+		logg.dinossauroID = this.GetInstanceID ();
+		logg.attachedObj = this;
+		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {
             if (habilidadeOn)
@@ -87,13 +94,20 @@ public class Triceratopo : Dinossauro {
             else
             {
                 dTarget.Vida = dTarget.Vida - ataque;
-                Debug.Log(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
-                return true;
+				string msg;
+				msg =(GetInstanceID() + "Attacked with " + ataque + " dmg. Target was " + dTarget + "which is now with " + dTarget.Vida + "life");
+				Debug.Log (msg);
+				logg.msg = msg;
+				logg.writeLog ();
+				return true;
             }
         }
         else
         {
-            Debug.Log(GetInstanceID() + "Attacked but there were no target");
+			string msg;
+			msg=(GetInstanceID() + "Attacked but there were no target");
+			Debug.Log (msg);
+			logg.msg = msg;
             return false;
         }
     }

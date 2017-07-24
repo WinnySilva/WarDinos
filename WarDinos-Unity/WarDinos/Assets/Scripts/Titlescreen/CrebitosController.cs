@@ -13,6 +13,11 @@ public class CrebitosController : MonoBehaviour
     private MenuLocker titlescreenLocker;
     private MenuLocker crebitosLocker;
     private CanvasGroup canvasG;
+	private LoggerMongo logg;
+
+	void Awake(){
+		logg = new LoggerMongo (this.GetType() );
+	}
 
     // Use this for initialization
     void Start()
@@ -20,6 +25,9 @@ public class CrebitosController : MonoBehaviour
         canvasG = GetComponent<CanvasGroup>();
         crebitosLocker = GetComponent<MenuLocker>();
         titlescreenLocker = gameObjectTitlescreen.GetComponent<MenuLocker>();
+		logg.acao="INICIANDO";
+		logg.msg = "INICIANDO CREBITOS CONTROLLE";
+		logg.writeLog ();
     }
 
     // Update is called once per frame

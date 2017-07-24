@@ -8,14 +8,26 @@ public class GameWinnerController : MonoBehaviour {
     private int fixedPlayer;
     public AudioSource victorySound;
     public AudioSource victorySound2;
+	private LoggerMongo logg;
+
+	void Awake(){
+		logg = new LoggerMongo (this.GetType() );
+	}
 
     // Use this for initialization
     void Start () {
+
         fixedPlayer = player;
         if (!GlobalParameters.someoneIsWinning) {
             GlobalParameters.someoneIsWinning = true;
             StartCoroutine(routine: WinGame());
         }
+		logg.acao= "START";
+		logg.msg = "START WIN GAME" + this.GetType ().Name;
+		logg.playerID = player;
+		logg.writeLog ();
+
+
     }
 	
     public int Player { set{ player = value; } }
