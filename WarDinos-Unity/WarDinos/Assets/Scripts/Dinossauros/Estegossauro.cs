@@ -18,7 +18,7 @@ public class Estegossauro : Dinossauro {
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-        base.dinoType= Dinossauro.DinoTypes.ESTEGOSSAURO;
+		base.dinoType= GroupController.DinoType.ESTEGOSSAURO;
 
         base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=25;
@@ -77,7 +77,7 @@ public class Estegossauro : Dinossauro {
         else
         {
 			logg.dinossauroID = this.GetInstanceID ();
-			logg.attachedObj = this;
+		//	logg.attachedObj = this;
 			logg.acao ="ATAQUE";
 			foreach (Dinossauro d in gp.DinosDinossauro)
             {

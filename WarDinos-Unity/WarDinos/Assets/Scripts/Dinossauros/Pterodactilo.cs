@@ -19,7 +19,7 @@ public class Pterodactilo : Dinossauro {
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-        base.dinoType= Dinossauro.DinoTypes.PTERODACTILO;
+		base.dinoType= GroupController.DinoType.PTERODACTILO;
 
         base.MAX_ALCANCE_ATAQUE=5;
 		base.MAX_ATAQUE=30;
@@ -59,7 +59,7 @@ public class Pterodactilo : Dinossauro {
         }
 
 		logg.dinossauroID = GetInstanceID ();
-		logg.attachedObj = this;
+		//logg.attachedObj = this;
 		logg.acao ="HABILIDADE";
 		logg.writeLog ();
 
@@ -80,7 +80,6 @@ public class Pterodactilo : Dinossauro {
             }
         }
 		logg.dinossauroID = GetInstanceID();
-		logg.attachedObj = this;
 		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {

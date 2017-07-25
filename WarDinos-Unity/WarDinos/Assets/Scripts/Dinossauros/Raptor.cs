@@ -21,7 +21,7 @@ public class Raptor : Dinossauro {
         base.custoAttrVelocidadeDeslocamento = 1;
 
 
-        base.dinoType = Dinossauro.DinoTypes.RAPTOR;
+		base.dinoType = GroupController.DinoType.RAPTOR;
         
         //MAX STATS AND ATTRIBUTE VALUES
         base.MAX_ALCANCE_ATAQUE = 1;

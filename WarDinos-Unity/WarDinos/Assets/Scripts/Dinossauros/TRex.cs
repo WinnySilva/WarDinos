@@ -19,7 +19,7 @@ public class TRex : Dinossauro {
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-        base.dinoType= Dinossauro.DinoTypes.TREX;
+		base.dinoType= GroupController.DinoType.TREX;
 
         base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=80;
@@ -80,7 +80,7 @@ public class TRex : Dinossauro {
             }
         }
 		logg.dinossauroID = GetInstanceID ();
-		logg.attachedObj = this;
+	//	logg.attachedObj = this;
 		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {

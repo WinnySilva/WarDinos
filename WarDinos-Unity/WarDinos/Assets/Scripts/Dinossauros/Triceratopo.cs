@@ -19,7 +19,7 @@ public class Triceratopo : Dinossauro {
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-        base.dinoType= Dinossauro.DinoTypes.TRICERATOPO;
+		base.dinoType= GroupController.DinoType.TRICERATOPO;
 
         base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=40;
@@ -80,7 +80,7 @@ public class Triceratopo : Dinossauro {
             }
         }
 		logg.dinossauroID = this.GetInstanceID ();
-		logg.attachedObj = this;
+	//	logg.attachedObj = this;
 		logg.acao ="ATAQUE";
         if (menorVida != -1)
         {

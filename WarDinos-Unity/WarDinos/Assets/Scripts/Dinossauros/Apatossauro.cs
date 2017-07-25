@@ -19,7 +19,7 @@ public class Apatossauro : Dinossauro {
         base.custoAttrVida = 1;
         base.custoAttrVelocidadeDeslocamento = 1;
 
-        base.dinoType= Dinossauro.DinoTypes.APATOSSAURO;
+		base.dinoType= GroupController.DinoType.APATOSSAURO;
 
         base.MAX_ALCANCE_ATAQUE=1;
 		base.MAX_ATAQUE=25;
@@ -89,7 +89,6 @@ public class Apatossauro : Dinossauro {
             }
         }
 		logg.dinossauroID = this.GetInstanceID ();
-		logg.attachedObj = this;
 		logg.acao ="ATAQUE";
 	
 		string msg = "";

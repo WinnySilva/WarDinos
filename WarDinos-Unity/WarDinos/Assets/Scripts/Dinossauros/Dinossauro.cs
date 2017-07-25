@@ -13,7 +13,7 @@ public abstract class Dinossauro : MonoBehaviour {
 	private Player playerEnemy;
 
 
-	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
+//	public enum DinoTypes{APATOSSAURO=0,ESTEGOSSAURO=1,PTERODACTILO=2,RAPTOR=3,TREX=4,TRICERATOPO=5}
 
     protected int custo;
     protected int abilityCost;
@@ -37,7 +37,7 @@ public abstract class Dinossauro : MonoBehaviour {
 
     //SOME FLAGS
 	[BsonIgnoreAttribute] 
-    protected DinoTypes dinoType;
+	protected GroupController.DinoType dinoType;
 	protected int playerID;
 	protected bool habilidadeOn = false;
 
@@ -57,10 +57,10 @@ public abstract class Dinossauro : MonoBehaviour {
 	protected LoggerMongo logg;
 
 	void Start(){
-		Velocidade_deslocamento =1;
+	//	Velocidade_deslocamento =1;
         
     }
-	public DinoTypes DinoType{
+	public GroupController.DinoType DinoType{
 		get{ 
 			return dinoType;
 		}
@@ -326,7 +326,7 @@ public abstract class Dinossauro : MonoBehaviour {
     private void Die() {
         //gameObject.SetActive(false);
         //transform.position = new Vector2(999.0f, 999.0f);
-        if (DinoType == DinoTypes.APATOSSAURO && habilidadeOn) {
+		if (DinoType == GroupController.DinoType.APATOSSAURO && habilidadeOn) {
             foreach(Dinossauro d in gc.enemyTargetGroup.DinosDinossauro)
             {
                 //Reverse Apatasaur ability

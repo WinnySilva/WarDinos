@@ -2,11 +2,12 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Gameplay\PlayerIA.cs">
     <Files>
-      <File FileName="Assets\Scripts\Gameplay\PlayerIA.cs" Line="64" Column="43" />
-      <File FileName="Assets\Scripts\HUD\HUDController.cs" Line="500" Column="50" />
-      <File FileName="Assets\Scripts\Gameplay\GroupController.cs" Line="10" Column="67" />
-      <File FileName="Assets\Scripts\DB\LoggerMongo.cs" Line="73" Column="21" />
-      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="81" Column="6" />
+      <File FileName="Assets\Scripts\Gameplay\PlayerIA.cs" Line="114" Column="49" />
+      <File FileName="Assets\Scripts\HUD\HUDController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Gameplay\GroupController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DB\LoggerMongo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Dinossauros\Dinossauro.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
