@@ -336,6 +336,7 @@ public abstract class Dinossauro : MonoBehaviour {
             }
         }
         // When the dinosaur is destroyed, the enemy player is rewarded with Dodo Meth
+		this.GetComponent<Animator>().Play("dead");
         playerEnemy.incrementarRecursos(custo);
         Destroy(gameObject);
     }

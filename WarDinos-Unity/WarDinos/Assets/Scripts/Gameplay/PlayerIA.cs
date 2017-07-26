@@ -15,7 +15,7 @@ public class PlayerIA : MonoBehaviour {
 	private Player playerScr;
 	private GameObject dinoGroupPrefab;
 	private float iniTime = 1f;
-	private float repeatTime= 20f;
+	private float repeatTime= 10f;
 	private int[][] ordemLanes;
 	private int[] ordemLaneAtual = { 0, 2 };
 	void Awake(){
