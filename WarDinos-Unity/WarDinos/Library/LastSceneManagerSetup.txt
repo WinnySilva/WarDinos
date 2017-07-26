@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Cenas/teste_gameplay.unity
+- path: Assets/Cenas/titlescreen.unity
   isLoaded: 1
   isActive: 1

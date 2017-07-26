@@ -13,12 +13,15 @@ public class TitlescreenController : MonoBehaviour {
     public string multiplayerScene;
     public GameObject gameObjectTitlescreen;
     public GameObject gameObjectCrebitos;
+	public LevelInfo gameLevelInfo;
+
 
     private MenuLocker titlescreenLocker;
     private MenuLocker crebitosLocker;
 
     // Use this for initialization
     void Start () {
+		
         singleplayerButton.onClick.AddListener(TaskOnClickSingleplayer);
         multiplayerButton.onClick.AddListener(TaskOnClickMultiplayer);
         crebitosButton.onClick.AddListener(TaskOnClickCrebitos);
@@ -31,12 +34,16 @@ public class TitlescreenController : MonoBehaviour {
     void TaskOnClickSingleplayer ()
     {
         Debug.Log("Clicou no botao Singleplayer");
-        //SceneManager.LoadScene(singleplayerScene);
+		gameLevelInfo.gameMode = LevelInfo.GAME_MODE.SINGLE;
+		gameLevelInfo.lvl = 1;
+		SceneManager.LoadScene(multiplayerScene);
     }
 
     void TaskOnClickMultiplayer()
     {
         Debug.Log("Clicou no botao Multiplayer");
+		gameLevelInfo.gameMode = LevelInfo.GAME_MODE.MULTI;
+		gameLevelInfo.lvl = 0;
         SceneManager.LoadScene(multiplayerScene);
     }
 

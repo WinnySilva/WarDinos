@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //using System.Windows.Forms;
+using UnityEngine.UI;
 
 public class PlayerIA : MonoBehaviour {
 	public GameObject player;
@@ -10,18 +11,26 @@ public class PlayerIA : MonoBehaviour {
 	public GameObject[] inicioLanes;
 	public GameObject[] fimLanes;
 	public GameObject[] dinoPrefab;
+	public LevelInfo gameLevelInfo;
+	public Text levelNumber;
+	public GameObject lvlNumer;
 
 	private HUDController playerHudController;
 	private Player playerScr;
 	private GameObject dinoGroupPrefab;
 	private float iniTime = 1f;
-	private float repeatTime= 10f;
+	private float iniTimeUp = 10f;
+	private float repeatTimeDespachar= 10f;
+	private float repeatTimeUp= 20f;
 	private int[][] ordemLanes;
 	private int[] ordemLaneAtual = { 0, 2 };
 	void Awake(){
 		playerHudController = hud.GetComponent<HUDController>();
 		playerScr = player.GetComponent<Player>();
 		dinoGroupPrefab = this.playerHudController.dinoGroupPrefab;
+
+
+
 
 		int n = this.playerHudController.transform.childCount;
 		for(int i =0; i<n-1; i++){
@@ -34,16 +43,40 @@ public class PlayerIA : MonoBehaviour {
 			new int[]{ 2, 1, 0 }, new int[]{ 2, 0, 1 }
 		};
 
+
+
 	}
 	// Use this for initialization
 	void Start () {
-		InvokeRepeating("Jogar",iniTime,repeatTime);
+		this.gameLevelInfo = (GameObject.Find ("gameLevelInfo")!=null)?	GameObject.FindWithTag ("LevelInfo").GetComponent<LevelInfo>():null  ;
+		if(gameLevelInfo !=null ){
+			Debug.Log ("gameLevelInfo " + gameLevelInfo);
+			if (gameLevelInfo.gameMode == LevelInfo.GAME_MODE.MULTI) {
+				int n = this.playerHudController.transform.childCount;
+				for (int i = 0; i < n - 1; i++) {
+					this.playerHudController.transform.GetChild (i).gameObject.SetActive (true);
+				}
+				this.lvlNumer.SetActive (false);
+				Destroy (this);
+				return;
+			} else {
+				int n = this.playerHudController.transform.childCount;
+				for(int i =0; i<n-1; i++){
+					this.playerHudController.transform.GetChild (i).gameObject.SetActive (false);
+				}
+				this.levelNumber.text = "lvl " + this.gameLevelInfo.lvl;
+			}
+			repeatTimeDespachar = repeatTimeDespachar / gameLevelInfo.lvl;
+			iniTime = iniTime / gameLevelInfo.lvl;
+			this.playerScr.incrementarRecursos(  this.playerScr.Recursos * (gameLevelInfo.lvl-1)    );
+		}
+
+
+		InvokeRepeating("Jogar",iniTime,repeatTimeDespachar);
+		InvokeRepeating("Upgrade",iniTimeUp,repeatTimeUp);
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
 	void Jogar(){
 		int mv = Random.Range(0,6);
@@ -180,6 +213,11 @@ public class PlayerIA : MonoBehaviour {
 			break;
 		}
 		return GroupController.DinoType.NONE;
+	}
+
+	void Upgrades(){
+		Attributes a = (Attributes) Random.Range(0,5);
+		this.playerScr.Upgrade( this.randomDino(false), a );
 	}
 
 }

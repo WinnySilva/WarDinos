@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\HUD\WDHudUpgradeButton.cs" />
      <Compile Include="Assets\Scripts\HUD\changeMenuButton.cs" />
      <Compile Include="Assets\Scripts\Jogador.cs" />
+     <Compile Include="Assets\Scripts\LevelInfo.cs" />
      <Compile Include="Assets\Scripts\MatchManager.cs" />
      <Compile Include="Assets\Scripts\Remakescreen\RemakeController.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\CrebitosController.cs" />
