@@ -8,12 +8,15 @@ public class LevelInfo : MonoBehaviour {
 
 	public GAME_MODE gameMode;
 	public int lvl=1;
+	public int id;
 
 	void Awake(){
 		DontDestroyOnLoad (this);
+		Debug.LogError ("LevelInfo  "+this.GetInstanceID() );
 		if( FindObjectsOfType(this.GetType() ).Length >1 ){
 			Destroy (gameObject);
 		}
+		id = this.GetInstanceID ();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 	}
 
@@ -32,6 +35,9 @@ public class LevelInfo : MonoBehaviour {
 		int scenaN = scene.buildIndex;
 		Debug.Log ("cena: "+scenaN);
 		switch (scenaN) {
+		case 0: 
+			this.lvl = 1;
+			break;
 
 		case 3:
 			/*se for tela de jogo */
@@ -43,10 +49,10 @@ public class LevelInfo : MonoBehaviour {
 					playerIA.SetActive (true);
 				}
 			}
-			if (gameMode == GAME_MODE.MULTI) {
-		//		if (playerIA != null) {
-		//			playerIA.SetActive (false);
-		//		}
+			else if (gameMode == GAME_MODE.MULTI) {
+				if (playerIA != null) {
+				//	playerIA.SetActive (false);
+			}
 			}
 			break;
 

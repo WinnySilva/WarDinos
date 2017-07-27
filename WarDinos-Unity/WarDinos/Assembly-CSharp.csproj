@@ -83,6 +83,7 @@
      <Compile Include="Assets\Scripts\Titlescreen\TextFadeInFadeOut.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\TitleScreenPressButton.cs" />
      <Compile Include="Assets\Scripts\Titlescreen\TitlescreenController.cs" />
+     <Compile Include="Assets\Scripts\Titlescreen\TutorialManager.cs" />
      <Compile Include="Assets\Scripts\Unidade.cs" />
      <Compile Include="Assets\Sky FX Pack\Scripts\LightBeamsControlScript.cs" />
      <Compile Include="Assets\Sky FX Pack\Scripts\LookAtBehaviour.cs" />

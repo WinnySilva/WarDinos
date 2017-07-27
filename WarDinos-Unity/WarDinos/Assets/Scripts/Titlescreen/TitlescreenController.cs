@@ -26,9 +26,11 @@ public class TitlescreenController : MonoBehaviour {
         multiplayerButton.onClick.AddListener(TaskOnClickMultiplayer);
         crebitosButton.onClick.AddListener(TaskOnClickCrebitos);
         sairButton.onClick.AddListener(TaskOnClickSair);
-
         titlescreenLocker = GetComponent<MenuLocker>();
-        crebitosLocker = gameObjectCrebitos.GetComponent<MenuLocker>();
+        
+		crebitosLocker = gameObjectCrebitos.GetComponent<MenuLocker>();
+
+		gameLevelInfo = GameObject.Find("gameLevelInfo").GetComponent<LevelInfo>() ;
     }
 
     void TaskOnClickSingleplayer ()

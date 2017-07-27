@@ -20,7 +20,8 @@ public class MapGenerator : MonoBehaviour {
 		Debug.Log(" MAP GENERATOR");
 		for(int i=0; i< arvores.transform.childCount;i++){
 			srAux = arvores.transform.GetChild(i).GetComponent<SpriteRenderer>();
-			srAux.sprite = Resources.Load<Sprite>("/Img/mapa/aderecos/use46806");
+		//	srAux.sprite = Resources.Load<Sprite>("/Img/mapa/aderecos/use46806");
+			srAux.gameObject.SetActive( Random.Range(0,2)==1?false:true   );
 			if(srAux.sprite == null){
 				Debug.Log("NULL tree :: "+arvores.transform.GetChild(i).name+" ");
 			}

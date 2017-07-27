@@ -28,10 +28,6 @@ public class PlayerIA : MonoBehaviour {
 		playerHudController = hud.GetComponent<HUDController>();
 		playerScr = player.GetComponent<Player>();
 		dinoGroupPrefab = this.playerHudController.dinoGroupPrefab;
-
-
-
-
 		int n = this.playerHudController.transform.childCount;
 		for(int i =0; i<n-1; i++){
 			this.playerHudController.transform.GetChild (i).gameObject.SetActive (false);
@@ -42,7 +38,8 @@ public class PlayerIA : MonoBehaviour {
 			new int[]{ 1, 0, 2 }, new int[]{ 1, 2, 0 },
 			new int[]{ 2, 1, 0 }, new int[]{ 2, 0, 1 }
 		};
-
+		this.ordemLaneAtual [0] = Random.Range (0, ordemLanes.Length);
+		this.ordemLaneAtual [1] = 0;
 
 
 	}
@@ -64,6 +61,7 @@ public class PlayerIA : MonoBehaviour {
 				for(int i =0; i<n-1; i++){
 					this.playerHudController.transform.GetChild (i).gameObject.SetActive (false);
 				}
+				this.lvlNumer.SetActive (true);
 				this.levelNumber.text = "lvl " + this.gameLevelInfo.lvl;
 			}
 			repeatTimeDespachar = repeatTimeDespachar / gameLevelInfo.lvl;
@@ -79,15 +77,17 @@ public class PlayerIA : MonoBehaviour {
 
 
 	void Jogar(){
-		int mv = Random.Range(0,6);
 		Debug.Log(" IA JOGAR");
 
 		int l = this.ordemLaneAtual [0];
 		int c = this.ordemLaneAtual [1];
 		jogarDinoLane((this.ordemLanes[l])[c]);
+		Debug.LogError ("LANE ATUAL"+this.ordemLanes[l][c])  ;
 
 		if (this.ordemLaneAtual [1] >= 2) {
+			
 			this.ordemLaneAtual [0] = Random.Range (0, this.ordemLanes.Length);
+			Debug.LogError ("ORDEM ATUAL ::"+this.ordemLaneAtual [0]);
 			this.ordemLaneAtual [1] = 0;
 		} else {
 			this.ordemLaneAtual [1]++;

@@ -256,7 +256,7 @@ public class GroupController : MonoBehaviour {
 
 	void Update(){
 		if(totalVida>=-5000){
-			Debug.Log(" UPDATE VIDA>500");
+//			Debug.Log(" UPDATE VIDA>500");
 			int atualVida = 0;
 			foreach( Dinossauro d in this.dinosDinossauro ){
 				if(d!=null)
