@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MongoDB.Bson.Serialization.Attributes;
+using UnityEngine.UI;
 
 public enum Attributes{ATK, VIDA, VEL_ATK, VEL_DES, HAB}
 
@@ -68,6 +69,11 @@ public class Player : MonoBehaviour {
         if (value <= recursos) {
             recursos -= value;
 			logg.acao = "REDUZIR RECURSOS";
+			if(dodoMethHud != null){
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "-" + value;
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (1,0,0);
+				dodoMethHud.GetComponent<Animator> ().Play ("AumentarRecursos");
+			}
 			logg.playerID = playerID;
 			logg.attachedObj = this ;
 			logg.writeLog ();
@@ -84,7 +90,12 @@ public class Player : MonoBehaviour {
             if (recursos > MAX_RECURSOS) {
                 recursos = MAX_RECURSOS;
             }
-			dodoMethHud.GetComponent<Animator>().Play("AumentarRecursos");
+			if (dodoMethHud != null) {
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "+" + value;
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (0,1,0);
+				dodoMethHud.GetComponent<Animator> ().Play ("AumentarRecursos");
+
+			}
 			logg.acao = "INCREMENTO DE RECURSOS";
 			logg.playerID = playerID;
 			logg.attachedObj = this ;
