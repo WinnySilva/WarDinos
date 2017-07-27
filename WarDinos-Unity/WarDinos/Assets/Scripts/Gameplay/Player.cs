@@ -70,7 +70,7 @@ public class Player : MonoBehaviour {
             recursos -= value;
 			logg.acao = "REDUZIR RECURSOS";
 			if(dodoMethHud != null){
-				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "-" + value;
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "-  " + value;
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (1,0,0);
 				dodoMethHud.GetComponent<Animator> ().Play ("AumentarRecursos");
 			}
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
                 recursos = MAX_RECURSOS;
             }
 			if (dodoMethHud != null) {
-				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "+" + value;
+				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = " + " + value;
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (0,1,0);
 				dodoMethHud.GetComponent<Animator> ().Play ("AumentarRecursos");
 

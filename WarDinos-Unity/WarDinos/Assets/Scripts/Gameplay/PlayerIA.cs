@@ -212,7 +212,7 @@ public class PlayerIA : MonoBehaviour {
 		return GroupController.DinoType.NONE;
 	}
 
-	void Upgrades(){
+	void Upgrade(){
 		Attributes a = (Attributes) Random.Range(0,5);
 		this.playerScr.Upgrade( this.randomDino(false), a );
 	}
