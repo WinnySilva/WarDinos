@@ -77,17 +77,14 @@ public class PlayerIA : MonoBehaviour {
 
 
 	void Jogar(){
-		Debug.Log(" IA JOGAR");
-
+		
 		int l = this.ordemLaneAtual [0];
 		int c = this.ordemLaneAtual [1];
 		jogarDinoLane((this.ordemLanes[l])[c]);
-		Debug.LogError ("LANE ATUAL"+this.ordemLanes[l][c])  ;
 
 		if (this.ordemLaneAtual [1] >= 2) {
 			
 			this.ordemLaneAtual [0] = Random.Range (0, this.ordemLanes.Length);
-			Debug.LogError ("ORDEM ATUAL ::"+this.ordemLaneAtual [0]);
 			this.ordemLaneAtual [1] = 0;
 		} else {
 			this.ordemLaneAtual [1]++;
