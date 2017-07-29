@@ -7,6 +7,7 @@ public class MapGenerator : MonoBehaviour {
 	public GameObject arvores;
 	public GameObject agua;
 	public GameObject lanes;
+	public Camera camera;
 
 	public Sprite[] arvris;
 	public Sprite[] rausis;
@@ -62,7 +63,9 @@ public class MapGenerator : MonoBehaviour {
 		for(int i=0; i< this.lanes.transform.childCount; i++ ){
 			this.lanes.transform.GetChild (i).GetComponent<SpriteRenderer> ().color = aux;
 		}
-		this.agua.GetComponent<SpriteRenderer>().color = backColor[Random.Range(0,backColor.Length)];
+		aux = backColor [Random.Range (0, backColor.Length)];
+		this.agua.GetComponent<SpriteRenderer> ().color = aux;
+		camera.backgroundColor = aux;
 
 	}
 

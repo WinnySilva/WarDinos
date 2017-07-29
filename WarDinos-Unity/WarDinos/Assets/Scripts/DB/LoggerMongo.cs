@@ -65,6 +65,21 @@ public class LoggerMongo {
 	[BsonIgnoreIfNull]
 	public int? enemyGrupoID {get;set;}
 
+	[BsonIgnoreIfNull]
+	public string tempoDePartida {get;set;}
+
+	[BsonIgnoreIfNull]
+	public int? jogadorVencedor {get;set;}
+
+	[BsonIgnoreIfNull]
+	public int? classId {get;set;}
+
+	[BsonIgnoreIfNull]
+	public string modoJogo {get;set;}
+
+
+	[BsonIgnoreIfNull]
+	public int? LevelJogo {get;set;}
 
 	public void writeLog(){
 		this.nCena= SceneManager.GetActiveScene ().buildIndex;

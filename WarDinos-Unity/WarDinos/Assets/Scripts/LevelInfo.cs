@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using MongoDB.Bson.Serialization.Attributes;
+using UnityEngine.UI;
 
 public class LevelInfo : MonoBehaviour {
 	public enum GAME_MODE {SINGLE=0, MULTI=1 };
@@ -9,15 +11,26 @@ public class LevelInfo : MonoBehaviour {
 	public GAME_MODE gameMode;
 	public int lvl=1;
 	public int id;
+	[BsonIgnoreAttribute]
+	private LoggerMongo logg;
+
+	private string tempoJogo;
 
 	void Awake(){
+		
 		DontDestroyOnLoad (this);
 		Debug.LogError ("LevelInfo  "+this.GetInstanceID() );
 		if( FindObjectsOfType(this.GetType() ).Length >1 ){
 			Destroy (gameObject);
 		}
 		id = this.GetInstanceID ();
+		logg = new LoggerMongo (this.GetType() );
+		logg.classId = this.GetInstanceID();
+		logg.msg = "INICIANDO LVL INFO";
+		logg.acao = "INICIANDO";
+		logg.writeLog ();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+		SceneManager.sceneUnloaded += OnSceneUnload;
 	}
 
 	// Use this for initialization
@@ -27,13 +40,18 @@ public class LevelInfo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		if (SceneManager.GetActiveScene ().buildIndex == 3) {
+			this.tempoJogo = GameObject.Find ("TextTempo").GetComponent<Text> ().text;
+		}
 	}
 
 	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
 	{
 		int scenaN = scene.buildIndex;
 		Debug.Log ("cena: "+scenaN);
+
+		logg.msg = "MUDANDO DE CENA";
 		switch (scenaN) {
 		case 0: 
 			this.lvl = 1;
@@ -64,6 +82,27 @@ public class LevelInfo : MonoBehaviour {
 			break;
 
 		}
+
+	}
+
+	void OnSceneUnload(Scene scene){
+
+		Debug.LogError ("SAINDO DA CENA " + scene.buildIndex);
+		int sceneID = scene.buildIndex;
+		logg.acao = "MUDANDO DE CENA";
+		logg.msg = "SAINDO DA CENA "+sceneID;
+		switch (sceneID) {
+		case 3:
+			logg.classId = this.GetInstanceID ();
+			logg.tempoDePartida = this.tempoJogo;
+			logg.modoJogo = this.gameMode.ToString ();
+			logg.LevelJogo = this.lvl;
+			logg.writeLog ();
+			Debug.LogError (":: SAINDO DA CENA " + scene.buildIndex);
+			break;
+
+		}
+
 
 	}
 }

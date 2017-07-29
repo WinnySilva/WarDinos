@@ -341,6 +341,8 @@ public abstract class Dinossauro : MonoBehaviour {
         Destroy(gameObject);
     }
 
+
+
     public Player PlayerSelf {
         get { return playerSelf; }
         set { playerSelf = value; }

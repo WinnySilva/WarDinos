@@ -69,13 +69,15 @@ public class Player : MonoBehaviour {
         if (value <= recursos) {
             recursos -= value;
 			logg.acao = "REDUZIR RECURSOS";
+			logg.msg = "add: - "+value+" recursos: "+recursos;
 			if(dodoMethHud != null){
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = "-  " + value;
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (1,0,0);
 				dodoMethHud.GetComponent<Animator> ().Play ("AumentarRecursos");
 			}
 			logg.playerID = playerID;
-			logg.attachedObj = this ;
+
+		//	logg.attachedObj = this ;
 			logg.writeLog ();
             return true;
         }
@@ -86,10 +88,12 @@ public class Player : MonoBehaviour {
     public void incrementarRecursos (int value) {
 
         if (recursos < MAX_RECURSOS) {
-            recursos += value;
+			logg.msg = "add: + "+value+" recursos: "+recursos;
+			recursos += value;
             if (recursos > MAX_RECURSOS) {
                 recursos = MAX_RECURSOS;
             }
+
 			if (dodoMethHud != null) {
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().text = " + " + value;
 				dodoMethHud.transform.GetChild (1).GetComponent<Text> ().color = new Color (0,1,0);
@@ -98,7 +102,7 @@ public class Player : MonoBehaviour {
 			}
 			logg.acao = "INCREMENTO DE RECURSOS";
 			logg.playerID = playerID;
-			logg.attachedObj = this ;
+		//	logg.attachedObj = this ;
 			logg.writeLog ();
         }
     }

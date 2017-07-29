@@ -323,7 +323,9 @@ public class GroupController : MonoBehaviour {
 		//		logg.attachedObj = this;
 				logg.grupoID = this.GetInstanceID();
 				logg.acao ="FIM JOGO";
+				logg.jogadorVencedor = this.player;
 				logg.writeLog ();
+
 
             }
 
