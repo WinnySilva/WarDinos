@@ -9,7 +9,7 @@ public class ConexaoMongo : MonoBehaviour {
 	protected static MongoClient _client;
 	protected static MongoDatabase _database;
 
-	static string host = "mongodb://localhost:27017";
+	static string host ="mongodb://localhost:27017"; //"mongodb://jogo:jogo@ds129153.mlab.com:29153/wardinos";  
 	public static string NUMERO_CENA= "NUMERO_CENA";
 	public static string NOME_CENA = "NOME_CENA";
 	public static string PLAYER = "PLAYER_NICK" ;
@@ -27,17 +27,6 @@ public class ConexaoMongo : MonoBehaviour {
 	void Awake(){
 		_client = new MongoClient();
 		_database =  _client.GetServer().GetDatabase("Wardinos") ; //(host, _client.Settings);
-		var document = new BsonDocument
-		{
-			{ "street", "2 Avenue" },
-			{ "zipcode", "10075" },
-			{ "building", "1480" },
-			{ "coord", new BsonArray { 73.9557413, 40.7720266 } }
-		};
-
-		var collection = _database.GetCollection<BsonDocument>("Logs");
-
-		collection.Insert(document);
 
 	}
 
@@ -68,7 +57,9 @@ public class ConexaoMongo : MonoBehaviour {
 			return;
 		try{
 			MongoCollection col = ConexaoMongo.getLogCollection();
+
 			col.Insert(log);
+			Debug.Log(" Insert LOG");
 		}
 		catch(BsonSerializationException e){
 			Debug.LogError("NÃO FOI POSSÍVEL GRAVAR LOG " +
@@ -83,6 +74,11 @@ public class ConexaoMongo : MonoBehaviour {
 		}
 		catch(MongoConnectionException e ){
 			ConexaoMongo.ativo = false;
+			Debug.LogError("Desativando banco" );
+		}
+		catch(Exception e ){
+//			ConexaoMongo.ativo = false;
+			Debug.LogError("banco:"+e );
 		}
 	}
 

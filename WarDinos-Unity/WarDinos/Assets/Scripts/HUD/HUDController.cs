@@ -190,6 +190,7 @@ public class HUDController : MonoBehaviour
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
                     if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
                         changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
+					Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>()");
                 }
                 // Upgrade Unit button
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
@@ -276,6 +277,7 @@ public class HUDController : MonoBehaviour
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
                     if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
                         changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
+					Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>() <<-");
                 }
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
                 {
@@ -407,7 +409,7 @@ public class HUDController : MonoBehaviour
                 int upgradeFlag = pgoPlayer.Upgrade(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType,
                     selectedButton.GetComponent<WDHudAttributeButton>().AttrType);
                 if (upgradeFlag == -1)
-                    displayMessageLoja("Requer mais DODO METH", 4.0f, 16);
+                    displayMessageLoja("Requer mais Recurso", 4.0f, 16);
                 else if (upgradeFlag == -2) {
                     displayMessageLoja("Impossivel, Nivel Maximo", 4.0f, 14);
                 }
@@ -591,7 +593,7 @@ public class HUDController : MonoBehaviour
                         pgoPlayer.goTrex);
                 }
                 else {
-                    displayMessage("Requer mais DODO METH", 4.0f, 16);
+                    displayMessage("Requer mais Recurso", 4.0f, 16);
                 }
 
                 // Clean group being displayed
@@ -778,7 +780,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerApato.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerApato.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerApato.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerApato.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerApato.Custo + " Recursos", fontSize);
         }
         if (dt == GroupController.DinoType.ESTEGOSSAURO)
         {
@@ -787,7 +789,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerEstego.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerEstego.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerEstego.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerEstego.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerEstego.Custo + " Recursos", fontSize);
         }
         if (dt == GroupController.DinoType.PTERODACTILO)
         {
@@ -796,7 +798,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerPtero.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerPtero.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerPtero.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerPtero.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerPtero.Custo + " Recursos", fontSize);
         }
         if (dt == GroupController.DinoType.RAPTOR)
         {
@@ -805,7 +807,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerVeloci.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerVeloci.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerVeloci.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerVeloci.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerVeloci.Custo + " Recursos", fontSize);
         }
         if (dt == GroupController.DinoType.TREX)
         {
@@ -814,7 +816,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerTRex.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerTRex.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerTRex.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerTRex.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerTRex.Custo + " Recursos", fontSize);
         }
         if (dt == GroupController.DinoType.TRICERATOPO)
         {
@@ -823,7 +825,7 @@ public class HUDController : MonoBehaviour
             dpt.VelAtk.text = pgoPlayerTricera.VelocidadeAtaque.ToString();
             dpt.Vel.text = pgoPlayerTricera.Velocidade_deslocamento.ToString();
             dpt.Tam.text = pgoPlayerTricera.NSlot.ToString();
-            changeTooltipText("" + ub.description + pgoPlayerTricera.Custo + " Dodo Meth", fontSize);
+            changeTooltipText("" + ub.description + pgoPlayerTricera.Custo + " Recursos", fontSize);
         }
     }
 

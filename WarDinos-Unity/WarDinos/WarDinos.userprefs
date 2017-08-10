@@ -1,14 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Gameplay\Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\HUD\HUDController.cs">
     <Files>
-      <File FileName="Assets\Scripts\Gameplay\Player.cs" Line="105" Column="5" />
+      <File FileName="Assets\Scripts\Gameplay\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Titlescreen\TitlescreenController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Titlescreen\MapGenerator.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Titlescreen\TutorialManager.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Gameplay\PlayerIA.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DB\LoggerMongo.cs" Line="82" Column="26" />
-      <File FileName="Assets\Scripts\LevelInfo.cs" Line="46" Column="4" />
+      <File FileName="Assets\Scripts\DB\LoggerMongo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelInfo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="28" Column="31" />
+      <File FileName="Assets\Scripts\Dinossauros\Dinossauro.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\HUD\HUDController.cs" Line="279" Column="95" />
+      <File FileName="Assets\Scripts\HUD\WDHudAttributeButton.cs" Line="17" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
