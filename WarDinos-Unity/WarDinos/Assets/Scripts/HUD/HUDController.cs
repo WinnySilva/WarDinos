@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class HUDController : MonoBehaviour
     private Dinossauro pgoPlayerTRex;
     private Dinossauro pgoPlayerEstego;
     private Dinossauro pgoPlayerPtero;
+    private Dinossauro[] pgoPlayerDinoVector;
 
     public GameObject dinoGroupPrefab;
     public GameObject lane1P1;
@@ -87,12 +89,14 @@ public class HUDController : MonoBehaviour
     private string lastMessageStringLoja = " ";
     private int lastMessageFontSizeLoja = 16;
     private bool isMessagingLoja = false;
+    public Text displayUpgradeCost;
 
     public GameObject dinoSkill;
     public Sprite maxLevelSprite;
 
     public Image[] dinoGroupFrames;
     public Sprite dinoGroupFreeSlotSprite;
+    public Text dinoGroupCostText;
 
     [System.Serializable]
     public struct DinoPanelTexts {
@@ -122,13 +126,14 @@ public class HUDController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        pgoPlayerDinoVector = new Dinossauro[7];
         pgoPlayer = pgo.GetComponent<Player>();
-        pgoPlayerApato = pgoPlayer.goApatossauro.GetComponent<Dinossauro>();
-        pgoPlayerPtero = pgoPlayer.goPterodactilo.GetComponent<Dinossauro>();
-        pgoPlayerTRex = pgoPlayer.goTrex.GetComponent<Dinossauro>();
-        pgoPlayerEstego = pgoPlayer.goEstegossauro.GetComponent<Dinossauro>();
-        pgoPlayerTricera = pgoPlayer.goTriceratopo.GetComponent<Dinossauro>();
-        pgoPlayerVeloci = pgoPlayer.goVelociraptor.GetComponent<Dinossauro>();
+        pgoPlayerApato = pgoPlayerDinoVector[(int)GroupController.DinoType.APATOSSAURO] = pgoPlayer.goApatossauro.GetComponent<Dinossauro>();
+        pgoPlayerPtero = pgoPlayerDinoVector[(int)GroupController.DinoType.PTERODACTILO] = pgoPlayer.goPterodactilo.GetComponent<Dinossauro>();
+        pgoPlayerTRex = pgoPlayerDinoVector[(int)GroupController.DinoType.TREX] = pgoPlayer.goTrex.GetComponent<Dinossauro>();
+        pgoPlayerEstego = pgoPlayerDinoVector[(int)GroupController.DinoType.ESTEGOSSAURO] = pgoPlayer.goEstegossauro.GetComponent<Dinossauro>();
+        pgoPlayerTricera = pgoPlayerDinoVector[(int)GroupController.DinoType.TRICERATOPO] = pgoPlayer.goTriceratopo.GetComponent<Dinossauro>();
+        pgoPlayerVeloci = pgoPlayerDinoVector[(int)GroupController.DinoType.RAPTOR] = pgoPlayer.goVelociraptor.GetComponent<Dinossauro>();
 
         selectedButton = buttonLane1;
         lastSelectedUnitButton = buttonUnitVelociraptor;
@@ -149,13 +154,17 @@ public class HUDController : MonoBehaviour
 
         updateDinoFrameInfo();
         changeTooltipText("Seleciona Lane " + selectedButton.GetComponent<LaneButton>().getNumber() + " para Despacho", 14);
-        displayMessage("Initiating Battlefield Control...", 4.0f, 15);
+        displayMessage("Iniciando Controles do Campo de Batalha...", 4.0f, 15);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        // ------ KEY ESCAPE --------------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SceneManager.LoadScene("titlescreen");
+        }
         // ------ KEY RIGHT --------------------------------------------------------------------
         if (getAxisRightDown())
         {
@@ -188,9 +197,10 @@ public class HUDController : MonoBehaviour
 
                     changeButton((Button)selectedButton.FindSelectableOnDown(), false);
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                    updateUpgradeAttributePrice();
                     if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
                         changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
-					Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>()");
+					//Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>()");
                 }
                 // Upgrade Unit button
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
@@ -275,9 +285,10 @@ public class HUDController : MonoBehaviour
 
                     changeButton((Button)selectedButton.FindSelectableOnUp(), false);
                     changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                    updateUpgradeAttributePrice();
                     if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
                         changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
-					Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>() <<-");
+					//Debug.LogError ("selectedButton.GetComponent<WDHudAttributeButton>() <<-");
                 }
                 else if (selectedButton.GetComponent<WDHudUpgradeButton>())
                 {
@@ -404,7 +415,7 @@ public class HUDController : MonoBehaviour
                 Selectable addB = selectedButton.FindSelectableOnLeft();
                 addB.targetGraphic.CrossFadeColor(addB.colors.pressedColor, addB.colors.fadeDuration, true, true);
 
-                // Efetua a compra caso haja recursos. Caso contrario emite uma mensagem avisando que nao tem recursos
+                // Efetua a compra caso haja recursos. Caso contrario emite uma mensagem avisando que nao tem recursos.
                 Debug.Log(selectedButton + " ___ " + selectedButton.GetComponent<WDHudAttributeButton>());
                 int upgradeFlag = pgoPlayer.Upgrade(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType,
                     selectedButton.GetComponent<WDHudAttributeButton>().AttrType);
@@ -418,6 +429,7 @@ public class HUDController : MonoBehaviour
                     selectedButton.GetComponentsInChildren<Image>()[1].sprite = maxLevelSprite;
                 }
 
+                updateUpgradeAttributePrice();
                 Debug.Log(pgoPlayer.GetComponent<Player>().Recursos);
 
             }
@@ -622,6 +634,7 @@ public class HUDController : MonoBehaviour
                 changeButton(lastSelectedUpgradeAttributeButton, true);
 
                 changeTooltipLojaText(selectedButton.GetComponent<WDHudAttributeButton>().getAttribute(), 16);
+                updateUpgradeAttributePrice();
                 if (selectedButton.GetComponent<WDHudAttributeButton>().AttrType == Attributes.HAB)
                     changeTooltipLojaText(lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().descricaoHabilidade, 15);
             }
@@ -848,32 +861,84 @@ public class HUDController : MonoBehaviour
         else return -1;
     }
 
+    private void updateUpgradeAttributePrice()
+    {
+        Attributes attr = selectedButton.GetComponent<WDHudAttributeButton>().AttrType;
+        GroupController.DinoType dinoType = lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().DinoType;
+        bool[] attrsML = lastSelectedUpgradeUnitButton.GetComponent<WDHudUpgradeButton>().attributesInMaxLevel;
+
+        switch (attr) {
+            case Attributes.ATK:
+                if (!attrsML[(int)Attributes.ATK])
+                    displayUpgradeCost.text = pgoPlayerDinoVector[(int)dinoType].CustoAttrAtaque.ToString();
+                else
+                    displayUpgradeCost.text = " ";
+                break;
+            case Attributes.HAB:
+                if (!attrsML[(int)Attributes.HAB])
+                    displayUpgradeCost.text = pgoPlayerDinoVector[(int)dinoType].AbilityCost.ToString();
+                else
+                    displayUpgradeCost.text = " ";
+                break;
+            case Attributes.VEL_ATK:
+                if (!attrsML[(int)Attributes.VEL_ATK])
+                    displayUpgradeCost.text = pgoPlayerDinoVector[(int)dinoType].CustoAttrVelocidadeAtaque.ToString();
+                else
+                    displayUpgradeCost.text = " ";
+                break;
+            case Attributes.VEL_DES:
+                if (!attrsML[(int)Attributes.VEL_DES])
+                    displayUpgradeCost.text = pgoPlayerDinoVector[(int)dinoType].CustoAttrVelocidadeDeslocamento.ToString();
+                else
+                    displayUpgradeCost.text = " ";
+                break;
+            case Attributes.VIDA:
+                if (!attrsML[(int)Attributes.VIDA])
+                    displayUpgradeCost.text = pgoPlayerDinoVector[(int)dinoType].CustoAttrVida.ToString();
+                else
+                    displayUpgradeCost.text = " ";
+                break;
+            default:
+                Debug.LogError("Selected button returned unknown attribute.");
+                break;
+        }
+    }
+
     private void updateDinoGroupInfo () {
         int dinoQuantity = 0;
+        int displayGroupPrice = 0;
         for (int i=0; i<buttonUnitTiranossauroUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitTiranossauroUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerTRex.Custo;
             dinoQuantity++;
         }
         for (int i = 0; i < buttonUnitTriceratopoUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitTriceratopoUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerTricera.Custo;
             dinoQuantity++;
         }
         for (int i = 0; i < buttonUnitEstegossauroUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitEstegossauroUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerEstego.Custo;
             dinoQuantity++;
         }
         for (int i = 0; i < buttonUnitApatossauroUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitApatossauroUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerApato.Custo;
             dinoQuantity++;
         }
         for (int i = 0; i < buttonUnitVelociraptorUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitVelociraptorUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerVeloci.Custo;
             dinoQuantity++;
         }
         for (int i = 0; i < buttonUnitPterodactiloUB.getQuantityOnGroup(); i++) {
             dinoGroupFrames[dinoQuantity].sprite = buttonUnitPterodactiloUB.getSpriteInFrame();
+            displayGroupPrice += pgoPlayerPtero.Custo;
             dinoQuantity++;
         }
+
+        dinoGroupCostText.text = displayGroupPrice.ToString();
 
         // Preenche o que sobrou de espaço vazios no grupo com nenhuma imagem
         for (int i = dinoQuantity; i<4; i++) {

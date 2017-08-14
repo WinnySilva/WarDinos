@@ -9,6 +9,7 @@ public class CrebitosController : MonoBehaviour
     public GameObject gameObjectTitlescreen;
     public GameObject gameObjectCrebitos;
     public AudioSource enteringSound;
+    public ScrollText crebitosScrollText;
 
     private MenuLocker titlescreenLocker;
     private MenuLocker crebitosLocker;
@@ -60,6 +61,7 @@ public class CrebitosController : MonoBehaviour
         }
         cg.alpha = 0.0f;
         crebitosLocker.unlockMenu();
+        crebitosScrollText.ResetScrolling();
         Debug.Log(crebitosLocker.isLocked());
     }
 

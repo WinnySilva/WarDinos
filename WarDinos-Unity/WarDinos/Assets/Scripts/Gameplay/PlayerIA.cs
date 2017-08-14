@@ -62,7 +62,7 @@ public class PlayerIA : MonoBehaviour {
 					this.playerHudController.transform.GetChild (i).gameObject.SetActive (false);
 				}
 				this.lvlNumer.SetActive (true);
-				this.levelNumber.text = "lvl " + this.gameLevelInfo.lvl;
+				this.levelNumber.text = "Nível\n" + this.gameLevelInfo.lvl;
 			}
 			repeatTimeDespachar = repeatTimeDespachar / gameLevelInfo.lvl;
 			iniTime = iniTime / gameLevelInfo.lvl;

@@ -14,6 +14,7 @@ public class TitlescreenController : MonoBehaviour {
     public GameObject gameObjectTitlescreen;
     public GameObject gameObjectCrebitos;
 	public LevelInfo gameLevelInfo;
+    public ScrollText crebitosScrollText;
 
 
     private MenuLocker titlescreenLocker;
@@ -35,6 +36,7 @@ public class TitlescreenController : MonoBehaviour {
 
     void TaskOnClickSingleplayer ()
     {
+        GlobalParameters.gameMode = 1;
         Debug.Log("Clicou no botao Singleplayer");
 		gameLevelInfo.gameMode = LevelInfo.GAME_MODE.SINGLE;
 		gameLevelInfo.lvl = 1;
@@ -43,6 +45,7 @@ public class TitlescreenController : MonoBehaviour {
 
     void TaskOnClickMultiplayer()
     {
+        GlobalParameters.gameMode = 2;
         Debug.Log("Clicou no botao Multiplayer");
 		gameLevelInfo.gameMode = LevelInfo.GAME_MODE.MULTI;
 		gameLevelInfo.lvl = 0;
@@ -58,6 +61,8 @@ public class TitlescreenController : MonoBehaviour {
             StartCoroutine(routine: fadeOutGameObject(gameObjectTitlescreen));
             crebitosLocker.lockMenu();
             StartCoroutine(routine: fadeInGameObject(gameObjectCrebitos));
+
+            crebitosScrollText.Scroll();
         }
     }
 
