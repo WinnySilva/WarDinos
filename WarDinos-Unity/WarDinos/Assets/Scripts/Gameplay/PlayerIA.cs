@@ -24,7 +24,12 @@ public class PlayerIA : MonoBehaviour {
 	private float repeatTimeUp= 20f;
 	private int[][] ordemLanes;
 	private int[] ordemLaneAtual = { 0, 2 };
-	void Awake(){
+
+    private int AIPrimaryStrategy;
+    private int AISecundaryStrategy;
+    private int AITerciaryStrategy;
+
+    void Awake(){
 		playerHudController = hud.GetComponent<HUDController>();
 		playerScr = player.GetComponent<Player>();
 		dinoGroupPrefab = this.playerHudController.dinoGroupPrefab;
@@ -45,7 +50,23 @@ public class PlayerIA : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		this.gameLevelInfo = (GameObject.Find ("gameLevelInfo")!=null)?	GameObject.FindWithTag ("LevelInfo").GetComponent<LevelInfo>():null  ;
+        if (GlobalParameters.playerWinner == 1) {
+            Debug.Log("Adquiriu nova tatica");
+            AIPrimaryStrategy = Random.Range(0, 6);
+            AISecundaryStrategy = Random.Range(0, 6);
+            AITerciaryStrategy = Random.Range(0, 6);
+
+            GlobalParameters.AIPrimaryStrategy = AIPrimaryStrategy;
+            GlobalParameters.AISecundaryStrategy = AISecundaryStrategy;
+            GlobalParameters.AITerciaryStrategy = AITerciaryStrategy;
+        }
+        else {
+            Debug.Log("NAO Adquiriu nova tatica");
+            AIPrimaryStrategy = GlobalParameters.AIPrimaryStrategy;
+            AISecundaryStrategy = GlobalParameters.AISecundaryStrategy;
+            AITerciaryStrategy = GlobalParameters.AITerciaryStrategy;
+        }
+        this.gameLevelInfo = (GameObject.Find ("gameLevelInfo")!=null)?	GameObject.FindWithTag ("LevelInfo").GetComponent<LevelInfo>():null  ;
 		if(gameLevelInfo !=null ){
 			Debug.Log ("gameLevelInfo " + gameLevelInfo);
 			if (gameLevelInfo.gameMode == LevelInfo.GAME_MODE.MULTI) {
@@ -119,38 +140,47 @@ public class PlayerIA : MonoBehaviour {
 		int slotsTotal = 4;
 		Dinossauro dinoAux, dinoAuxEscolhido;
 		GroupController.DinoType aux;
-		arg_dinos[0] = randomDino (false);
+		arg_dinos[0] = decideDinoType();//randomDino (false);
 
 		//SE O RANDOM NAO FOR NONE
 		slotsTotal -=  (int)(arg_dinos[0])!=0? this.dinoPrefab[ (int)(arg_dinos[0]) -1 ].GetComponent<Dinossauro> ().NSlot: 0 ;
 		custoTotal +=  (int)(arg_dinos[0])!=0? this.dinoPrefab[ (int)(arg_dinos[0])-1  ].GetComponent<Dinossauro> ().Custo: 0;
-		int skip = 0;//(int)(arg_dinos[0])!=0? this.dinoPrefab[ (int)(arg_dinos[0]) -1 ].GetComponent<Dinossauro> ().NSlot-1: -1;
+        int skip = 0;//(int)(arg_dinos[0])!=0? this.dinoPrefab[ (int)(arg_dinos[0]) -1 ].GetComponent<Dinossauro> ().NSlot-1: -1;
 
 		string debugMSG = ("  0 : "+arg_dinos[0]+" "+custoTotal+"/"+recursos +" "+(4-slotsTotal)+"/"+4+" skip: "+skip+ " ; ");
 		for(int i=1; i<4; i++ ) {
 			dinoAuxEscolhido = null;
 	//		Debug.Log ("skip: " + skip);
 			if (skip--<1 ) {
-			//	Debug.Log ("2:: skip: " + skip);
-				for (int j = 0; (j < 6); j++) {
-					dinoAux = this.dinoPrefab [j].GetComponent<Dinossauro> ();
-					if ((dinoAux.NSlot <= slotsTotal) && ((custoTotal + dinoAux.Custo) <= recursos)) {
-						arg_dinos [i] = dinoAux.DinoType;
-						dinoAuxEscolhido = dinoAux;
-					}
-				}
+                //	Debug.Log ("2:: skip: " + skip);
+                dinoAux = dinoPrefab[(int)decideDinoType()-1].GetComponent<Dinossauro>();
+                if ((dinoAux.NSlot <= slotsTotal) && ((custoTotal + dinoAux.Custo) <= recursos)) {
+                    arg_dinos[i] = dinoAux.DinoType;
+                    dinoAuxEscolhido = dinoAux;
+                }
+                else {
+                    for (int j = 0; (j < 6); j++)
+                    {
+                        dinoAux = this.dinoPrefab[j].GetComponent<Dinossauro>();
+                        if ((dinoAux.NSlot <= slotsTotal) && ((custoTotal + dinoAux.Custo) <= recursos))
+                        {
+                            arg_dinos[i] = dinoAux.DinoType;
+                            dinoAuxEscolhido = dinoAux;
+                        }
+                    }
+                }
 			}
 			if (dinoAuxEscolhido == null) {
 				arg_dinos [i] = GroupController.DinoType.NONE;
 				debugMSG += ("  "+i+": x "+arg_dinos [i]+" "+0+"/ "+recursos+"  "+0+"/"+4)+" skip: "+skip+" total slots:"+slotsTotal+ ";";
 
 			} else {
-				custoTotal += dinoAuxEscolhido.Custo;
-				slotsTotal -= dinoAuxEscolhido.NSlot;
-				skip = 0;//dinoAuxEscolhido.NSlot - 1;
+                custoTotal += dinoAuxEscolhido.Custo;
+                slotsTotal -= dinoAuxEscolhido.NSlot;
+                skip = 0;//dinoAuxEscolhido.NSlot - 1;
 				debugMSG += ("  "+i+": x "+dinoAuxEscolhido.DinoType+" "+dinoAuxEscolhido.Custo+"/ "+recursos+"  "+dinoAuxEscolhido.NSlot+"/"+4)+" skip: "+skip+" total slots:"+slotsTotal+ ";";
 			}
-		}
+        }
 
 	//msg += ("=== GRUPO::: " + custoTotal + " slots: " + slotsTotal+" skip: "+skip)+"\n";
 
@@ -213,8 +243,60 @@ public class PlayerIA : MonoBehaviour {
 	}
 
 	void Upgrade(){
-		Attributes a = (Attributes) Random.Range(0,5);
-		this.playerScr.Upgrade( this.randomDino(false), a );
-	}
+        for (int i = 0; i <= 5; i++)
+            this.playerScr.Upgrade(this.decideDinoType(), (Attributes)i);
+    }
 
+    GroupController.DinoType decideDinoType () {
+        int turnStrategy = Random.Range(0, 100);
+
+        if (turnStrategy < 60)
+            return executeStrategy(AIPrimaryStrategy);
+        else if (turnStrategy < 90)
+            return executeStrategy(AISecundaryStrategy);
+        else
+            return executeStrategy(AITerciaryStrategy);
+    }
+
+    GroupController.DinoType executeStrategy (int strategy) {
+        switch (strategy) {
+            // Random Groups
+            case 0:
+                Debug.Log("Random Strategy");
+                return randomDino(false);
+
+            // Mass Raptor
+            case 1:
+                Debug.Log("Mass Raptor Strategy");
+                return GroupController.DinoType.RAPTOR;
+
+            // Mass TRex
+            case 2:
+                Debug.Log("Mass TRex Strategy");
+                return GroupController.DinoType.TREX;
+
+            // Mass Triceratopo
+            case 3:
+                Debug.Log("Mass Triceratopo Strategy");
+                return GroupController.DinoType.TRICERATOPO;
+
+            // Mass Apatossauro
+            case 4:
+                Debug.Log("Mass Apatossauro Strategy");
+                return GroupController.DinoType.APATOSSAURO;
+
+            // Mass Estegossauro
+            case 5:
+                Debug.Log("Mass Estegossauro Strategy");
+                return GroupController.DinoType.ESTEGOSSAURO;
+
+            // Mass Pterodactilo
+            case 6:
+                Debug.Log("Mass Pterodactilo Strategy");
+                return GroupController.DinoType.PTERODACTILO;
+
+            default:
+                return randomDino(false);
+        }
+    }
 }

@@ -11,6 +11,11 @@ public class RemakeController : MonoBehaviour {
     public string cenaTelaInicial;
     public GameObject textPlayerWins;
     public Text playAgain;
+    public AudioSource vsAIAnnouncerDefeat;
+    public AudioSource vsAIAnnouncerVictory;
+    public AudioSource pvpAnnouncer;
+    public AudioSource victoryMusic;
+    public AudioSource defeatMusic;
 
     // Use this for initialization
     void Start () {
@@ -23,13 +28,21 @@ public class RemakeController : MonoBehaviour {
             textPlayerWins.GetComponent<Text>().text = "Jogador 2 venceu!";
 
         if (GlobalParameters.gameMode == 1) {
-            if (GlobalParameters.playerWinner == 1)
+            if (GlobalParameters.playerWinner == 1) {
                 playAgain.text = "Próximo Nível";
-            else
+                victoryMusic.Play();
+                vsAIAnnouncerVictory.Play();
+            }
+            else {
                 playAgain.text = "Repetir Nível";
+                defeatMusic.Play();
+                vsAIAnnouncerDefeat.Play();
+            }
         }
         else {
             playAgain.text = "Jogar novamente";
+            victoryMusic.Play();
+            pvpAnnouncer.Play();
         }
     }
 
