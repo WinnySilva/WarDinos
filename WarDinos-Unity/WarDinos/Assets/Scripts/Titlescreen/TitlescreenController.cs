@@ -11,6 +11,7 @@ public class TitlescreenController : MonoBehaviour {
     public Button sairButton;
     public string singleplayerScene;
     public string multiplayerScene;
+	public string tutorialScene;
     public GameObject gameObjectTitlescreen;
     public GameObject gameObjectCrebitos;
 	public LevelInfo gameLevelInfo;
@@ -65,7 +66,9 @@ public class TitlescreenController : MonoBehaviour {
             crebitosScrollText.Scroll();
         }
     }
-
+	public void TaskOnClickTutorial(){
+		SceneManager.LoadScene(tutorialScene);
+	}
     void TaskOnClickSair()
     {
         Debug.Log("Clicou no botao Sair");
