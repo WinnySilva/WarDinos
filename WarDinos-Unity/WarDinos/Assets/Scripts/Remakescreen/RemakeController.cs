@@ -11,9 +11,11 @@ public class RemakeController : MonoBehaviour {
     public string cenaTelaInicial;
     public GameObject textPlayerWins;
     public Text playAgain;
+	public LevelInfo gameLevelInfo;
 
     // Use this for initialization
     void Start () {
+		this.gameLevelInfo = (GameObject.Find ("gameLevelInfo")!=null)?	GameObject.FindWithTag ("LevelInfo").GetComponent<LevelInfo>():null  ;
         GlobalParameters.someoneIsWinning = false;
         playAgainButton.onClick.AddListener(TaskOnClickPlayAgainButton);
         titleScreenButton.onClick.AddListener(TaskOnClickTitleScreenButton);
@@ -23,8 +25,10 @@ public class RemakeController : MonoBehaviour {
             textPlayerWins.GetComponent<Text>().text = "Jogador 2 venceu!";
 
         if (GlobalParameters.gameMode == 1) {
-            if (GlobalParameters.playerWinner == 1)
-                playAgain.text = "Próximo Nível";
+			if (GlobalParameters.playerWinner == 1) {
+				playAgain.text = "Próximo Nível";
+				this.gameLevelInfo.lvl++;
+			}
             else
                 playAgain.text = "Repetir Nível";
         }
@@ -36,8 +40,10 @@ public class RemakeController : MonoBehaviour {
     void TaskOnClickPlayAgainButton()
     {
         Debug.Log("Clicou no botao Jogar Novamente");
-        if (GlobalParameters.gameMode == 1) 
-            SceneManager.LoadScene(cenaJogarNovamente);
+		if (GlobalParameters.gameMode == 1) {
+			
+			SceneManager.LoadScene (cenaJogarNovamente);
+		}
         else
             // TODO: Quando o modo vs IA estiver pronto, devera ir para essa tela
             SceneManager.LoadScene(cenaJogarNovamente);

@@ -76,9 +76,9 @@ public class LevelInfo : MonoBehaviour {
 
 		case 4:
 			/*se for tela de remake */
-			if( gameMode == GAME_MODE.SINGLE){
+		/*	if( gameMode == GAME_MODE.SINGLE){
 				this.lvl++;
-			}
+			}*/
 			break;
 
 		}
