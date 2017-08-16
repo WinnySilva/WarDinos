@@ -13,6 +13,13 @@ public class RemakeController : MonoBehaviour {
     public Text playAgain;
 	public LevelInfo gameLevelInfo;
 
+    public AudioSource vsAIAnnouncerDefeat;
+    public AudioSource vsAIAnnouncerVictory;
+    public AudioSource pvpAnnouncer;
+    public AudioSource victoryMusic;
+    public AudioSource defeatMusic;
+
+
     // Use this for initialization
     void Start () {
 		this.gameLevelInfo = (GameObject.Find ("gameLevelInfo")!=null)?	GameObject.FindWithTag ("LevelInfo").GetComponent<LevelInfo>():null  ;
@@ -25,15 +32,23 @@ public class RemakeController : MonoBehaviour {
             textPlayerWins.GetComponent<Text>().text = "Jogador 2 venceu!";
 
         if (GlobalParameters.gameMode == 1) {
+
 			if (GlobalParameters.playerWinner == 1) {
-				playAgain.text = "Próximo Nível";
 				this.gameLevelInfo.lvl++;
-			}
-            else
+                playAgain.text = "Próximo Nível";
+                victoryMusic.Play();
+                vsAIAnnouncerVictory.Play();
+            }
+            else {
                 playAgain.text = "Repetir Nível";
+                defeatMusic.Play();
+                vsAIAnnouncerDefeat.Play();
+            }
         }
         else {
             playAgain.text = "Jogar novamente";
+            victoryMusic.Play();
+            pvpAnnouncer.Play();
         }
     }
 
