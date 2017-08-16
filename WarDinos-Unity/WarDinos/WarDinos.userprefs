@@ -1,15 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Titlescreen\TutorialManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LevelInfo.cs">
     <Files>
       <File FileName="Assets\Scripts\Gameplay\Player.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\HUD\WDHudAttributeButton.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Gameplay\GameWinnerController.cs" Line="48" Column="47" />
-      <File FileName="Assets\Scripts\LevelInfo.cs" Line="67" Column="32" />
+      <File FileName="Assets\Scripts\Gameplay\GameWinnerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LevelInfo.cs" Line="50" Column="48" />
       <File FileName="Assets\Scripts\Gameplay\PlayerIA.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="77" Column="1" />
-      <File FileName="Assets\Scripts\Remakescreen\RemakeController.cs" Line="14" Column="28" />
-      <File FileName="Assets\Scripts\Titlescreen\TutorialManager.cs" Line="21" Column="47" />
+      <File FileName="Assets\Scripts\DB\ConexaoMongo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Remakescreen\RemakeController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Titlescreen\TutorialManager.cs" Line="17" Column="4" />
+      <File FileName="Assets\Scripts\Titlescreen\TitlescreenController.cs" Line="69" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -44,6 +44,12 @@ public class LevelInfo : MonoBehaviour {
 		if (SceneManager.GetActiveScene ().buildIndex == 3) {
 			this.tempoJogo = GameObject.Find ("TextTempo").GetComponent<Text> ().text;
 		}
+
+		if( Input.GetButtonUp("full") ){
+			Screen.fullScreen = !Screen.fullScreen;
+			Debug.Log ( "FullScreen: "+Screen.fullScreen);
+		}
+
 	}
 
 	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
