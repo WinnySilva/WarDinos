@@ -12,11 +12,15 @@ public class TutorialManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonUp("ConfirmP1")){
+		if(Input.GetButtonUp("ConfirmP1") || Input.GetButtonUp("ConfirmP2")){
 			SceneManager.LoadScene (0); /*CARREGA main*/
 		}
 
 	}
+	public void LoadMainMenu(){
+		SceneManager.LoadScene (0); /*CARREGA main*/
+	}
+
 
 
 
