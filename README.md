@@ -1,5 +1,5 @@
 # WarDinos
-Jogo desenvolvido para a disciplina optativa de Jogos, do curso de Bacharelado em Ciência da Computação da Universidade Federal de Pelotas
+Jogo desenvolvido para a disciplina optativa de Jogos - 2017, do curso de Bacharelado em Ciência da Computação da Universidade Federal de Pelotas
 # Geral
 ⦁	Objetivo: Derrotar o inimigo, atráves da colocação de tropas nas lanes
 
